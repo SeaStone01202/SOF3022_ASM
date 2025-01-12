@@ -1,0 +1,49 @@
+package com.springboot.asm.fpoly_asm_springboot.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.Instant;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "review")
+public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id", nullable = false)
+    private Integer id;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @NotNull
+    @Column(name = "rating", nullable = false)
+    private Integer rating;
+
+    @Size(max = 128)
+    @NotNull
+    @Column(name = "headline", nullable = false, length = 128)
+    private String headline;
+
+    @Size(max = 500)
+    @NotNull
+    @Column(name = "comment", nullable = false, length = 500)
+    private String comment;
+
+    @NotNull
+    @Column(name = "review_time", nullable = false)
+    private Instant reviewTime;
+
+}

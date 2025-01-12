@@ -1,0 +1,12 @@
+package com.springboot.asm.fpoly_asm_springboot.repositories;
+
+
+import com.springboot.asm.fpoly_asm_springboot.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+    Category findByName(String name);
+    Category findById(int id);
+}
