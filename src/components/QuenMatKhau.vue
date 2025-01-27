@@ -1,135 +1,159 @@
 <template>
   <div>
     <header>
-        <div class="dongdau">
+      <div class="dongdau">
+        <p>
+          Miễn phí vận chuyển với đơn hàng trên 500K. Hàng pre-order còn được
+          giảm thêm 5%.
+        </p>
+      </div>
+      <div class="container">
+        <div class="container1">
+          <a href="index.html">
+            <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
+          </a>
+          <div class="seach">
+            <input type="search" placeholder="Tìm kiếm sản phẩm..." />
+            <button>
+              <i
+                class="fa-solid fa-magnifying-glass"
+                style="color: #ffffff"
+              ></i>
+            </button>
+          </div>
+          <div class="login">
+            <i
+              class="fa-regular fa-user fa-xl"
+              style="padding-top: 12px; margin-right: 10px"
+            ></i>
             <p>
-                Miễn phí vận chuyển với đơn hàng trên 500K. Hàng pre-order còn được giảm thêm 5%.</p>
+              <a href="dangnhap.html"
+                >Đăng nhập / Đăng ký<br />Tài khoản của tôi</a
+              >
+            </p>
+          </div>
+          <div class="cart">
+            <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
+            <p><a href="detail.html">giỏ hàng</a></p>
+          </div>
         </div>
-        <div class="container">
-            <div class="container1">
-                <a href="index.html">
-                    <div class="swe"><img src="../assets/img/logo.webp" alt=""></div>
-                </a>
-                <div class="seach">
-                    <input type="search" placeholder="Tìm kiếm sản phẩm...">
-                    <button><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
-                </div>
-                <div class="login"><i class="fa-regular fa-user fa-xl" style="padding-top: 12px; margin-right: 10px;"></i>
-                    <p><a href="dangnhap.html">Đăng nhập / Đăng ký<br>Tài khoản của tôi</a></p></div>
-                    <div class="cart"><i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px;"></i>
-                    <p><a href="detail.html">giỏ hàng</a></p></div>
-            </div>
-        </div>
-        <div class="khungchuamenu">
-        <div class="menu">
-            <ul>
-                <li><a href="newarrival.html">new arrivals</a></li>
-                <li><a href="bestselling.html">best-selling items</a></li>
-                <li><a href="top.html">tops</a></li>
-                <li><a href="bottom.html">bottoms</a></li>
-                <li><a href="outerwear.html">outerwear</a></li>
-                <li><a href="accessories.html">accessories</a></li>
-                <li><a href="saleoff.html">sale off</a></li>
-                <li><a href="flashsale.html">flash sale</a></li>
-            </ul>
-        </div>
-    </div>
- 
+      </div>
+      <Menu></Menu>
     </header>
-    
-    <div class="container-default">
-        <article>
-            <h1>Phục hồi mật khẩu</h1>
-            <h2>____</h2>
-        </article>
-        <aside>
-            <div class="form-container">
-                <form>
-                    <div class="form-group">
 
-                    <h2>Phục hồi mật khẩu</h2>
-                    <div class="form-group">
-                   
-                        <input type="password" id="password" name="password" placeholder="Mật khẩu">
-                    </div>
-                    </div>
+    <div class="container-default">
+      <article>
+        <h1>Phục hồi mật khẩu</h1>
+        <h2>____</h2>
+      </article>
+      <aside>
+        <div class="form-container">
+          <form>
+            <div class="form-group">
+              <h2>Phục hồi mật khẩu</h2>
+              <div class="form-group">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Mật khẩu"
+                />
+              </div>
+            </div>
 
             <!-- Phần ghi chú -->
             <p class="note">
-                This site is protected by reCAPTCHA and the Google 
-                <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and 
-                <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+              This site is protected by reCAPTCHA and the Google
+              <a href="https://policies.google.com/privacy" target="_blank"
+                >Privacy Policy</a
+              >
+              and
+              <a href="https://policies.google.com/terms" target="_blank"
+                >Terms of Service</a
+              >
+              apply.
             </p>
 
             <!-- Nút Đăng ký -->
             <button type="submit" class="submit-btn">Gửi</button>
-           
+
             <!-- Link quay lại -->
-            <a href="index.html" class="back-link"><strong style="font-size: 14px; margin-right: 10px;">← </strong>Quay lại trang chủ</a>
-                </form>
-            </div>
-        </aside>   
-              
+            <a href="index.html" class="back-link"
+              ><strong style="font-size: 14px; margin-right: 10px">← </strong
+              >Quay lại trang chủ</a
+            >
+          </form>
+        </div>
+      </aside>
     </div>
     <footer>
-        <div class="footer-content">
-            <div class="newsletter">
-                <h4>Nhận khuyến mãi</h4>
-                <form>
-                    <input type="email" placeholder="Nhập email của bạn">
-                    <button type="submit">
-                        <i class="fa fa-envelope"></i>
-                    </button>
-                </form>
-            </div>
-            <div class="footer-sections">
-                <div class="about-us">
-                    <h5>ABOUT US</h5>
-                    <p>Được thành lập vào cuối năm 2016 trong bối cảnh thời trang streetstyle dẫn nhẹn nhóm vào thị trường Việt Nam. Sau 6 năm phát triển, SWE - Street Wear Eazy với slogan Young kids with a mission™ đã chiếm được tình cảm của hầu hết các bạn trẻ yêu mến thời trang đường phố trên khắp cả nước.</p>
-                </div>
-                <div class="policy">
-                    <h5>CHÍNH SÁCH</h5>
-                    <ul>
-                        <li>Chính sách bảo mật</li>
-                        <li>Hướng dẫn mua hàng</li>
-                        <li>Phương thức thanh toán</li>
-                        <li>Chính sách giao nhận - vận chuyển</li>
-                        <li>Chính sách đổi và bảo hành sản phẩm</li>
-                    </ul>
-                </div>
-                <div class="store-info">
-                    <h5>HỆ THỐNG CỬA HÀNG SWE</h5>
-                    <ul>
-                        <li>Store 1: 44A Trần Quang Diệu, Quận 3</li>
-                        <li>Store 2: TNP Lý Tự Trọng, Quận 1</li>
-                        <li>Store 3: TNP Lê Lai, Quận 1</li>
-                        <li>Đại lý phân phối chính hãng: SN 84, Tổ 9, Hoàng Công Chất, P. Mường Thanh, TP Điện Biên</li>
-                    </ul>
-                    <div class="lienhe">
-                        <p>0357 420 420</p>
-                        <p>streetweareazy@gmail.com</p>
-                    </div>
-               
-                </div>
-                <div class="social">
-                    <h5>FANPAGE</h5>
-                    <img src="../assets/img/z5992517442123_37d90b0e615763da46b0c7449303fb0c.jpg" alt="">
-                </div>
-            </div>
+      <div class="footer-content">
+        <div class="newsletter">
+          <h4>Nhận khuyến mãi</h4>
+          <form>
+            <input type="email" placeholder="Nhập email của bạn" />
+            <button type="submit">
+              <i class="fa fa-envelope"></i>
+            </button>
+          </form>
         </div>
-        <div class="footer-bottom">
-            <p>Copyright © 2024 SWE (STREETWEAREAZY). Powered by Haravan</p>
+        <div class="footer-sections">
+          <div class="about-us">
+            <h5>ABOUT US</h5>
+            <p>
+              Được thành lập vào cuối năm 2016 trong bối cảnh thời trang
+              streetstyle dẫn nhẹn nhóm vào thị trường Việt Nam. Sau 6 năm phát
+              triển, SWE - Street Wear Eazy với slogan Young kids with a
+              mission™ đã chiếm được tình cảm của hầu hết các bạn trẻ yêu mến
+              thời trang đường phố trên khắp cả nước.
+            </p>
+          </div>
+          <div class="policy">
+            <h5>CHÍNH SÁCH</h5>
+            <ul>
+              <li>Chính sách bảo mật</li>
+              <li>Hướng dẫn mua hàng</li>
+              <li>Phương thức thanh toán</li>
+              <li>Chính sách giao nhận - vận chuyển</li>
+              <li>Chính sách đổi và bảo hành sản phẩm</li>
+            </ul>
+          </div>
+          <div class="store-info">
+            <h5>HỆ THỐNG CỬA HÀNG SWE</h5>
+            <ul>
+              <li>Store 1: 44A Trần Quang Diệu, Quận 3</li>
+              <li>Store 2: TNP Lý Tự Trọng, Quận 1</li>
+              <li>Store 3: TNP Lê Lai, Quận 1</li>
+              <li>
+                Đại lý phân phối chính hãng: SN 84, Tổ 9, Hoàng Công Chất, P.
+                Mường Thanh, TP Điện Biên
+              </li>
+            </ul>
+            <div class="lienhe">
+              <p>0357 420 420</p>
+              <p>streetweareazy@gmail.com</p>
+            </div>
+          </div>
+          <div class="social">
+            <h5>FANPAGE</h5>
+            <img
+              src="../assets/img/z5992517442123_37d90b0e615763da46b0c7449303fb0c.jpg"
+              alt=""
+            />
+          </div>
         </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright © 2024 SWE (STREETWEAREAZY). Powered by Haravan</p>
+      </div>
     </footer>
   </div>
 </template>
 
-<script>
-export default {
+<script setup>
+import Menu from "./menu-link/Menu.vue";
 
-}
+Menu;
 </script>
 
-<style>
-
-</style>
+<style></style>
