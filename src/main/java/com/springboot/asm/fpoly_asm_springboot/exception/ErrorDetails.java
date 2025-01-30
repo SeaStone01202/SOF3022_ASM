@@ -1,7 +1,6 @@
-package com.in28minutes.webservices.restfulwebservices.exception;
+package com.springboot.asm.fpoly_asm_springboot.exception;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
