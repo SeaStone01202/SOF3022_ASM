@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.entity;
+package com.springboot.asm.fpoly_asm_springboot.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

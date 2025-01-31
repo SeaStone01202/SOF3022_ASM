@@ -1,8 +1,17 @@
-package com.springboot.asm.fpoly_asm_springboot.entity;
+package com.springboot.asm.fpoly_asm_springboot.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetailKey implements Serializable {
     private Integer order;
     private Integer product;

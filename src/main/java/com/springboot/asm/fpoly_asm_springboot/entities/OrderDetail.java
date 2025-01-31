@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.entity;
+package com.springboot.asm.fpoly_asm_springboot.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "order_detail")
-@IdClass(OrderDetail.class)
+@IdClass(OrderDetailKey.class)
 public class OrderDetail {
 
     @Id
