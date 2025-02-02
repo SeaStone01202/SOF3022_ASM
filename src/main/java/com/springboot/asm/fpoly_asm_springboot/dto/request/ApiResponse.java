@@ -1,4 +1,4 @@
-package com.poly.dto.request;
+package com.springboot.asm.fpoly_asm_springboot.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

@@ -1,11 +1,12 @@
-package com.poly.config;
+package com.springboot.asm.fpoly_asm_springboot.config;
 
-import com.poly.enity.User;
-import com.poly.enums.Role;
-import com.poly.repository.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.constant.Role;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
+import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,15 +22,21 @@ public class ApplicationInitConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+    @Bean
     ApplicationRunner applicationRunner(UserRepository userRepository) {
         return args -> {
-            if (userRepository.findByUsername("admin").isEmpty()) {
+            if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
                 var roles = new HashSet<String>();
                 roles.add(Role.ADMIN.name());
                 User user = User.builder().
-                        username("admin").
+                        email("admin@gmail.com").
                         password(passwordEncoder.encode("admin")).
-                        roles(roles).
+                        role(roles).
                         build();
                 userRepository.save(user);
                 log.warn("Admin user added with default password: admin. Please change!");

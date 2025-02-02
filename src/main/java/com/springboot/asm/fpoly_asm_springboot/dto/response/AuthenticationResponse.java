@@ -1,4 +1,4 @@
-package com.poly.dto.response;
+package com.springboot.asm.fpoly_asm_springboot.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

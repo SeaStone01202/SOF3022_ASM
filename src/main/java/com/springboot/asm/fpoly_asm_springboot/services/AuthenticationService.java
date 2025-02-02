@@ -1,10 +1,10 @@
-package com.poly.service;
+package com.springboot.asm.fpoly_asm_springboot.services;
 
 import com.nimbusds.jose.JOSEException;
-import com.poly.dto.request.AuthenticationRequest;
-import com.poly.dto.request.IntrospectRequest;
-import com.poly.dto.response.AuthenticationResponse;
-import com.poly.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
 
 import java.text.ParseException;
 

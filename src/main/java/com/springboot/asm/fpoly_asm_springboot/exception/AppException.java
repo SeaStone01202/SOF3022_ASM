@@ -1,4 +1,4 @@
-package com.poly.exception;
+package com.springboot.asm.fpoly_asm_springboot.exception;
 
 import lombok.Getter;
 import lombok.Setter;

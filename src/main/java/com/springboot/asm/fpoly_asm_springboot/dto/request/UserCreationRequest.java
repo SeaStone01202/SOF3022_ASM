@@ -1,4 +1,4 @@
-package com.poly.dto.request;
+package com.springboot.asm.fpoly_asm_springboot.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 public class UserCreationRequest {
     @Size(min = 3, max = 50, message = "USERNAME_INVALID")
-    private String username;
+    private String email;
 
     @Size(min = 8, message = "PASSWORD_INVALID")
     private String password;

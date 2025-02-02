@@ -1,9 +1,10 @@
-package com.poly.dto.response;
+package com.springboot.asm.fpoly_asm_springboot.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -14,9 +15,9 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
     String id;
-    String username;
+    String email;
     String firstName;
     String lastName;
     LocalDate birthDate;
-    Set<String> roles;
+    HashSet<String> roles;
 }

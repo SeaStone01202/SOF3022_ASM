@@ -1,9 +1,10 @@
-package com.poly.mapper;
+package com.springboot.asm.fpoly_asm_springboot.mapper;
 
-import com.poly.dto.request.UserCreationRequest;
-import com.poly.dto.request.UserUpdatedRequest;
-import com.poly.dto.response.UserResponse;
-import com.poly.enity.User;
+
+import com.springboot.asm.fpoly_asm_springboot.dto.request.UserCreationRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.UserUpdatedRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 

@@ -1,6 +1,6 @@
-package com.poly.exception;
+package com.springboot.asm.fpoly_asm_springboot.exception;
 
-import com.poly.dto.request.ApiResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

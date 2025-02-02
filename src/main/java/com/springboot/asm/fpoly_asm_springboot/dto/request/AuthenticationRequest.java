@@ -1,4 +1,4 @@
-package com.poly.dto.request;
+package com.springboot.asm.fpoly_asm_springboot.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,8 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationRequest {
 
-
-    String username;
+    String email;
     String password;
 
 }
