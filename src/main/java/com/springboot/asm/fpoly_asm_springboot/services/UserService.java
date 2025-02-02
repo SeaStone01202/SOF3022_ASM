@@ -1,13 +1,25 @@
-package com.springboot.asm.fpoly_asm_springboot.services;
+package com.poly.service;
 
-import com.springboot.asm.fpoly_asm_springboot.dto.request.UserRequest;
-import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
+import com.poly.dto.request.UserCreationRequest;
+import com.poly.dto.request.UserUpdatedRequest;
+import com.poly.dto.response.UserResponse;
+import com.poly.enity.User;
 
 import java.util.List;
 
+
 public interface UserService {
-    UserResponse create(UserRequest userRequest);
-    UserResponse update(UserRequest userRequest);
-    Boolean delete(UserRequest userRequest);
-    List<UserResponse> findAll();
+
+    UserResponse createUser(UserCreationRequest request);
+
+    List<User> getUsers();
+
+    UserResponse getUserById(String id);
+
+    UserResponse updateUser(String userId, UserUpdatedRequest request);
+
+    void deleteUser(String userId);
+
+
 }
+
