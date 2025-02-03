@@ -36,4 +36,5 @@ public class MapperUtil {
     public static <D, T> Page<D> mapEntityPageIntoDtoPage(final Page<T> entities, Class<D> dtoClass) {
         return entities.map(objectEntity -> modelMapper.map(objectEntity, dtoClass));
     }
+
 }
