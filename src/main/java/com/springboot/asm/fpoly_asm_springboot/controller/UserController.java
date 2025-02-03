@@ -7,10 +7,13 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.services.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -31,7 +34,10 @@ public class UserController {
 
     @GetMapping
     List<User> getAllUsers() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        log.info("Username: {}", authentication.getName());
+        authentication.getAuthorities().forEach(grantedAuthority -> log.info("GrantedAuthority: {}", grantedAuthority.getAuthority()));
         return userService.getUsers();
     }
 

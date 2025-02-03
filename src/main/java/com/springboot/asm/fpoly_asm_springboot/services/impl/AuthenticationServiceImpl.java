@@ -9,6 +9,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest
 import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
@@ -25,6 +26,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Slf4j
 @Service
@@ -45,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (!authenticated) {
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
-        var token = generateToken(user.getEmail());
+        var token = generateToken(user);
         return AuthenticationResponse.builder().
                 token(token).
                 authenticated(true).
@@ -53,13 +55,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String generateToken(String username) {
+    public String generateToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
-        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject(username).
+        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject(user.getEmail()).
                 issuer("poly.com").
                 issueTime(new Date()).
                 expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli())).
+                claim("scope", buildScope(user)).
                 build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -90,5 +93,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 valid(verified && expirationTime.after(new Date())).
                 build();
 
+    }
+
+    private String buildScope(User user) {
+        StringJoiner scope = new StringJoiner(" ");
+        if(user.getRole().describeConstable().isPresent()){
+            scope.add( user.getRole()? "ADMIN" : "USER");
+        }
+        return scope.toString();
     }
 }

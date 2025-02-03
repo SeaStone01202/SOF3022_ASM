@@ -27,8 +27,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
-                anyRequest().authenticated());
+        httpSecurity.authorizeHttpRequests(requests ->
+                requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
+                requestMatchers(HttpMethod.GET, "/users").hasAuthority("SCOPE_ADMIN").
+                        anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(
                 oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()))
