@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
-
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
@@ -31,12 +29,10 @@ public class ApplicationInitConfig {
     ApplicationRunner applicationRunner(UserRepository userRepository) {
         return args -> {
             if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
-                var roles = new HashSet<String>();
-                roles.add(Role.ADMIN.name());
                 User user = User.builder().
                         email("admin@gmail.com").
                         password(passwordEncoder.encode("admin")).
-                        role(roles).
+                        role(Role.ADMIN).
                         build();
                 userRepository.save(user);
                 log.warn("Admin user added with default password: admin. Please change!");

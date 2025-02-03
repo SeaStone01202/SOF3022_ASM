@@ -8,26 +8,25 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "order_detail")
+@Table(name = "order_detail", schema = "storedb")
 public class OrderDetail {
-    @EmbeddedId
-    private OrderDetailKey orderDetailKey;
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private ProductOrder order;
+    private com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder order;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    private com.springboot.asm.fpoly_asm_springboot.entity.Product product;
 
-    @NotNull
-    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @NotNull
-    @Column(name = "subtotal", nullable = false)
     private Float subtotal;
 
 }

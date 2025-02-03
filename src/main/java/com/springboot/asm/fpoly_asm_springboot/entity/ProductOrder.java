@@ -7,17 +7,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "product_order")
+@Table(name = "product_order", schema = "storedb", indexes = {
+        @Index(name = "customer_fk_2_idx", columnList = "customer_id")
+})
 public class ProductOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
@@ -90,8 +90,5 @@ public class ProductOrder {
     @NotNull
     @Column(name = "status", nullable = false, length = 20)
     private String status;
-
-    @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
 
 }

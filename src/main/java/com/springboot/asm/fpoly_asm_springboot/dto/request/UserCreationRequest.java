@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class UserCreationRequest {
-    @Size(min = 3, max = 50, message = "USERNAME_INVALID")
+    @Size(min = 3, message = "USERNAME_INVALID")
     private String email;
 
     @Size(min = 8, message = "PASSWORD_INVALID")
@@ -18,6 +18,6 @@ public class UserCreationRequest {
     @NotBlank
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private LocalDate birthday;
 
 }

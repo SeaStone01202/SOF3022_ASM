@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,30 +15,18 @@ import java.util.Set;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(max = 128)
-    @NotNull
-    @Column(name = "title", nullable = false, length = 128)
-    private String title;
+    private String name;
 
-    @Size(max = 64)
-    @NotNull
-    @Column(name = "author", nullable = false, length = 64)
     private String author;
 
-    @Lob
-    @Column(name = "description")
     private String description;
 
-    @Size(max = 255)
-    @Column(name = "image")
     private String image;
 
-    @NotNull
-    @Column(name = "price", nullable = false)
     private Float price;
 
     @NotNull
@@ -55,11 +41,5 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
-    @OneToMany(mappedBy = "product")
-    private Set<OrderDetail> orderDetails = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "product")
-    private Set<Review> reviews = new LinkedHashSet<>();
 
 }

@@ -14,10 +14,13 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
-    String id;
+    Integer id;
     String email;
+    String fullName;
     String firstName;
     String lastName;
-    LocalDate birthDate;
-    HashSet<String> roles;
+    String phone;
+    String gender;
+    LocalDate birthday;
+    Boolean role;
 }

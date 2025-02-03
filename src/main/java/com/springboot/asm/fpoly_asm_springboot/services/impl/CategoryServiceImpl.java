@@ -17,11 +17,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category create(Category category) {
-        Optional<Category> newCategory = categoryRepository.findById(category.getId());
-        if (newCategory.isPresent()) {
-
-        }
-        return null;
+       if(categoryRepository.existsByName(category.getName())) {
+           return null;
+       }
+       return categoryRepository.save(category);
     }
 
     @Override

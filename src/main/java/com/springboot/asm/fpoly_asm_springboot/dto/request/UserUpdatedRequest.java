@@ -11,6 +11,6 @@ public class UserUpdatedRequest {
     private String password;
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private LocalDate birthday;
 
 }

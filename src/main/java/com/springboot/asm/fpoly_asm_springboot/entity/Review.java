@@ -11,11 +11,11 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "review")
+@Table(name = "review", schema = "storedb")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull

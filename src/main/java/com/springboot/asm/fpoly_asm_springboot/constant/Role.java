@@ -1,6 +1,10 @@
 package com.springboot.asm.fpoly_asm_springboot.constant;
 
-public enum Role {
-    ADMIN,
-    USER,
+public class Role {
+
+    public static Boolean ADMIN = true;
+    public static Boolean USER = false;
+
+    private Role() {
+    }
 }
