@@ -1,30 +1,33 @@
 package com.springboot.asm.fpoly_asm_springboot.services.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.entity.Product;
+import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
+import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.repositories.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
+@Service
 public class ProductServiceImpl implements ProductService {
 
-    private ModelMapper modelMapper;
-    private ProductRepository productRepository;
-
-    public ProductServiceImpl(ModelMapper modelMapper, ProductRepository productRepository) {
-        this.modelMapper = modelMapper;
-        this.productRepository = productRepository;
-    }
+    private final ProductRepository productRepository;
 
     @Override
     public Product create(Product product) {
+        if (productRepository.existsById(product.getId())) {
+            throw new AppException(ErrorCode.PRODUCT_ALREADY_EXISTED);
+        }
         return productRepository.saveAndFlush(product);
     }
 
     @Override
     public Product findById(int id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
     }
 

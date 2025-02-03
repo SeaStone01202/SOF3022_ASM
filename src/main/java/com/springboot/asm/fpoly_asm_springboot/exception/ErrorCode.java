@@ -10,6 +10,8 @@ public enum ErrorCode {
     PASSWORD_INVALID(1004,"Password is invalid, please input at least 8 characters"),
     USER_NOT_EXISTED(1005,"User not existed"),
     UNAUTHENTICATED_EXCEPTION(1006,"Unauthenticated error"),
+    PRODUCT_NOT_EXISTED(1007,"Product not existed"),
+    PRODUCT_ALREADY_EXISTED(1008,"Product already existed"),
     ;
 
     private int code;
