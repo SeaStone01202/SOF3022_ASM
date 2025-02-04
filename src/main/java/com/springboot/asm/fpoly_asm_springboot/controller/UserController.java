@@ -7,6 +7,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.services.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -16,48 +17,52 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
+    
     @PostMapping
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
 
-        ApiResponse<UserResponse> userApiResponse = ApiResponse.<UserResponse>builder().result(userService.createUser(request)).build();
-
-        return userApiResponse;
+        return ApiResponse.<UserResponse>builder().
+                result(userService.createUser(request)).
+                build();
     }
 
     @GetMapping
-    List<User> getAllUsers() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
+    ApiResponse<List<UserResponse>> getAllUsers() {
+        return ApiResponse.<List<UserResponse>>builder().
+                result(userService.getUsers()).
+                build();
+    }
 
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority -> log.info("GrantedAuthority: {}", grantedAuthority.getAuthority()));
-        return userService.getUsers();
+    @GetMapping("/myInfo")
+    ApiResponse<UserResponse> getMyInfo() {
+        return ApiResponse.<UserResponse>builder().
+                result(userService.getMyInfo()).
+                build();
     }
 
     @GetMapping("/{userId}")
-    UserResponse getUser(@PathVariable Integer userId) {
-
-        return userService.getUserById(userId);
+    ApiResponse<UserResponse> getUser(@PathVariable Integer userId) {
+        return ApiResponse.<UserResponse>builder().
+                result(userService.getUserById(userId)).
+                build();
     }
 
     @PutMapping("/{userId}")
-    UserResponse updateUser(@PathVariable Integer userId, @RequestBody UserUpdatedRequest request) {
-
-        return userService.updateUser(userId, request);
+    ApiResponse<UserResponse> updateUser(@PathVariable Integer userId, @RequestBody UserUpdatedRequest request) {
+        return ApiResponse.<UserResponse>builder().
+                result(userService.updateUser(userId, request)).
+                build();
     }
 
     @DeleteMapping("/{userId}")
-    String deleteUser(@PathVariable Integer userId) {
-
+    ApiResponse<String> deleteUser(@PathVariable Integer userId) {
         userService.deleteUser(userId);
-
-        return "User deleted";
+        return ApiResponse.<String>builder().
+                result("User deleted").
+                build();
     }
 }

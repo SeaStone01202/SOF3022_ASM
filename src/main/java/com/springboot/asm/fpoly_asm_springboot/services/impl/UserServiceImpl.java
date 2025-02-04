@@ -11,11 +11,17 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -27,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse createUser(UserCreationRequest request) {
-        if( userRepository.existsByEmail(request.getEmail()) ) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         User user = userMapper.toUser(request);
@@ -38,23 +44,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserResponse> getUsers() {
+        log.info("in getUsers");
+        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
 
     @Override
+    public UserResponse getMyInfo(){
+        var context = SecurityContextHolder.getContext();
+        String email = context.getAuthentication().getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse getUserById(Integer id) {
-        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id " + id + " not found")));
+        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
     @Override
+    @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse updateUser(Integer userId, UserUpdatedRequest request) {
-        User userUpdating = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
+        User userUpdating = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         userMapper.updateUser(userUpdating, request);
         return userMapper.toUserResponse(userRepository.save(userUpdating));
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(Integer userId) {
         userRepository.deleteById(userId);
     }

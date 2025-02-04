@@ -13,11 +13,13 @@ public interface UserService {
 
     UserResponse createUser(UserCreationRequest request);
 
-    List<User> getUsers();
+    List<UserResponse> getUsers();
 
     UserResponse getUserById(Integer id);
 
     UserResponse updateUser(Integer userId, UserUpdatedRequest request);
+
+    UserResponse getMyInfo();
 
     void deleteUser(Integer userId);
 
