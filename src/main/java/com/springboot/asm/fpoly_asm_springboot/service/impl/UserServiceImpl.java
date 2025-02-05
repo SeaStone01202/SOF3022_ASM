@@ -1,8 +1,9 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
-import com.springboot.asm.fpoly_asm_springboot.entities.User;
-import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
-import com.springboot.asm.fpoly_asm_springboot.services.UserService;
+import com.springboot.asm.fpoly_asm_springboot.entity.AppUser;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
+import com.springboot.asm.fpoly_asm_springboot.repository.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public AppUser findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }

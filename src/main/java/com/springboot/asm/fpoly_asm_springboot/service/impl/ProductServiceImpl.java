@@ -1,7 +1,7 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.ProductDTO;
-import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
+import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,7 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.security.userdetail;
 
-import com.springboot.asm.fpoly_asm_springboot.entities.User;
-import com.springboot.asm.fpoly_asm_springboot.services.UserService;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
+import com.springboot.asm.fpoly_asm_springboot.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

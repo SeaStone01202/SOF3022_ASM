@@ -1,6 +1,6 @@
 package com.springboot.asm.fpoly_asm_springboot.security.userdetail;
 
-import com.springboot.asm.fpoly_asm_springboot.entities.User;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

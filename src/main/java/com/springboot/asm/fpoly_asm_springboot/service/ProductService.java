@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services;
+package com.springboot.asm.fpoly_asm_springboot.service;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.ProductDTO;
 import org.springframework.data.domain.Page;

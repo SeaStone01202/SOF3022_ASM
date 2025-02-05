@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.entities;
+package com.springboot.asm.fpoly_asm_springboot.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
