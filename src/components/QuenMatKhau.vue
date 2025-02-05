@@ -9,7 +9,7 @@
       </div>
       <div class="container">
         <div class="container1">
-          <a href="index.html">
+          <a href="/">
             <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
           </a>
           <div class="seach">

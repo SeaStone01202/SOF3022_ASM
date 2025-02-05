@@ -9,7 +9,7 @@
       </div>
       <div class="container">
         <div class="container1">
-          <a href="index.html">
+          <a href="/">
             <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
           </a>
           <div class="seach">
@@ -22,15 +22,7 @@
             </button>
           </div>
           <div class="login">
-            <i
-              class="fa-regular fa-user fa-xl"
-              style="padding-top: 12px; margin-right: 10px"
-            ></i>
-            <p>
-              <a href="dangnhap.html"
-                >Đăng nhập / Đăng ký<br />Tài khoản của tôi</a
-              >
-            </p>
+            <UserDropMenu></UserDropMenu>
           </div>
           <div class="cart">
             <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
@@ -48,7 +40,7 @@
       </article>
       <aside>
         <div class="form-container">
-          <form>
+          <form @submit.prevent="handleLogin">
             <div class="form-group">
               <div class="form-group">
                 <input
@@ -56,6 +48,7 @@
                   id="email"
                   name="email"
                   placeholder="Email"
+                  v-model="model.email"
                 />
               </div>
               <div class="form-group">
@@ -64,6 +57,7 @@
                   id="password"
                   name="password"
                   placeholder="Mật khẩu"
+                  v-model="model.password"
                 />
               </div>
             </div>
@@ -182,6 +176,36 @@
 
 <script setup>
 import Menu from "./menu-link/Menu.vue";
+import UserDropMenu from "./menu-link/UserDropMenu.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axiosInstance from "../axios/asios";
+
+const message = ref("");
+const router = useRouter();
+const model = ref({
+  email: "",
+  password: "",
+});
+//Login Funtion
+const handleLogin = async () => {
+  try {
+    const response = await axiosInstance.post("/store/auth/token", {
+      email: model.value.email,
+      password: model.value.password,
+    });
+    message.value = "ĐĂNG NHẬP THÀNH CÔNG";
+    localStorage.setItem("token", response.data.result.token);
+    router.push({
+      name: "home",
+      query: {
+        token: response.data.result.token,
+      },
+    });
+  } catch (error) {
+    message.value = error.response?.data?.message || "Đăng nhập thất bại!";
+  }
+};
 </script>
 
 <style></style>

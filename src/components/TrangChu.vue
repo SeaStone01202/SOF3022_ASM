@@ -20,20 +20,7 @@
             </button>
           </div>
           <div class="login">
-            <i
-              class="fa-regular fa-user fa-xl"
-              style="padding-top: 12px; margin-right: 10px"
-            ></i>
-            <!-- mấy cái này sau này check bằng v-if -->
-            <p>
-              <router-link to="/register">Đăng kí</router-link>
-            </p>
-            <p>
-              <router-link to="/login">Đăng nhập</router-link>
-            </p>
-            <p>
-              <router-link to="/user-info">Thông tin cá nhân</router-link>
-            </p>
+            <UserDropMenu></UserDropMenu>
           </div>
           <div class="cart">
             <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
@@ -298,6 +285,6 @@
 
 <script setup>
 import Menu from "./menu-link/Menu.vue";
+import UserDropMenu from "./menu-link/UserDropMenu.vue";
 </script>
-
 <style></style>

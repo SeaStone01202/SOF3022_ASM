@@ -1,7 +1,7 @@
 import axios from "axios";
 // Tạo một instance của axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: "http://localhost:8080",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
     // thêm token vào header nếu cần
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
