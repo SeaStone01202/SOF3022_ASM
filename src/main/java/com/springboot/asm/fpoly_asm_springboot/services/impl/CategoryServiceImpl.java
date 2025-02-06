@@ -1,11 +1,10 @@
 package com.springboot.asm.fpoly_asm_springboot.services.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.entity.Category;
-import com.springboot.asm.fpoly_asm_springboot.repositories.CategoryRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.CategoryService;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CategoryServiceImpl implements CategoryService {
 

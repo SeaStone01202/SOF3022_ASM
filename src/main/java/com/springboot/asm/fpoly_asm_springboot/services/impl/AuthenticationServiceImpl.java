@@ -12,7 +12,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
-import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;

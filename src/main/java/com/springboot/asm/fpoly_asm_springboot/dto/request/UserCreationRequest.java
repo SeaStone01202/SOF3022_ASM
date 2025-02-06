@@ -15,9 +15,10 @@ public class UserCreationRequest {
 
     @Size(min = 8, message = "PASSWORD_INVALID")
     private String password;
-    @NotBlank
+    @NotBlank(message = "FIELD_BLANK")
     private String firstName;
     private String lastName;
     private LocalDate birthday;
+    private Boolean gender;
 
 }

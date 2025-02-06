@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum ErrorCode {
+public enum ErrorCodeProduct {
     USER_EXISTED(1001, "User already existed", HttpStatus.CONFLICT),
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     USERNAME_INVALID(1003, "Username is invalid, please input at least 3 characters", HttpStatus.BAD_REQUEST),
@@ -22,7 +22,7 @@ public enum ErrorCode {
     private String message;
     private HttpStatus httpStatus;
 
-    ErrorCode(int code, String message, HttpStatus httpStatus) {
+    ErrorCodeProduct(int code, String message, HttpStatus httpStatus) {
         this.code = code;
         this.message = message;
         this.httpStatus = httpStatus;

@@ -2,7 +2,7 @@ package com.springboot.asm.fpoly_asm_springboot.config;
 
 import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
-import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

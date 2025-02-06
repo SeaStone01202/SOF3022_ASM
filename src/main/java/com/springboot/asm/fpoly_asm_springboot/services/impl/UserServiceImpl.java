@@ -8,7 +8,7 @@ import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
-import com.springboot.asm.fpoly_asm_springboot.repositories.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -37,6 +36,8 @@ public class UserServiceImpl implements UserService {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
         User user = userMapper.toUser(request);
+        String fullName = request.getLastName() + " " + request.getFirstName();
+        user.setFullName(fullName);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setRole(Role.USER);

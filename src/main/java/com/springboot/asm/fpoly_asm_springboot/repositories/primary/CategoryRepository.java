@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.repositories;
+package com.springboot.asm.fpoly_asm_springboot.repositories.primary;
 
 
 import com.springboot.asm.fpoly_asm_springboot.entity.Category;
