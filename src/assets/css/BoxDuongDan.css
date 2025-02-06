@@ -1,0 +1,19 @@
+.duongdan {
+  margin-left: 18%;
+  font-size: 13px;
+  font-weight: 100;
+}
+
+.duongdan span {
+  margin-right: 10px; /* Tạo khoảng trống giữa các phần tử */
+}
+
+.boxduongdan {
+  width: 100%;
+  background-color: rgb(238, 236, 236);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border: 0.5px solid rgb(213, 213, 213);
+}

@@ -1,0 +1,83 @@
+
+
+.boxspto{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px auto;
+}
+.boxsp {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+}
+
+.sp {
+    width: 100%;
+   
+    padding: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.sp img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.sale {
+    position: absolute;
+    top: 5px; /* Đặt vị trí cụ thể cho nhãn giảm giá */
+    left: 5px;
+    color: red; /* Màu chữ trắng */
+    padding: 3px 7px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.tensp {
+    display: flex;
+    height: 20px;
+    margin-top: 5px;
+}
+
+.tensp label {
+    margin: 0;
+    font-size: 15px;
+}
+
+.price {
+    font-size: 15px;
+    color: red;
+    margin: 5px 0;
+}
+
+.price del {
+    font-size: 13px;
+    color: gray;
+}
+
+.danhgia {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.danhgia i {
+    color: #ff4d4f;
+    font-size: 10px;
+}
+
+.danhgia label {
+    font-size: 14px;
+    color: gray;
+}

@@ -1,0 +1,47 @@
+.container-default-NA {
+    margin: 0 auto; /* Giữa cho container */
+    max-width: 1200px; /* Chiều rộng tối đa */
+}
+
+h1 {
+    text-align: left; /* Căn trái tiêu đề */
+    margin: 20px 0; /* Khoảng cách trên và dưới */
+}
+
+.filter-container {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 20px; /* Khoảng cách giữa các phần tử */
+    margin-bottom: 20px;
+}
+
+.filter-item-popular {
+    margin-left: auto; /* Đẩy sang bên phải */
+}
+
+.filter-item-gia select,
+.filter-item-size select,
+.filter-item-popular select {
+    font-size: 13px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 8px 12px;
+    background-color: #ffffff;
+    min-width: 150px; /* Chiều rộng tối thiểu */
+}
+
+.filter-item-gia,
+.filter-item-size {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.filter-item-gia label,
+.filter-item-size label {
+    margin-right: 10px; /* Khoảng cách giữa label và select */
+}
+
+.filter-icon {
+    margin-right: 8px;
+}

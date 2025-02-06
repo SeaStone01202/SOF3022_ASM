@@ -1,0 +1,95 @@
+
+footer {
+    background-color: #f5f5f5;
+    padding: 40px 0;
+}
+
+.footer-content {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.newsletter {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.newsletter form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.newsletter input[type="email"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.newsletter button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    width: 100%;
+    gap: 20px;
+}
+
+.footer-sections div {
+    font-size: 20px;
+}
+
+.about-us p,
+.store-info ul,
+.policy ul {
+    font-size: 14px;
+    color: #555;
+}
+
+.policy ul,
+.store-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.policy ul li,
+.store-info ul li {
+    margin-bottom: 5px;
+}
+
+.social .fanpage iframe {
+    width: 100%;
+    height: 200px;
+    border: none;
+}
+.social img{
+    width: 100%;
+    height: auto;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    margin-top: 20px;
+}
+.lienhe p{
+    font-size: 14px;
+    color: #555;
+}
