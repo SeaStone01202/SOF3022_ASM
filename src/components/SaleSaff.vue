@@ -15,7 +15,7 @@
         </div>  
    
         <div class="container-default-NA">
-            <h1>sale off</h1>    
+            <h1>Sale off</h1>    
          
             <div class="filter-container">
                 <div class="filter">
