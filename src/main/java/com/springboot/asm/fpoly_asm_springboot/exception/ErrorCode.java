@@ -11,11 +11,14 @@ public enum ErrorCode {
     PASSWORD_INVALID(1004, "Password is invalid, please input at least 8 characters", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(1005, "User not existed", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED_EXCEPTION(1006, "Unauthenticated error", HttpStatus.UNAUTHORIZED),
-    PRODUCT_NOT_EXISTED(1007, "Product not existed", HttpStatus.NOT_FOUND),
-    PRODUCT_ALREADY_EXISTED(1008, "Product already existed", HttpStatus.CONFLICT),
+    PRODUCT_NOT_EXISTED(2001, "Product not existed", HttpStatus.NOT_FOUND),
+    PRODUCT_ALREADY_EXISTED(2005, "Product already existed", HttpStatus.CONFLICT),
     UNAUTHORIZED(1009, "You don't have permission", HttpStatus.FORBIDDEN),
     INVALID_KEY(9991, "Invalid key", HttpStatus.BAD_REQUEST),
     FIELD_BLANK(1011, "Field first name is blank", HttpStatus.BAD_REQUEST),
+    CATEGORY_EXISTED(3001, "Category already existed", HttpStatus.CONFLICT),
+    CATEGORY_NOT_EXISTED(3005, "Category not existed", HttpStatus.CONFLICT),
+
     ;
 
     private int code;

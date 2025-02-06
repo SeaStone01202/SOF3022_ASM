@@ -1,15 +1,17 @@
 package com.springboot.asm.fpoly_asm_springboot.services;
 
-import com.springboot.asm.fpoly_asm_springboot.entity.Product;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductCreationRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductUpdatedRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductResponse;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product create(Product product);
-    Product findById(int id);
-    List<Product> findAll();
-    Product update(Product product);
-    Boolean delete(int id);
+    ProductResponse create(ProductCreationRequest product);
+    ProductResponse findById(int id);
+    List<ProductResponse> findAll();
+    ProductResponse update(Integer productId, ProductUpdatedRequest product);
+    void delete(int id);
     
 }

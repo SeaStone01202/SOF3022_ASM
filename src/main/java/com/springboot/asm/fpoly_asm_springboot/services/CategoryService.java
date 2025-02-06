@@ -1,14 +1,15 @@
 package com.springboot.asm.fpoly_asm_springboot.services;
 
-import com.springboot.asm.fpoly_asm_springboot.entity.Category;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.CategoryRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
 
 import java.util.List;
 
 public interface CategoryService {
-    Category create(Category category);
-    Category update(Category category);
-    Category delete(Category category);
-    List<Category> findAll();
-    Category findById(int id);
-    List<Category> findByName(String name);
+    CategoryResponse create(CategoryRequest category);
+    CategoryResponse update(Integer categoryId,CategoryRequest category);
+    void delete(Integer categoryId);
+    List<CategoryResponse> findAll();
+    CategoryResponse findById(int id);
+    List<CategoryResponse> findByName(String name);
 }

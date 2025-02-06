@@ -1,49 +1,69 @@
 package com.springboot.asm.fpoly_asm_springboot.services.impl;
 
+import com.springboot.asm.fpoly_asm_springboot.dto.request.CategoryRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.Category;
+import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
+import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
+import com.springboot.asm.fpoly_asm_springboot.mapper.CategoryMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.CategoryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    public CategoryResponse create(CategoryRequest request) {
+        if (categoryRepository.existsByName(request.getName())) {
+            throw new AppException(ErrorCode.CATEGORY_EXISTED);
+        }
+        Category category = categoryMapper.toCategory(request);
+        return categoryMapper.toCategoryResponse(categoryRepository.save(category));
     }
 
     @Override
-    public Category create(Category category) {
-       if(categoryRepository.existsByName(category.getName())) {
-           return null;
-       }
-       return categoryRepository.save(category);
+    @PreAuthorize("hasRole('ADMIN')")
+    public CategoryResponse update(Integer categoryId, CategoryRequest request) {
+
+        Category categoryToUpdate = categoryRepository.findById(categoryId).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
+
+        categoryMapper.updateCategory(categoryToUpdate, request);
+
+        return categoryMapper.toCategoryResponse(categoryRepository.save(categoryToUpdate));
     }
 
     @Override
-    public Category update(Category category) {
-        return null;
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(Integer categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 
     @Override
-    public Category delete(Category category) {
-        return null;
+    public List<CategoryResponse> findAll() {
+
+        var categoryList = categoryRepository.findAll();
+
+        return categoryList.stream().map(categoryMapper::toCategoryResponse).toList();
     }
 
     @Override
-    public List<Category> findAll() {
-        return List.of();
+    public CategoryResponse findById(int id) {
+        return categoryMapper.toCategoryResponse(categoryRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED)));
     }
 
     @Override
-    public Category findById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Category> findByName(String name) {
+    public List<CategoryResponse> findByName(String name) {
         return List.of();
     }
 }

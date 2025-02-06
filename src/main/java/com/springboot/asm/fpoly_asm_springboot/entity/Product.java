@@ -1,11 +1,12 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -29,13 +30,11 @@ public class Product {
 
     private Float price;
 
-    @NotNull
-    @Column(name = "publish_date", nullable = false)
-    private LocalDate publishDate;
+    @Column(name = "publish_date", nullable = true)
+    private Date publishDate;
 
-    @NotNull
-    @Column(name = "last_update_time", nullable = false)
-    private Instant lastUpdateTime;
+    @Column(name = "last_update_time", nullable = true)
+    private Date lastUpdateTime;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

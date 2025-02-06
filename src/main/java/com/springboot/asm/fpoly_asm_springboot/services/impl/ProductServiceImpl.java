@@ -1,13 +1,22 @@
 package com.springboot.asm.fpoly_asm_springboot.services.impl;
 
+import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductCreationRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductUpdatedRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductResponse;
+import com.springboot.asm.fpoly_asm_springboot.entity.Category;
 import com.springboot.asm.fpoly_asm_springboot.entity.Product;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
+import com.springboot.asm.fpoly_asm_springboot.mapper.ProductMapper;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,42 +24,51 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
 
     @Override
-    public Product create(Product product) {
-        if (productRepository.existsById(product.getId())) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ProductResponse create(ProductCreationRequest request) {
+        if (productRepository.existsByName(request.getName())) {
             throw new AppException(ErrorCode.PRODUCT_ALREADY_EXISTED);
         }
-        return productRepository.saveAndFlush(product);
+        Product product = productMapper.toProduct(request);
+        product.setPublishDate(Date.valueOf(LocalDate.now()));
+        product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
+        product.setCategory(getCategoryByName(request.getCategoryName()));
+        return productMapper.toProductResponse(productRepository.save(product));
     }
 
     @Override
-    public Product findById(int id) {
-        return productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
-
+    public ProductResponse findById(int id) {
+        return productMapper.toProductResponse(productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED)));
     }
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
-
+    public List<ProductResponse> findAll() {
+        var products = productRepository.findAll();
+        return products.stream().map(productMapper::toProductResponse).toList();
     }
 
     @Override
-    public Product update(Product product) {
-        if (productRepository.findById(product.getId()).isPresent()) {
-            return null;
-        }
-        return productRepository.saveAndFlush(product);
+    @PreAuthorize("hasRole('ADMIN')")
+    public ProductResponse update(Integer productId, ProductUpdatedRequest request) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
+        product.setCategory(getCategoryByName(request.getCategoryName()));
+        productMapper.updateProduct(product, request);
+        return productMapper.toProductResponse(productRepository.save(product));
     }
 
     @Override
-    public Boolean delete(int id) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (product != null) {
-            return false;
-        }
-        productRepository.delete(product);
-        return true;
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(int id) {
+        productRepository.deleteById(id);
+    }
+
+    Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name).
+                orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
 }
