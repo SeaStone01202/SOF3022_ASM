@@ -7,7 +7,9 @@
       </div>
       <div class="container">
         <div class="container1">
-          <router-link to="/"><div class="swe"><img src="/src/assets/img/logo.webp" alt="" /> </div></router-link>
+          <a href="/">
+            <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
+          </a>
           <div class="seach">
             <input type="search" placeholder="Tìm kiếm sản phẩm..." />
             <button>
@@ -18,19 +20,11 @@
             </button>
           </div>
           <div class="login">
-            <i class="fa-regular fa-user fa-xl" style="padding-top: 12px; margin-right: 10px"></i>
-            <div class="links">
-                <p>
-                <router-link to="/register">Đăng kí</router-link>
-                </p>
-                <p>
-                <router-link to="/login">/ Đăng nhập</router-link>
-                </p>
-            </div>
-            </div>
+            <UserDropMenu></UserDropMenu>
+          </div>
           <div class="cart">
-            <router-link to="/payment"><i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i></router-link>
-           
+            <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
+            <p><a href="detail.html">giỏ hàng</a></p>
           </div>
         </div>
       </div>
@@ -40,6 +34,7 @@
 
 <script setup>
 import Menu from './Menu.vue';
+import UserDropMenu from './UserDropMenu.vue';
 </script>
 
 <style>

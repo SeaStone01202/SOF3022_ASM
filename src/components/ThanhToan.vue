@@ -1,9 +1,6 @@
 <template>
   <div>
-    <header>
       <Header></Header>
-    </header>
-
     <aside>
       <div class="giohang">
         <div class="sanphamgiohang">
@@ -102,10 +99,7 @@
         </div>
       </div>
     </aside>
-
-    <footer>
       <Footer></Footer>
-    </footer>
   </div>
 </template>
 

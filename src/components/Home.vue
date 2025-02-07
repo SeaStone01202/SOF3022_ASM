@@ -2,7 +2,6 @@
   <div>
     <header>
       <Header></Header>
-      <Carousel></Carousel>
     </header>
     <aside>
       <div class="odichvu">
@@ -202,6 +201,6 @@
 import Footer from "./menu-link/Footer.vue";
 import Header from "./menu-link/header.vue";
 import Carousel from "./menu-link/Carousel.vue";
+import UserDropMenu from "./menu-link/UserDropMenu.vue";
 </script>
-
 <style></style>
