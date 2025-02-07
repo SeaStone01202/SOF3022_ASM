@@ -27,8 +27,19 @@
 </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted } from "vue";
+import { Carousel } from "bootstrap";
 
+onMounted(() => {
+  const carouselElement = document.querySelector("#demo");
+  if (carouselElement) {
+    new Carousel(carouselElement, {
+      interval: 2000, // Tự động chạy sau 2 giây
+      ride: "carousel",
+    });
+  }
+});
 </script>
 
 <style>

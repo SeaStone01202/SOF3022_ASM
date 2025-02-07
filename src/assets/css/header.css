@@ -64,7 +64,7 @@ header {
 }
 
 .cart {
-  margin-left: 500px;
+  margin-left: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
