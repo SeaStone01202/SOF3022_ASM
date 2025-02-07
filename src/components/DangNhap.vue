@@ -1,9 +1,6 @@
 <template>
   <div>
-    <header>
-      <header></header>
-    </header>
-
+      <Header></Header>
     <div class="container-default">
       <article>
         <h1>Đăng nhập</h1>
@@ -49,8 +46,7 @@
             <button type="submit" class="submit-btn">ĐĂNG NHẬP</button>
 
             <!-- Link quay lại -->
-            <a
-              href="quenmatkhau.html"
+            <router-link to="/forgot-password"><a
               class="back-link"
               style="
                 font-size: 14px;
@@ -62,7 +58,7 @@
               >Quên mật khẩu?</a
             ><strong style="font-size: 12px; font-weight: 100; color: #939090">
               hoặc
-            </strong>
+            </strong></router-link>
             <a
               href="dangky.html"
               style="
@@ -73,10 +69,9 @@
               "
               >đăng ký</a
             >
-            <a href="index.html" class="back-link"
+            <router-link to="/"><a class="back-link"
               ><strong style="font-size: 14px; margin-right: 10px">← </strong
-              >Quay lại trang chủ</a
-            >
+              >Quay lại trang chủ</a> </router-link>
           </form>
         </div>
       </aside>
@@ -88,8 +83,8 @@
 </template>
 
 <script setup>
-import Menu from "./menu-link/Menu.vue";
-import UserDropMenu from "./menu-link/UserDropMenu.vue";
+import Footer from "./menu-link/Footer.vue";
+import Header from "./menu-link/Header.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axiosInstance from "../axios/asios";

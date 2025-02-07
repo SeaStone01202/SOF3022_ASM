@@ -1,37 +1,6 @@
 <template>
   <div>
-    <header>
-      <div class="dongdau">
-        <p>
-          Miễn phí vận chuyển với đơn hàng trên 500K. Hàng pre-order còn được
-          giảm thêm 5%.
-        </p>
-      </div>
-      <div class="container">
-        <div class="container1">
-          <a href="/">
-            <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
-          </a>
-          <div class="seach">
-            <input type="search" placeholder="Tìm kiếm sản phẩm..." />
-            <button>
-              <i
-                class="fa-solid fa-magnifying-glass"
-                style="color: #ffffff"
-              ></i>
-            </button>
-          </div>
-          <div class="login">
-            <UserDropMenu></UserDropMenu>
-          </div>
-          <div class="cart">
-            <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
-            <p><a href="detail.html">giỏ hàng</a></p>
-          </div>
-        </div>
-      </div>
-      <Menu></Menu>
-    </header>
+    <Header></Header>
 
     <div class="container-default-DK">
       <article>
@@ -118,9 +87,9 @@
             <button type="submit" class="submit-btn">ĐĂNG KÝ</button>
 
             <!-- Link quay lại -->
-            <a href="/" class="back-link"
+            <router-link to="/"><a class="back-link"
               ><strong style="font-size: 14px; margin-right: 10px">← </strong
-              >Quay lại trang chủ</a
+              >Quay lại trang chủ</a> </router-link>
             >
           </form>
         </div>
@@ -133,11 +102,12 @@
 </template>
 
 <script setup>
+import Footer from "./menu-link/Footer.vue";
+import Header from "./menu-link/Header.vue";
 import { useUserStore } from "../stores/userStore";
 import { ref } from "vue";
 import { useRouter } from "vue-router"; // Thêm import này
-import Menu from "./menu-link/Menu.vue";
-import UserDropMenu from "./menu-link/UserDropMenu.vue";
+
 
 const router = useRouter(); // Khai báo router
 const userStore = useUserStore();

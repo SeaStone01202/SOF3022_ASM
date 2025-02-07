@@ -8,7 +8,7 @@
       <div class="container">
         <div class="container1">
           <a href="/">
-            <div class="swe"><img src="../assets/img/logo.webp" alt="" /></div>
+            <div class="swe"><img src="/src/assets/img/logo.webp" alt="" /></div>
           </a>
           <div class="seach">
             <input type="search" placeholder="Tìm kiếm sản phẩm..." />
@@ -23,8 +23,7 @@
             <UserDropMenu></UserDropMenu>
           </div>
           <div class="cart">
-            <i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i>
-            <p><a href="detail.html">giỏ hàng</a></p>
+          <router-link to="/payment"><i class="fa-solid fa-bag-shopping fa-xl" style="padding: 10px"></i></router-link>
           </div>
         </div>
       </div>

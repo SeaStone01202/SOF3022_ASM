@@ -72,7 +72,7 @@
 
 <script setup>
 import Footer from "./menu-link/Footer.vue"
-import Header from "./menu-link/header.vue";
+import Header from "./menu-link/Header.vue";
 </script>
 
 <style>

@@ -1,8 +1,5 @@
 <template>
-    <header>
         <Header></Header>
-    </header>
-
     <section>
         <div class="boxduongdan">
             <div class="duongdan">
@@ -71,8 +68,8 @@
 </template>
 
 <script setup>
+import Header from "./menu-link/Header.vue";
 import Footer from "./menu-link/Footer.vue"
-import Header from "./menu-link/header.vue";
 </script>
 
 <style>

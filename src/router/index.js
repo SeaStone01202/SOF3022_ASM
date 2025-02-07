@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../components/Login.vue"),
+      component: () => import("../components/DangNhap.vue"),
     },
     {
       path: "/register",
@@ -21,7 +21,7 @@ const router = createRouter({
     {
       path: "/forgot-password",
       name: "forgotpassword",
-      component: () => import("../components/Passworld.vue"),
+      component: () => import("../components/QuenMatKhau.vue"),
     },
     {
       path: "/payment",

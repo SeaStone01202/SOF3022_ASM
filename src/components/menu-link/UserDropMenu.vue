@@ -61,6 +61,7 @@ onMounted(() => {
   padding: 10px;
   border-radius: 8px;
   transition: background 0.3s ease;
+  
 }
 
 .user-icon:hover {

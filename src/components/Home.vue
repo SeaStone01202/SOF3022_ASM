@@ -1,8 +1,7 @@
 <template>
   <div>
-    <header>
       <Header></Header>
-    </header>
+      <Carousel></Carousel>
     <aside>
       <div class="odichvu">
         <div class="dichvu">
@@ -199,8 +198,8 @@
 
 <script setup>
 import Footer from "./menu-link/Footer.vue";
-import Header from "./menu-link/header.vue";
+import Header from "./menu-link/Header.vue";
 import Carousel from "./menu-link/Carousel.vue";
-import UserDropMenu from "./menu-link/UserDropMenu.vue";
+
 </script>
 <style></style>
