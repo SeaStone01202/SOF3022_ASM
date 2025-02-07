@@ -37,6 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
+
                         anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(
@@ -45,6 +46,7 @@ public class SecurityConfig {
                         authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
+        httpSecurity.cors(corsFilter -> corsFilter.configure(httpSecurity));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();
