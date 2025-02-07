@@ -1,0 +1,140 @@
+.boxduongdan {
+  width: 100%;
+  background-color: rgb(241, 236, 236);
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1 solid #555;
+}
+.container-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin: 50px auto;
+}
+.duongdan {
+  width: 60%;
+  font-size: 14px;
+  color: #555;
+}
+aside {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+.giohang {
+  width: 60%;
+  display: flex;
+  height: auto;
+  margin: 0 auto;
+}
+.sanphamgiohang {
+  width: 65%;
+  height: auto;
+  padding: 10px;
+}
+.thanhtoan {
+  width: 35%;
+  margin: 10px;
+  text-align: center;
+}
+.khunggiohang {
+  width: 100%;
+  display: flex;
+  height: auto;
+  margin-top: 15px;
+}
+.hinh {
+  width: 20%;
+}
+.hinh img {
+  width: 100%;
+}
+.tenvagia {
+  width: 60%;
+}
+.tenvagia label {
+  font-size: 16px;
+}
+.quantity-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 65px; /* Điều chỉnh theo kích thước mong muốn */
+  margin-top: 7px;
+}
+
+.quantity-btn {
+  width: 20px;
+  height: 20px;
+  background-color: #f8f8f8;
+  border: none;
+  font-size: 23px;
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+}
+
+.quantity-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.quantity-input {
+  width: 20px;
+  text-align: center;
+  border: none;
+  font-size: 21px;
+  background-color: #ffffff;
+  color: #333;
+}
+.xoagiohang {
+  width: 20%;
+  text-align: right;
+  font-size: 15px;
+}
+.boxthanhtoan {
+  width: 100%;
+  border: 1px solid rgb(243, 240, 240);
+  border-radius: 2px;
+  display: flex;
+  height: 125px;
+  align-items: center;
+  justify-content: center;
+}
+.thanhtoannho {
+  width: 90%;
+}
+.thanhtoannho label {
+  font-size: 18px;
+}
+.tongtien {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.thanhtoannho button {
+  width: 100%;
+  height: 30px;
+  background-color: red;
+  color: whitesmoke;
+  border: none;
+}
+.thanhtoannho hr {
+  border: 1px dotted black;
+}
+.ghichu {
+  width: 100%;
+  background-color: #f7f2f2;
+  height: auto;
+  padding: 10px;
+}
+.ghichu input {
+  width: 98%;
+  height: 90px;
+  border: none;
+  margin-top: 10px;
+}

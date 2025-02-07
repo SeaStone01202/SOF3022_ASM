@@ -1,0 +1,117 @@
+body{
+    margin: 0 auto;
+    font-family: "Poppins", Arial, sans-serif;
+}
+article{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.boxduongdan{
+    width: 100%;
+    background-color: rgb(241, 236, 236);
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1 solid #555;
+}
+.duongdan{
+    width: 60%;
+    font-size: 14px;
+}
+.sanphamchitiet{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+.boxanh{
+    width: 60%;
+    display: flex;
+    height: auto;
+}
+.anhsanpham{
+    width: 10%;
+    padding: 5px;
+}
+.anhsanpham img{
+    width: 100%;
+    padding: 3px;
+}
+.anhspto{
+    width: 90%;
+    padding: 5px;
+}
+.anhspto img{
+    width: 100%;
+}
+.boxmota{
+    width: 40%;
+    padding: 5px;
+}
+.price{
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    padding: 5px;
+}
+.giamgia{
+    background-color: rgb(241, 236, 236);
+    color: #ff4d4f;
+    padding: 5px 8px;
+    font-size: 17px;
+    width: 25px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.sizes{
+    padding: 5px;
+    display: flex;
+}
+.sizes span {
+    padding: 5px 10px;
+    margin: 5px;
+    border: 1px solid #000;
+    font-size: 17px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+.soluong{
+    padding: 5px;
+}
+.soluong input{
+    width: 50px;
+    margin: 0;
+    text-align: center;
+}
+.themvaogiohang button{
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(162, 4, 4);
+    height: 50px;
+    color: rgb(201, 197, 197);
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+}
+.thongso{
+    padding: 5px;
+}
+.thongso label{
+    color: #555;
+    font-size: 14px;
+}
+.anhthongso{
+    width: 100%;
+}
+.anhthongso img{
+    width: 100%;
+}
