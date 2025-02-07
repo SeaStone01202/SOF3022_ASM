@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.Instant;
 
 @Getter
@@ -44,6 +45,6 @@ public class Review {
 
     @NotNull
     @Column(name = "review_time", nullable = false)
-    private Instant reviewTime;
+    private Date reviewTime;
 
 }

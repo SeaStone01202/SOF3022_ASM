@@ -29,7 +29,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect"};
-
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products/**", "/products/**/*"};
     @Value("${jwt.signerKey}")
     private String signerKey;
 
@@ -37,7 +37,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
-
+                        requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
                         anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(

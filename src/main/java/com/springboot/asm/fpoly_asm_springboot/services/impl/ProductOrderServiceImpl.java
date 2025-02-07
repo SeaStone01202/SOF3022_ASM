@@ -15,6 +15,7 @@ import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -24,7 +25,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductOrderServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
