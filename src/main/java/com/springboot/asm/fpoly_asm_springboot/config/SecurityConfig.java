@@ -29,7 +29,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products/**", "/products/**/*"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products/**", "/products/**/*","/categories/**","/categories/**/*"};
     @Value("${jwt.signerKey}")
     private String signerKey;
 
