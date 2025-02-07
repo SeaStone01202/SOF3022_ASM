@@ -29,7 +29,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products/**", "/products/**/*","/categories/**","/categories/**/*"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*"};
+
     @Value("${jwt.signerKey}")
     private String signerKey;
 
@@ -42,18 +43,17 @@ public class SecurityConfig {
 
         httpSecurity.oauth2ResourceServer(
                 oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()).
-                        jwtAuthenticationConverter(jwtAuthenticationConverter())).
+                                jwtAuthenticationConverter(jwtAuthenticationConverter())).
                         authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
-        httpSecurity.cors(corsFilter -> corsFilter.configure(httpSecurity));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();
     }
 
     @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter (){
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
@@ -71,7 +71,7 @@ public class SecurityConfig {
 
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-        
+
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 

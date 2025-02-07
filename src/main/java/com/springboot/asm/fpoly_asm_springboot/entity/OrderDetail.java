@@ -18,12 +18,12 @@ public class OrderDetail {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private ProductOrder order;
+    private com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder order;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    private com.springboot.asm.fpoly_asm_springboot.entity.Product product;
 
     private Integer quantity;
 
