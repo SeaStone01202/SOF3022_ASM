@@ -47,7 +47,7 @@
                 id="ho"
                 name="ho"
                 placeholder="Họ"
-                v-model="user.firstName"
+                v-model="user.lastName"
               />
             </div>
             <div class="form-group">
@@ -56,28 +56,18 @@
                 id="ten"
                 name="ten"
                 placeholder="Tên"
-                v-model="user.lastName"
+                v-model="user.firstName"
               />
             </div>
-            <!-- <div class="form-group">
+            <div class="form-group">
               <label
-                ><input
-                  type="radio"
-                  name="gender"
-                  value="nu"
-                  v-model="user.gender"
-                />
+                ><input type="radio" name="gender" v-model="user.gender" />
                 Nữ
-                <input
-                  type="radio"
-                  name="gender"
-                  value="nam"
-                  v-model="user.gender"
-                />
+                <input type="radio" name="gender" v-model="user.gender" />
                 Nam</label
               >
               <label></label>
-            </div> -->
+            </div>
             <div class="form-group">
               <input type="date" id="dob" name="dob" v-model="user.birthday" />
             </div>
@@ -202,6 +192,7 @@ const userStore = useUserStore();
 const user = ref({
   email: "",
   password: "",
+  gender: true,
   confirmPassword: "", // Thêm trường xác nhận mật khẩu
   firstName: "",
   lastName: "",
@@ -214,7 +205,8 @@ const handleRegister = async () => {
     !user.value.password ||
     !user.value.firstName ||
     !user.value.lastName ||
-    !user.value.birthday
+    !user.value.birthday ||
+    !user.value.gender
   ) {
     alert("Vui lòng nhập đầy đủ thông tin!");
     return;
@@ -228,8 +220,9 @@ const handleRegister = async () => {
       firstName: user.value.firstName,
       lastName: user.value.lastName,
       birthday: new Date(user.value.birthday).toISOString().split("T")[0],
+      gender: user.value.gender,
     });
-    
+
     if (success) {
       alert("Đăng ký và đăng nhập thành công");
       router.push("/"); // Chuyển hướng về trang chủ
