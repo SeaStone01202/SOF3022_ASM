@@ -18,7 +18,10 @@ public enum ErrorCode {
     FIELD_BLANK(1011, "Field first name is blank", HttpStatus.BAD_REQUEST),
     CATEGORY_EXISTED(3001, "Category already existed", HttpStatus.CONFLICT),
     CATEGORY_NOT_EXISTED(3005, "Category not existed", HttpStatus.CONFLICT),
-
+    INVALID_PARAMETER(6001, "Invalid Parameter", HttpStatus.BAD_REQUEST),
+    RESPONSE_NOT_FOUND(6002, "Not Found Payment Response", HttpStatus.NOT_FOUND),
+    INVALID_REQUEST_BODY(6007, "Invalid Request Body", HttpStatus.BAD_REQUEST),
+    CREATE_PAYMENT_FAILED(6008, "Create payment failed",HttpStatus.INTERNAL_SERVER_ERROR),;
     ;
 
     private int code;

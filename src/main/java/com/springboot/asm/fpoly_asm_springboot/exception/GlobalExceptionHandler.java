@@ -1,12 +1,17 @@
 package com.springboot.asm.fpoly_asm_springboot.exception;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.nio.file.AccessDeniedException;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -56,6 +61,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(errorCode.getHttpStatus()).body(ApiResponse.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
+                .build());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public final ResponseEntity<ApiResponse> handleConstraintViolationException(ConstraintViolationException ex) {
+        Map<String, Object> details = ex.getConstraintViolations().stream()
+                .collect(Collectors.toMap(violation ->
+                        violation.getPropertyPath().toString(), ConstraintViolation::getMessage));
+        ErrorCode errorCode = ErrorCode.INVALID_PARAMETER;
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(ApiResponse.builder()
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage()).
+                result(details)
                 .build());
     }
 }
