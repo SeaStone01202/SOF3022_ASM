@@ -10,13 +10,16 @@ import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.ProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.secondary.Product2Repository;
 import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
+    private final Product2Repository product2Repository;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -67,8 +71,21 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional
+    public List<ProductResponse> findAlls() {
+        List<Product> products = productRepository.findAll();
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : products) {
+            productResponses.add(productMapper.toProductResponse(product));
+        }
+        return productResponses;
+    }
+
     Category getCategoryByName(String name) {
         return categoryRepository.findByName(name).
                 orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
+
+
 }
