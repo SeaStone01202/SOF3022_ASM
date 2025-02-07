@@ -107,6 +107,7 @@ CREATE TABLE product_order (
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 CREATE TABLE order_detail (
+  id INT(11) primary key auto_increment,
   order_id INT(11) NOT NULL,
   product_id INT(11) NOT NULL,
   quantity INT(11) NOT NULL,

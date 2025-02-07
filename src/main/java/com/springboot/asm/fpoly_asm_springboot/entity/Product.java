@@ -1,46 +1,44 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product {
-
     @Id
+    @Column(name = "product_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Integer productId;
+    private Integer id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String author;
 
     private String description;
 
     private String image;
 
-    @Column(nullable = false)
     private Float price;
 
-    @Column(name = "publish_date", nullable = false)
-    private LocalDate publishDate;
+    @Column(name = "publish_date", nullable = true)
+    private Date publishDate;
 
-    @Column(name = "last_update_time", nullable = false)
-    private LocalDate lastUpdateTime;
+    @Column(name = "last_update_time", nullable = true)
+    private Date lastUpdateTime;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
 }

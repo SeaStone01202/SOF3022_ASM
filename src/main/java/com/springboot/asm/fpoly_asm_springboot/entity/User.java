@@ -1,34 +1,31 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Entity
+@Table(name = "users", schema = "storedb", uniqueConstraints = {
+        @UniqueConstraint(name = "email_UNIQUE", columnNames = {"email"})
+})
 public class User {
-
     @Id
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer userId;
+    private Integer id;
 
-    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(name = "full_name", nullable = false)
     private String fullName;
 
     private LocalDate birthday;
@@ -39,16 +36,4 @@ public class User {
 
     private Boolean role;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", birthday=" + birthday +
-                ", phone='" + phone + '\'' +
-                ", gender=" + gender +
-                ", role=" + role +
-                '}';
-    }
 }

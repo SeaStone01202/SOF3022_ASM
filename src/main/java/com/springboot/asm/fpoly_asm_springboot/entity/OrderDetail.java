@@ -1,27 +1,32 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "order_detail")
-@IdClass(OrderDetailKey.class)
+@Table(name = "order_detail", schema = "storedb")
 public class OrderDetail {
-
     @Id
-    @ManyToOne
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private ProductOrder order;
+    private com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder order;
 
-    @Id
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    private com.springboot.asm.fpoly_asm_springboot.entity.Product product;
 
-    @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
     private Float subtotal;
+
 }
