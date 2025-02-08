@@ -12,10 +12,12 @@ import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepo
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.secondary.Product2Repository;
 import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
+import com.springboot.asm.fpoly_asm_springboot.services.UploadImageFileService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -30,23 +32,31 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
     private final Product2Repository product2Repository;
+    private final UploadImageFileService uploadImageFileService;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse create(ProductCreationRequest request) {
+
         if (productRepository.existsByName(request.getName())) {
             throw new AppException(ErrorCode.PRODUCT_ALREADY_EXISTED);
         }
+
         Product product = productMapper.toProduct(request);
+
         product.setPublishDate(Date.valueOf(LocalDate.now()));
+
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
+
         product.setCategory(getCategoryByName(request.getCategoryName()));
+
         return productMapper.toProductResponse(productRepository.save(product));
     }
 
     @Override
     public ProductResponse findById(int id) {
-        return productMapper.toProductResponse(productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED)));
+        return productMapper.toProductResponse(productRepository.findById(id).
+                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED)));
     }
 
     @Override
@@ -58,10 +68,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse update(Integer productId, ProductUpdatedRequest request) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
+        Product product = productRepository.findById(productId).
+                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
+
         product.setCategory(getCategoryByName(request.getCategoryName()));
+
         productMapper.updateProduct(product, request);
+
         return productMapper.toProductResponse(productRepository.save(product));
     }
 
@@ -74,12 +90,33 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductResponse> findAlls() {
+
         List<Product> products = productRepository.findAll();
+
         List<ProductResponse> productResponses = new ArrayList<>();
+
         for (Product product : products) {
+
             productResponses.add(productMapper.toProductResponse(product));
+
         }
+
         return productResponses;
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    public void uploadImage(Integer productId, MultipartFile imageFile) {
+
+        Product product = product2Repository.findById(productId).
+                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
+        product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
+
+        product.setImage(convertImageToStringUrl(imageFile));
+
+        productRepository.save(product);
+
     }
 
     Category getCategoryByName(String name) {
@@ -87,5 +124,8 @@ public class ProductServiceImpl implements ProductService {
                 orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
 
+    private String convertImageToStringUrl(MultipartFile file) {
+        return uploadImageFileService.uploadImageFile(file);
+    }
 
 }

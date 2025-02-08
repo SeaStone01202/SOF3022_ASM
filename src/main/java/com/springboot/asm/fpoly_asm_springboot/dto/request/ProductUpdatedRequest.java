@@ -2,6 +2,7 @@ package com.springboot.asm.fpoly_asm_springboot.dto.request;
 
 import com.springboot.asm.fpoly_asm_springboot.entity.Category;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -15,8 +16,6 @@ public class ProductUpdatedRequest {
     private String author;
 
     private String description;
-
-    private String image;
 
     private Float price;
 

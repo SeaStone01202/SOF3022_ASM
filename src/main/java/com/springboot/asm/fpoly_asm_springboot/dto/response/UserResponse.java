@@ -15,12 +15,22 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
     Integer id;
+
     String email;
+
     String fullName;
+
     String firstName;
+
     String lastName;
+
     String phone;
+
     String gender;
+
     LocalDate birthday;
+
     Boolean role;
+
+    String avatar;
 }
