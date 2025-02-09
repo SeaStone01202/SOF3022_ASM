@@ -24,7 +24,13 @@ public enum ErrorCode {
     CREATE_PAYMENT_FAILED(6008, "Create payment failed",HttpStatus.INTERNAL_SERVER_ERROR),
     CART_ITEM_ALREADY_EXISTS(4001, "Cart item already exists", HttpStatus.CONFLICT),
     CART_ITEM_NOT_FOUND(4002, "Cart item not found", HttpStatus.NOT_FOUND),
-    INVALID_CART_ITEM(4003, "Invalid cart item", HttpStatus.BAD_REQUEST)
+    INVALID_CART_ITEM(4003, "Invalid cart item", HttpStatus.BAD_REQUEST),
+    ORDER_NOT_FOUND(5001, "Order not existed", HttpStatus.NOT_FOUND),
+    ORDER_ALREADY_EXISTED(5005, "Order already existed", HttpStatus.CONFLICT),
+    ORDER_NOT_SPENDING(5010, "Only pending orders can be confirmed. ", HttpStatus.CONFLICT),
+    ORDER_NOT_PROCESSING(5020, "Only processing orders can be shipped. ", HttpStatus.CONFLICT),
+    ORDER_NOT_SHIPPING(5030, "Only shipping orders can be completed.", HttpStatus.CONFLICT),
+    ORDER_NOT_CANCEL(5040, "Cannot cancel a completed order.", HttpStatus.CONFLICT),
     ;
 
 
