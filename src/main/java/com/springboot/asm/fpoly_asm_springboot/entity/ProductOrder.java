@@ -13,8 +13,10 @@ import java.sql.Date;
 @Entity
 @Table
 public class ProductOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Integer id;
 
     @NotNull
