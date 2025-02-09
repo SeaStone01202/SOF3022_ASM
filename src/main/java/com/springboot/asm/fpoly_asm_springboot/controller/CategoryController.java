@@ -3,7 +3,7 @@ package com.springboot.asm.fpoly_asm_springboot.controller;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.CategoryRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
-import com.springboot.asm.fpoly_asm_springboot.services.CategoryService;
+import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

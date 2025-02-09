@@ -1,8 +1,8 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.springboot.asm.fpoly_asm_springboot.services.UploadImageFileService;
+import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

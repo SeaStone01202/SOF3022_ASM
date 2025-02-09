@@ -1,8 +1,8 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.config.payment.VNPAYConfig;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PaymentResponse;
-import com.springboot.asm.fpoly_asm_springboot.services.PaymentService;
+import com.springboot.asm.fpoly_asm_springboot.service.PaymentService;
 import com.springboot.asm.fpoly_asm_springboot.util.VNPayUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

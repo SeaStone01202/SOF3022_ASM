@@ -21,8 +21,12 @@ public enum ErrorCode {
     INVALID_PARAMETER(6001, "Invalid Parameter", HttpStatus.BAD_REQUEST),
     RESPONSE_NOT_FOUND(6002, "Not Found Payment Response", HttpStatus.NOT_FOUND),
     INVALID_REQUEST_BODY(6007, "Invalid Request Body", HttpStatus.BAD_REQUEST),
-    CREATE_PAYMENT_FAILED(6008, "Create payment failed",HttpStatus.INTERNAL_SERVER_ERROR),;
+    CREATE_PAYMENT_FAILED(6008, "Create payment failed",HttpStatus.INTERNAL_SERVER_ERROR),
+    CART_ITEM_ALREADY_EXISTS(4001, "Cart item already exists", HttpStatus.CONFLICT),
+    CART_ITEM_NOT_FOUND(4002, "Cart item not found", HttpStatus.NOT_FOUND),
+    INVALID_CART_ITEM(4003, "Invalid cart item", HttpStatus.BAD_REQUEST)
     ;
+
 
     private int code;
     private String message;

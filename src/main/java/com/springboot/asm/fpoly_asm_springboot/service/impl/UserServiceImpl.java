@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.UserCreationRequest;
@@ -9,13 +9,12 @@ import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
-import com.springboot.asm.fpoly_asm_springboot.services.UploadImageFileService;
-import com.springboot.asm.fpoly_asm_springboot.services.UserService;
+import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
+import com.springboot.asm.fpoly_asm_springboot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -85,6 +84,8 @@ public class UserServiceImpl implements UserService {
 
         User userUpdating = userRepository.findById(userId).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        userUpdating.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userMapper.updateUser(userUpdating, request);
 

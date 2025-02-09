@@ -1,4 +1,4 @@
-package com.m2m.config;
+package com.springboot.asm.fpoly_asm_springboot.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

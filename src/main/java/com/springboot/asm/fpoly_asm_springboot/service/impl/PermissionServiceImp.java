@@ -1,11 +1,11 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.PermissionRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PermissionResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.Permission;
 import com.springboot.asm.fpoly_asm_springboot.mapper.PermissionMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.PermissionRepository;
-import com.springboot.asm.fpoly_asm_springboot.services.PermissionService;
+import com.springboot.asm.fpoly_asm_springboot.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

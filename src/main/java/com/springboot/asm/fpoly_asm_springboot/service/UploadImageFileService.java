@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services;
+package com.springboot.asm.fpoly_asm_springboot.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

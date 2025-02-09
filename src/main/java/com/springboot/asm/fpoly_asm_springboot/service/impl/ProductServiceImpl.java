@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductCreationRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductUpdatedRequest;
@@ -11,8 +11,8 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.ProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.secondary.Product2Repository;
-import com.springboot.asm.fpoly_asm_springboot.services.ProductService;
-import com.springboot.asm.fpoly_asm_springboot.services.UploadImageFileService;
+import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
+import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

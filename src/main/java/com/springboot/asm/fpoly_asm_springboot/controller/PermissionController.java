@@ -3,7 +3,7 @@ package com.springboot.asm.fpoly_asm_springboot.controller;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.PermissionRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PermissionResponse;
-import com.springboot.asm.fpoly_asm_springboot.services.PermissionService;
+import com.springboot.asm.fpoly_asm_springboot.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

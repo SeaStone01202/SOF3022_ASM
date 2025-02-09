@@ -1,6 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.config;
 
-import com.springboot.asm.fpoly_asm_springboot.constant.Role;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,13 +27,14 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-
-    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*"};
 
     @Value("${jwt.signerKey}")
     private String signerKey;
+
+    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -63,6 +65,12 @@ public class SecurityConfig {
     }
 
     @Bean
+    JwtDecoder jwtDecoder() {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
+        return NimbusJwtDecoder.withSecretKey(secretKeySpec).
+                macAlgorithm(MacAlgorithm.HS512).build();
+    }
+    @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
@@ -73,13 +81,6 @@ public class SecurityConfig {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
         return new CorsFilter(urlBasedCorsConfigurationSource);
-    }
-
-    @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).
-                macAlgorithm(MacAlgorithm.HS512).build();
     }
 
     @Bean

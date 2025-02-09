@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services.impl;
+package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.CategoryRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
@@ -7,7 +7,7 @@ import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.CategoryMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
-import com.springboot.asm.fpoly_asm_springboot.services.CategoryService;
+import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

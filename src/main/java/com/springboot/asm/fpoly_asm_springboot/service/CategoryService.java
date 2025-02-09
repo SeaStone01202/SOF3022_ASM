@@ -1,4 +1,4 @@
-package com.springboot.asm.fpoly_asm_springboot.services;
+package com.springboot.asm.fpoly_asm_springboot.service;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.CategoryRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
