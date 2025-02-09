@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
 import axiosInstance from "../axios/asios";
-export const useProductStore = defineStore("products", {
+export const useCategoryStore = defineStore("categories", {
   state: () => ({
-    products: [],
+    categories: [],
     loading: false,
     error: null,
   }),
   actions: {
     // Hàm lấy danh sách product
-    async fetchProduct() {
+    async fetchCategory() {
       this.loading = true;
       this.error = null;
       try {
-        const response = await axiosInstance.get("/store/products");
-        this.products = response.data.result;
+        const response = await axiosInstance.get("/store/categories");
+        this.categories = response.data.result;
       } catch (error) {
         this.error = "Không thể tải danh sách sản phẩm ";
       } finally {

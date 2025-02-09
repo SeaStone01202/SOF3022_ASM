@@ -7,82 +7,49 @@
       <div
         class="boxsp"
         id="spmoinhat"
-        v-if="!productStore.loading && productStore.error"
+        v-if="!productStore.loading && !productStore.error"
       >
-        <div class="sp">
-          <div class="sale">23%</div>
-          <img src="../../assets//img/sp1.webp" alt="" />
-          <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-          <div class="price">221,000₫ <del> 286,000₫</del></div>
-          <div class="danhgia">
-            <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-            <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
+        <div
+          class="sp"
+          v-for="product in productStore.products"
+          :key="product.id"
+        >
+          <div class="sale">{{ product.discount }}%</div>
+          <img :src="product.image" :alt="product.name" />
+          <div class="tensp">
+            <label>{{ product.name }}</label>
           </div>
-        </div>
-      </div>
-    </div>
-    <p>BEST SELING-ITEMS</p>
-    <div class="boxspto">
-      <div class="boxsp" id="spmoinhat">
-        <div class="sp">
-          <div class="sale">23%</div>
-          <img src="../../assets/img/sp10.webp" alt="" />
-          <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-          <div class="price">221,000₫ <del> 286,000₫</del></div>
-          <div class="danhgia">
-            <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-            ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-            <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
+          <div class="price">
+            {{ product.salePrice }}₫ <del> {{ product.originalPrice }}₫</del>
           </div>
-        </div>
-      </div>
-    </div>
-    <p>FEEDBACK</p>
-    <div class="ochuafb">
-      <div class="feedback-section">
-        <div class="khungfb1">
-          <img src="../../assets//img/fb1.jpg" alt="" />
-          <img src="../assets/img/fb2.webp" alt="" />
-        </div>
-        <div class="khungfb2">
-          <img
-            src="../assets/img/fb3.webp"
-            alt=""
-            style="width: 100%; padding: 5px"
-          />
-          <div class="boxbefb">
-            <img
-              src="../assets/img/fb4.jpg"
-              alt=""
-              style="width: 50%; padding: 5px"
-            />
-            <img
-              src="../assets/img/fb5.webp"
-              alt=""
-              style="width: 50%; padding: 5px"
-            />
+          <div class="danhgia">
+            <i
+              v-for="star in 5"
+              :key="star"
+              class="fa-solid fa-star fa-2xs"
+              :style="{ color: star <= product.rating ? '#ff4d4f' : '#ccc' }"
+            ></i>
+            <label for="" style="font-size: 9px">
+              ({{ product.reviews }} lượt đánh giá)
+            </label>
           </div>
         </div>
       </div>
     </div>
   </article>
 </template>
+
 <script setup>
 import { onMounted } from "vue";
 import { useProductStore } from "../../stores/productStore";
+
 const productStore = useProductStore();
 
 onMounted(() => {
   productStore.fetchProduct();
 });
 </script>
+
 <style>
 .error {
   color: red;
