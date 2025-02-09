@@ -1,0 +1,29 @@
+.login {
+    margin-left: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Sắp xếp theo chiều ngang */
+    white-space: nowrap; /* Giữ cho chữ không xuống hàng */
+  }
+  
+  .links {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row; /* Sắp xếp theo chiều ngang */
+  }
+  
+
+  .login i {
+    color: #00000098;
+    height: 15px;
+  }
+  
+  .login p {
+    font-size: 16px;
+  }
+  
+  .login p a {
+    text-decoration: none;
+    color: #00000060;
+    
+  }
