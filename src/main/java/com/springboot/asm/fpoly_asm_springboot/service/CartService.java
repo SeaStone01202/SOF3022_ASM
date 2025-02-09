@@ -17,9 +17,9 @@ public interface CartService {
 
     List<CartItemResponse> getCartItems(String email);
 
-    int getTotalQuantity();
+    int getTotalQuantity(Integer userId);
 
-    double getTotalAmount();
+    double getTotalAmount(Integer userId);
 
     void saveCartOnLogout(String email);
 

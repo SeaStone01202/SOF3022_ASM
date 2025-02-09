@@ -47,13 +47,13 @@ public class CartController {
                 build();
     }
 
-    @GetMapping("/total-quantity")
-    public Integer getTotalQuantity() {
-        return cartService.getTotalQuantity();
+    @GetMapping("/{userId}/total-quantity")
+    public Integer getTotalQuantity(@PathVariable Integer userId) {
+        return cartService.getTotalQuantity(userId);
     }
 
-    @GetMapping("/total-amount")
-    public Double getTotalAmount() {
-        return cartService.getTotalAmount();
+    @GetMapping("/{userId}/total-amount")
+    public Double getTotalAmount(@PathVariable Integer userId) {
+        return cartService.getTotalAmount(userId);
     }
 }

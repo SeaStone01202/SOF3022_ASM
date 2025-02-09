@@ -127,14 +127,18 @@ public class CartItemServiceImpl implements CartService {
     }
 
     @Override
-    public int getTotalQuantity() {
-        return cartCached.values().stream().mapToInt(CartItem::getQuantity).sum();
+    public int getTotalQuantity(Integer userId) {
+        return cartCached.values().stream()
+                .filter(u -> u.getUser().getId().equals(userId))
+                .mapToInt(CartItem::getQuantity)
+                .sum();
     }
 
     @Override
-    public double getTotalAmount() {
-        return cartCached.values().stream().
-                mapToDouble(item -> item.getPrice() * item.getQuantity()).
+    public double getTotalAmount(Integer userId) {
+        return cartCached.values().stream()
+                .filter(u -> u.getUser().getId().equals(userId))
+                .mapToDouble(item -> item.getPrice() * item.getQuantity()).
                 sum();
     }
 
