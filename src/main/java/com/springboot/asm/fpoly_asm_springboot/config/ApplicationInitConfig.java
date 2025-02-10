@@ -1,0 +1,40 @@
+package com.springboot.asm.fpoly_asm_springboot.config;
+
+import com.springboot.asm.fpoly_asm_springboot.constant.Role;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@Slf4j
+@Configuration
+@RequiredArgsConstructor
+public class ApplicationInitConfig {
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Bean
+    ApplicationRunner applicationRunner(UserRepository userRepository) {
+        log.info("Initializing application.....");
+        return args -> {
+            if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
+                User user = User.builder().
+                        email("admin@gmail.com").
+                        password(passwordEncoder.encode("admin")).
+                        role(Role.ADMIN).
+                        build();
+                userRepository.save(user);
+                log.warn("Admin user added with default password: admin. Please change!");
+            }
+            log.info("Application initialization completed .....");
+        };
+    }
+}
