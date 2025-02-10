@@ -2,8 +2,8 @@ package com.springboot.asm.fpoly_asm_springboot.constant;
 
 public class Role {
 
-    public static final Boolean ADMIN = true;
-    public static final Boolean USER = false;
+    public final static Boolean ADMIN = true;
+    public final static Boolean USER = false;
 
     private Role() {
     }
