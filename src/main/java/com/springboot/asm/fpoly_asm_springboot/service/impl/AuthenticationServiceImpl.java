@@ -22,11 +22,13 @@ import com.springboot.asm.fpoly_asm_springboot.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -37,9 +39,11 @@ import java.util.StringJoiner;
 import java.util.UUID;
 
 @Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    public Logger logger;
 
     private final UserRepository userRepository;
 

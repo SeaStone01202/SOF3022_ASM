@@ -35,7 +35,7 @@ public class SecurityConfig {
     private String signerKey;
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*","/swagger-ui","/swagger-ui/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -57,7 +57,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter() {
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
@@ -67,8 +67,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
+    public JwtDecoder jwtDecoder() {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HmacSHA512");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).
                 macAlgorithm(MacAlgorithm.HS512).build();
     }
@@ -86,7 +86,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 }
