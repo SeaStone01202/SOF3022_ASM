@@ -6,7 +6,6 @@
     <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
     <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
   </div>
-  
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -16,7 +15,7 @@
       <img src="/src/assets/img/slideshow_2.webp" alt="Chicago" class="d-block" style="width:100%">
     </div>
   </div>
-  
+  ưdadad
   <!-- Left and right controls/icons -->
   <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
     <span class="carousel-control-prev-icon"></span>
