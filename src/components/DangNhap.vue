@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Header></Header>
+    <Header></Header>
     <div class="container-default">
       <article>
         <h1>Đăng nhập</h1>
@@ -46,19 +46,23 @@
             <button type="submit" class="submit-btn">ĐĂNG NHẬP</button>
 
             <!-- Link quay lại -->
-            <router-link to="/forgot-password"><a
-              class="back-link"
-              style="
-                font-size: 14px;
-                margin-right: 10px;
-                text-decoration: none;
-                color: black;
-                font-weight: bold;
-              "
-              >Quên mật khẩu?</a
-            ><strong style="font-size: 12px; font-weight: 100; color: #939090">
-              hoặc
-            </strong></router-link>
+            <router-link to="/forgot-password"
+              ><a
+                class="back-link"
+                style="
+                  font-size: 14px;
+                  margin-right: 10px;
+                  text-decoration: none;
+                  color: black;
+                  font-weight: bold;
+                "
+                >Quên mật khẩu?</a
+              ><strong
+                style="font-size: 12px; font-weight: 100; color: #939090"
+              >
+                hoặc
+              </strong></router-link
+            >
             <a
               href="dangky.html"
               style="
@@ -69,9 +73,12 @@
               "
               >đăng ký</a
             >
-            <router-link to="/"><a class="back-link"
-              ><strong style="font-size: 14px; margin-right: 10px">← </strong
-              >Quay lại trang chủ</a> </router-link>
+            <router-link to="/"
+              ><a class="back-link"
+                ><strong style="font-size: 14px; margin-right: 10px">← </strong
+                >Quay lại trang chủ</a
+              >
+            </router-link>
           </form>
         </div>
       </aside>

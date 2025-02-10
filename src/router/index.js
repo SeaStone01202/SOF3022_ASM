@@ -48,11 +48,6 @@ const router = createRouter({
       name: "Bottoms",
       component: () => import("../components/Bottoms.vue"),
     },
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> 9293942 (update product and category)
     {
       path: "/FashSale",
       name: "FashSale",
@@ -61,11 +56,7 @@ const router = createRouter({
     {
       path: "/outerWear",
       name: "PuterWear",
-<<<<<<< HEAD
-      component: () => import("../components/OuterWear.vue"),
-=======
       component: () => import("../components/CategoryDetail.vue"),
->>>>>>> 9293942 (update product and category)
     },
     {
       path: "/SaleSaff",
@@ -77,15 +68,12 @@ const router = createRouter({
       name: "Tops",
       component: () => import("../components/Tops.vue"),
     },
-<<<<<<< HEAD
-=======
     {
       path: "/category/:id",
       name: "CategoryDetail",
       component: () => import("../components/CategoryDetail.vue"),
       props: true, // Giúp truyền param 'id' vào component dưới dạng prop
     },
->>>>>>> 9293942 (update product and category)
   ],
 });
 
