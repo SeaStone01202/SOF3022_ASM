@@ -55,7 +55,6 @@ onMounted(() => {
 <style scoped>
 /* Kiểu dáng icon user */
 .user-icon {
-  display: flex;
   align-items: center;
   cursor: pointer;
   padding: 10px;
