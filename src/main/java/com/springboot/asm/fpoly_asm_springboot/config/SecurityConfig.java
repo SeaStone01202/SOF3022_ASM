@@ -35,19 +35,24 @@ public class SecurityConfig {
     private String signerKey;
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*","/swagger-ui","/swagger-ui/**"};
+    private final String[] PUBLIC_PRODUCT_URLS = {
+            "/products", "/products/*", "/categories", "/categories/*",
+            "/swagger-ui", "/swagger-ui/**", "/swagger-ui.html",
+            "/v3/api-docs/**", "/v3/api-docs"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(requests ->
-                requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
-                        requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
-                        anyRequest().authenticated());
+        httpSecurity.authorizeHttpRequests(requests -> requests
+                .requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll()
+                .requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll()
+                .anyRequest().authenticated()
+        );
 
-        httpSecurity.oauth2ResourceServer(
-                oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()).
-                                jwtAuthenticationConverter(jwtAuthenticationConverter())).
-                        authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
         httpSecurity.cors(Customizer.withDefaults());
@@ -55,6 +60,7 @@ public class SecurityConfig {
 
         return httpSecurity.build();
     }
+
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
