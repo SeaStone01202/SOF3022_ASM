@@ -24,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -35,15 +36,25 @@ public class SecurityConfig {
     private String signerKey;
 
     private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
+
     private final String[] PUBLIC_PRODUCT_URLS = {
-            "/products", "/products/*", "/categories", "/categories/*",
-            "/swagger-ui", "/swagger-ui/**", "/swagger-ui.html",
-            "/v3/api-docs/**", "/v3/api-docs"
+            "/products", "/products/*", "/categories", "/categories/*"
     };
+
+    private final String[] PUBLIC_SWAGGER_URLS = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security"
+    };
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(requests -> requests
+                .requestMatchers(PUBLIC_SWAGGER_URLS).permitAll()
                 .requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll()
                 .requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll()
                 .anyRequest().authenticated()

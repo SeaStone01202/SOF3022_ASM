@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handlingRuntimeException() {
-        ApiResponse apiResponse = ApiResponse.builder().
-                code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode()).
-                message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage()).
-                build();
-
-        return ResponseEntity.badRequest().body(apiResponse);
-    }
+//
+//    @ExceptionHandler(value = Exception.class)
+//    ResponseEntity<ApiResponse> handlingRuntimeException() {
+//        ApiResponse apiResponse = ApiResponse.builder().
+//                code(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode()).
+//                message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage()).
+//                build();
+//
+//        return ResponseEntity.badRequest().body(apiResponse);
+//    }
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
