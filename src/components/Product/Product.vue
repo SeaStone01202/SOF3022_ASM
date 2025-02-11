@@ -15,9 +15,13 @@
           :key="product.id"
         >
           <div class="sale">{{ product.discount }}%</div>
-          <img :src="product.image" :alt="product.name" />
+          <router-link :to="`/product-detail/${product.id}`">
+            <img :src="product.image" :alt="product.name" />
+          </router-link>
           <div class="tensp">
-            <label>{{ product.name }}</label>
+            <router-link :to="`/product/${product.id}`">
+              <label>{{ product.name }}</label>
+            </router-link>
           </div>
           <div class="price">
             {{ product.salePrice }}₫ <del> {{ product.originalPrice }}₫</del>
@@ -42,9 +46,10 @@
 <script setup>
 import { onMounted } from "vue";
 import { useProductStore } from "../../stores/productStore";
+import { useRouter } from "vue-router";
 
 const productStore = useProductStore();
-
+const route = useRouter();
 onMounted(() => {
   productStore.fetchProduct();
 });

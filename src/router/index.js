@@ -74,6 +74,12 @@ const router = createRouter({
       component: () => import("../components/CategoryDetail.vue"),
       props: true, // Giúp truyền param 'id' vào component dưới dạng prop
     },
+    {
+      path: "/product-detail/:id",
+      name: "Product Detail",
+      component: () => import("../components/Product/ProductDetail.vue"),
+      props: true,
+    },
   ],
 });
 

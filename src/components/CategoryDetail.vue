@@ -59,29 +59,43 @@
 
       <!-- Container hiển thị danh sách sản phẩm -->
       <div class="boxspto">
-        <div class="boxsp" id="loadsp">
-          <!-- Hiển thị loading, lỗi hoặc danh sách sản phẩm -->
-          <div v-if="productStore.loading">Đang tải...</div>
-          <div v-else-if="productStore.error" class="error">
-            {{ productStore.error }}
-          </div>
-          <div v-else>
-            <div
-              v-for="product in productStore.products"
-              :key="product.id"
-              class="product-item"
-            >
-              <img
-                :src="product.image ? product.image : '/placeholder.jpg'"
-                :alt="product.name"
-              />
-              <h2>{{ product.name }}</h2>
-              <p><strong>Tác giả:</strong> {{ product.author }}</p>
-              <p><strong>Danh mục:</strong> {{ product.categoryName }}</p>
-              <p><strong>Mô tả:</strong> {{ product.description }}</p>
-              <p><strong>Giá:</strong> {{ product.price }} USD</p>
-              <p><strong>Ngày xuất bản:</strong> {{ product.publishDate }}</p>
+        <p v-if="productStore.loading">Đang tải...</p>
+        <p v-if="productStore.error" class="error">{{ productStore.error }}</p>
+        <div class="boxsp" v-if="!productStore.loading && !productStore.error">
+          <div
+            class="sp"
+            v-for="product in productStore.products"
+            :key="product.id"
+          >
+            <div class="sale">{{ product.discount }}%</div>
+            <router-link :to="`/product-detail/${product.id}`">
+              <img :src="product.image" :alt="product.name" />
+            </router-link>
+            <div class="tensp">
+              <router-link :to="`/product/${product.id}`">
+                <label>{{ product.name }}</label>
+              </router-link>
             </div>
+            <div class="price">
+              {{ product.salePrice }}₫ <del> {{ product.originalPrice }}₫</del>
+            </div>
+            <div class="danhgia">
+              <i
+                v-for="star in 5"
+                :key="star"
+                class="fa-solid fa-star fa-2xs"
+                :style="{ color: star <= product.rating ? '#ff4d4f' : '#ccc' }"
+              ></i>
+              <label for="" style="font-size: 9px">
+                ({{ product.reviews }} lượt đánh giá)
+              </label>
+            </div>
+            <h2>{{ product.name }}</h2>
+            <p><label>Thương Hiệu:</label> {{ product.author }}</p>
+            <p><label>Danh mục:</label> {{ product.categoryName }}</p>
+            <p><label>Mô tả:</label> {{ product.description }}</p>
+            <p><label>Giá:</label> {{ product.price }} USD</p>
+            <p><label>Ngày mở bán:</label> {{ product.publishDate }}</p>
           </div>
         </div>
       </div>

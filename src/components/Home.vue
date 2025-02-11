@@ -1,7 +1,7 @@
 <template>
   <div>
-      <Header></Header>
-      <Carousel></Carousel>
+    <Header></Header>
+    <Carousel></Carousel>
     <aside>
       <div class="odichvu">
         <div class="dichvu">
@@ -34,162 +34,34 @@
         </div>
       </div>
     </aside>
-    <article>
-      <p>FOR THE YOUTH</p>
-      <div class="boxspto">
-        <div class="boxsp" id="spmoinhat">
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
+    <Product></Product>
+    <div class="ochuafb">
+      <div class="feedback-section">
+        <div class="khungfb1">
+          <img src="../assets/img/fb1.jpg" alt="" />
+          <img src="../assets/img/fb2.webp" alt="" />
         </div>
-      </div>
-
-      <p>BEST SELING-ITEMS</p>
-      <div class="boxspto">
-        <div class="boxsp" id="spmoinhat">
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-          <div class="sp">
-            <div class="sale">23%</div>
-            <img src="../assets/img/sp1.webp" alt="" />
-            <div class="tensp"><label>2BAR BABY TEE - BLUE</label></div>
-            <div class="price">221,000₫ <del> 286,000₫</del></div>
-            <div class="danhgia">
-              <i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i
-              ><i class="fa-solid fa-star fa-2xs" style="color: #ff4d4f"></i>
-              <label for="" style="font-size: 9px">(1 lượt đánh giá)</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p>FEEDBACK</p>
-      <div class="ochuafb">
-        <div class="feedback-section">
-          <div class="khungfb1">
-            <img src="../assets/img/fb1.jpg" alt="" />
-            <img src="../assets/img/fb2.webp" alt="" />
-          </div>
-          <div class="khungfb2">
+        <div class="khungfb2">
+          <img
+            src="../assets/img/fb3.webp"
+            alt=""
+            style="width: 100%; padding: 5px"
+          />
+          <div class="boxbefb">
             <img
-              src="../assets/img/fb3.webp"
+              src="../assets/img/fb4.jpg"
               alt=""
-              style="width: 100%; padding: 5px"
+              style="width: 50%; padding: 5px"
             />
-            <div class="boxbefb">
-              <img
-                src="../assets/img/fb4.jpg"
-                alt=""
-                style="width: 50%; padding: 5px"
-              />
-              <img
-                src="../assets/img/fb5.webp"
-                alt=""
-                style="width: 50%; padding: 5px"
-              />
-            </div>
+            <img
+              src="../assets/img/fb5.webp"
+              alt=""
+              style="width: 50%; padding: 5px"
+            />
           </div>
         </div>
       </div>
-    </article>
-
+    </div>
     <footer>
       <Footer></Footer>
     </footer>
@@ -200,6 +72,6 @@
 import Footer from "./menu-link/Footer.vue";
 import Header from "./menu-link/Header.vue";
 import Carousel from "./menu-link/Carousel.vue";
-
+import Product from "./Product/Product.vue";
 </script>
 <style></style>
