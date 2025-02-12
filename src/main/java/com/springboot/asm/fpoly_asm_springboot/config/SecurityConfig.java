@@ -51,30 +51,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomUserDetailsService customUserDetailsService) throws Exception {
         httpSecurity.authorizeHttpRequests(requests ->
-                requests.requestMatchers(PUBLIC_URLS).permitAll().
+                requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
                         requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
                         anyRequest().authenticated()
         );
 
         httpSecurity.oauth2Login(oauth2 -> oauth2
-                        .successHandler((request, response, authentication) -> {
-                            OAuth2User user = (OAuth2User) authentication.getPrincipal();
-                            UserResponse userResponse = authenticationService.getOrCreateUser(
-                                    User.builder()
-                                            .email(user.getAttribute("email"))
-                                            .fullName(user.getAttribute("name"))
-                                            .avatar(user.getAttribute("picture"))
-                                            .build());
+                .successHandler((request, response, authentication) -> {
+                    OAuth2User user = (OAuth2User) authentication.getPrincipal();
+                    UserResponse userResponse = authenticationService.getOrCreateUser(
+                            User.builder()
+                                    .email(user.getAttribute("email"))
+                                    .fullName(user.getAttribute("name"))
+                                    .avatar(user.getAttribute("picture"))
+                                    .build());
 
-                            response.setContentType("application/json");
-                            response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
-                        })
-                )
-                .oauth2ResourceServer(oauth2 ->
-                        oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter()))
-                )
-                ;
+                    response.setContentType("application/json");
+                    response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
+                })
+        );
+
+        httpSecurity.oauth2ResourceServer(oauth2 ->
+                oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
+                        .jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
         httpSecurity.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -93,10 +92,11 @@ public class SecurityConfig {
     }
 
 
-        @Bean
+    @Bean
     public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
         return new OAuth2AuthenticationSuccessHandler(authenticationService);
     }
+
     @Bean
     public JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HmacSHA512");
