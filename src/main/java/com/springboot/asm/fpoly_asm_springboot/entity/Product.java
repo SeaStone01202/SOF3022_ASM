@@ -1,5 +1,6 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,8 @@ public class Product {
     private String name;
 
     private String author;
+
+    private String size;
 
     private String description;
 

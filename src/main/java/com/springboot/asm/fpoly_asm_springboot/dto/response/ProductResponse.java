@@ -13,7 +13,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class ProductResponse {
+
+    private int id;
 
     private String name;
 
@@ -24,6 +27,8 @@ public class ProductResponse {
     private String image;
 
     private Float price;
+
+    private String size;
 
     private Date publishDate;
 

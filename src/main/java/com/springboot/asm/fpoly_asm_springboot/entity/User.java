@@ -28,6 +28,8 @@ public class User {
 
     private String fullName;
 
+    private String avatar;
+
     private LocalDate birthday;
 
     private String phone;

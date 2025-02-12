@@ -1,9 +1,12 @@
 package com.springboot.asm.fpoly_asm_springboot.config;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.asm.fpoly_asm_springboot.constant.Role;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
-import com.springboot.asm.fpoly_asm_springboot.services.AuthenticationService;
+import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +28,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import com.springboot.asm.fpoly_asm_springboot.services.impl.OAuth2AuthenticationSuccessHandler;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Map;
@@ -33,47 +35,37 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/user"};
+    private final AuthenticationService authenticationService;
 
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    private final AuthenticationService authenticationService;
-
-    public SecurityConfig(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
+    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*", "/swagger-ui", "/swagger-ui/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(PUBLIC_URLS).permitAll().
+                        requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
                         anyRequest().authenticated()
         );
 
-        httpSecurity.oauth2ResourceServer(
-                        oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()).
-                                        jwtAuthenticationConverter(jwtAuthenticationConverter())).
-                                authenticationEntryPoint(new JwtAuthenticationEntryPoint())
-                )
-                .oauth2Login(oauth2 -> oauth2
+        httpSecurity.oauth2Login(oauth2 -> oauth2
                         .successHandler((request, response, authentication) -> {
                             OAuth2User user = (OAuth2User) authentication.getPrincipal();
-                            String token = authenticationService.generateToken(User.builder()
-                                    .email(user.getAttribute("email"))
-                                    .role(Role.USER)
-                                    .build());
-                            Map<String, Object> userInfo = Map.of(
-                                    "name", user.getAttribute("name"),
-                                    "email", user.getAttribute("email"),
-                                    "picture", user.getAttribute("picture"),
-                                    "token", token
+                            UserResponse userResponse = authenticationService.getOrCreateUser(
+                                    User.builder()
+                                            .email(user.getAttribute("email"))
+                                            .fullName(user.getAttribute("name"))
+                                            .avatar(user.getAttribute("picture"))
+                                            .build());
 
-                            );
                             response.setContentType("application/json");
-                            response.getWriter().write(new ObjectMapper().writeValueAsString(userInfo));
+                            response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
                         })
                 )
                 .oauth2ResourceServer(oauth2 ->
@@ -82,11 +74,14 @@ public class SecurityConfig {
                 )
                 .csrf(AbstractHttpConfigurer::disable);
 
+        httpSecurity.cors(Customizer.withDefaults());
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
         return httpSecurity.build();
     }
 
     @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter() {
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
@@ -94,9 +89,16 @@ public class SecurityConfig {
         return converter;
     }
 
+
+    //    @Bean
+//    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
+//        return new OAuth2AuthenticationSuccessHandler(authenticationService);
+//    }
     @Bean
-    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
-        return new OAuth2AuthenticationSuccessHandler(authenticationService);
+    public JwtDecoder jwtDecoder() {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HmacSHA512");
+        return NimbusJwtDecoder.withSecretKey(secretKeySpec).
+                macAlgorithm(MacAlgorithm.HS512).build();
     }
 
     @Bean
@@ -113,14 +115,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).
-                macAlgorithm(MacAlgorithm.HS512).build();
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
 }

@@ -18,8 +18,21 @@ public enum ErrorCode {
     FIELD_BLANK(1011, "Field first name is blank", HttpStatus.BAD_REQUEST),
     CATEGORY_EXISTED(3001, "Category already existed", HttpStatus.CONFLICT),
     CATEGORY_NOT_EXISTED(3005, "Category not existed", HttpStatus.CONFLICT),
-
+    INVALID_PARAMETER(6001, "Invalid Parameter", HttpStatus.BAD_REQUEST),
+    RESPONSE_NOT_FOUND(6002, "Not Found Payment Response", HttpStatus.NOT_FOUND),
+    INVALID_REQUEST_BODY(6007, "Invalid Request Body", HttpStatus.BAD_REQUEST),
+    CREATE_PAYMENT_FAILED(6008, "Create payment failed",HttpStatus.INTERNAL_SERVER_ERROR),
+    CART_ITEM_ALREADY_EXISTS(4001, "Cart item already exists", HttpStatus.CONFLICT),
+    CART_ITEM_NOT_FOUND(4002, "Cart item not found", HttpStatus.NOT_FOUND),
+    INVALID_CART_ITEM(4003, "Invalid cart item", HttpStatus.BAD_REQUEST),
+    ORDER_NOT_FOUND(5001, "Order not existed", HttpStatus.NOT_FOUND),
+    ORDER_ALREADY_EXISTED(5005, "Order already existed", HttpStatus.CONFLICT),
+    ORDER_NOT_SPENDING(5010, "Only pending orders can be confirmed. ", HttpStatus.CONFLICT),
+    ORDER_NOT_PROCESSING(5020, "Only processing orders can be shipped. ", HttpStatus.CONFLICT),
+    ORDER_NOT_SHIPPING(5030, "Only shipping orders can be completed.", HttpStatus.CONFLICT),
+    ORDER_NOT_CANCEL(5040, "Cannot cancel a completed order.", HttpStatus.CONFLICT),
     ;
+
 
     private int code;
     private String message;
