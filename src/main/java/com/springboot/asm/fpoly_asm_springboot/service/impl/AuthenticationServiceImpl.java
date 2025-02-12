@@ -229,8 +229,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         UserResponse userResponse = userMapper.toUserResponse(userOauth2);
 
-        userResponse.setToken(generateToken(user));
+        userResponse.setToken(generateToken(userOauth2));
 
         return userResponse;
+    }
+
+    @Override
+    public User getOrCreateUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseGet(() -> {
+
+                    User newUser = new User();
+
+                    newUser.setEmail(email);
+
+                    newUser.setPassword("");
+
+                    newUser.setRole(Role.USER);
+
+                    return userRepository.save(newUser);
+                });
     }
 }

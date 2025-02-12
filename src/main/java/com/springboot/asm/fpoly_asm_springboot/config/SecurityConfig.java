@@ -6,6 +6,8 @@ import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
+import com.springboot.asm.fpoly_asm_springboot.service.impl.CustomUserDetailsService;
+import com.springboot.asm.fpoly_asm_springboot.service.impl.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,7 +49,7 @@ public class SecurityConfig {
     private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*", "/swagger-ui", "/swagger-ui/**"};
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomUserDetailsService customUserDetailsService) throws Exception {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(PUBLIC_URLS).permitAll().
                         requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
@@ -72,10 +74,11 @@ public class SecurityConfig {
                         oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 )
-                .csrf(AbstractHttpConfigurer::disable);
+                ;
 
-        httpSecurity.cors(Customizer.withDefaults());
-        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        httpSecurity.cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+                .oauth2Login(Customizer.withDefaults());
 
         return httpSecurity.build();
     }
@@ -90,10 +93,10 @@ public class SecurityConfig {
     }
 
 
-    //    @Bean
-//    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
-//        return new OAuth2AuthenticationSuccessHandler(authenticationService);
-//    }
+        @Bean
+    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
+        return new OAuth2AuthenticationSuccessHandler(authenticationService);
+    }
     @Bean
     public JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HmacSHA512");

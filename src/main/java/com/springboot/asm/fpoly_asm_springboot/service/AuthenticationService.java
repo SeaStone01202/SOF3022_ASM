@@ -22,6 +22,8 @@ public interface AuthenticationService {
 
     UserResponse getOrCreateUser(User user);
 
+    User getOrCreateUser(String email);
+
     void logout(LogoutRequest token)throws ParseException, JOSEException ;
 
 //    AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException;
