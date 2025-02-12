@@ -31,7 +31,6 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
-    private final Product2Repository product2Repository;
     private final UploadImageFileService uploadImageFileService;
 
     @Override
@@ -108,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
     @PreAuthorize("hasRole('ADMIN')")
     public void uploadImage(Integer productId, MultipartFile imageFile) {
 
-        Product product = product2Repository.findById(productId).
+        Product product = productRepository.findById(productId).
                 orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
