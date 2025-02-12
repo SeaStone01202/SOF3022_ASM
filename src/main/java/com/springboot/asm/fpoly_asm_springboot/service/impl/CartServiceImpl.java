@@ -10,6 +10,7 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.CartItemMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CartItemRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.CartService;
+import jakarta.servlet.http.Cookie;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
-public class CartItemServiceImpl implements CartService {
+public class CartServiceImpl implements CartService {
 
     Map<String, CartItem> cartCached = new ConcurrentHashMap<>();
     CartItemMapper cartMapper;
@@ -103,12 +104,10 @@ public class CartItemServiceImpl implements CartService {
 
 
         if (cartCached.isEmpty()) {
-            var carts = cartItemRepository.findAll();
+            var carts = cartItemRepository.findByUserEmail(email);
 
             for (CartItem cartItem : carts) {
-                if (cartItem.getUser().getEmail().equals(email)) {
-                    cartItemResponses.add(cartMapper.toCartItemResponse(cartItem));
-                }
+                cartItemResponses.add(cartMapper.toCartItemResponse(cartItem));
             }
 
             return cartItemResponses;
@@ -152,12 +151,19 @@ public class CartItemServiceImpl implements CartService {
                 stream().
                 filter(cartItem -> cartItem.getUser().getEmail().equals(email)).
                 toList();
-
-        cartItemRepository.saveAll(cartItems);
-
-        log.debug("Cart saved {} in cache", cartItems);
+        if(email == null || email.isBlank()) {
+            saveCartToLocal(cartItems);
+            log.debug("Cart saved {} to local", cartItems);
+        } else {
+            cartItemRepository.saveAll(cartItems);
+            log.debug("Cart saved {} in cache", cartItems);
+        }
 
         clear();
+    }
+
+    private void saveCartToLocal(List<CartItem> cartItems) {
+        Cookie cookie = new Cookie("cart",cartItems.toString());
     }
 
     @Override
