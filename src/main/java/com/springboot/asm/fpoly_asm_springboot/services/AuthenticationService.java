@@ -16,4 +16,7 @@ public interface AuthenticationService {
     String generateToken(User user);
 
     IntrospectResponse introspect(IntrospectRequest token) throws JOSEException, ParseException;
+
+    public User getOrCreateUser(String email);
+
 }

@@ -5,6 +5,7 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
@@ -97,9 +98,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private String buildScope(User user) {
         StringJoiner scope = new StringJoiner(" ");
-        if(user.getRole().describeConstable().isPresent()){
-            scope.add( user.getRole()? "ADMIN" : "USER");
+        if (user.getRole().describeConstable().isPresent()) {
+            scope.add(user.getRole() ? "ADMIN" : "USER");
         }
         return scope.toString();
     }
+
+    @Override
+    public User getOrCreateUser(String email) {
+        return userRepository.findByEmail(email).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setPassword(""); // Google không cần password
+            newUser.setRole(Role.USER); // Gán quyền mặc định
+            return userRepository.save(newUser);
+        });
+    }
+
 }

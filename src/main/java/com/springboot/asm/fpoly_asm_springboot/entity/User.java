@@ -34,6 +34,8 @@ public class User {
 
     private Boolean gender;
 
+    private String avatar;
+
     private Boolean role;
 
 }

@@ -1,0 +1,24 @@
+package com.springboot.asm.fpoly_asm_springboot.dto.response;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UserGGResponse {
+    Integer id;
+    String email;
+    String fullName;
+    String phone;
+    LocalDate birthday;
+    Boolean role;
+    String token;
+}
