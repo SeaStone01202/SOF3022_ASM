@@ -42,12 +42,12 @@ public class SecurityConfig {
     };
 
     private final String[] PUBLIC_SWAGGER_URLS = {
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/webjars/**",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security"
+            "/swagger-ui/**",           // Giao diện UI của Swagger
+            "/v3/api-docs/**",          // API docs (JSON)
+            "/webjars/**",              // Static resources của Swagger
+            "/swagger-resources/**",    // Tài nguyên Swagger (CSS, JS,...)
+            "/configuration/ui",        // Cấu hình UI Swagger
+            "/configuration/security"   // Cấu hình bảo mật của Swagger
     };
 
 
@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(PUBLIC_SWAGGER_URLS).permitAll()
                 .requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll()
                 .requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll()
+    //                .requestMatchers(HttpMethod.POST, PUBLIC_PRODUCT_URLS).permitAll()
                 .anyRequest().authenticated()
         );
 
