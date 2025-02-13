@@ -103,7 +103,7 @@ public class CartItemServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItemResponse> getCartItems(String email) {
+    public List<CartItemResponse> getCartItems(Integer userId) {
 
         List<CartItemResponse> cartItemResponses = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public class CartItemServiceImpl implements CartService {
             var carts = cartItemRepository.findAll();
 
             for (CartItem cartItem : carts) {
-                if (cartItem.getUser().getEmail().equals(email)) {
+                if (cartItem.getUser().getId().equals(userId)) {
                     cartItemResponses.add(cartMapper.toCartItemResponse(cartItem));
                 }
             }
