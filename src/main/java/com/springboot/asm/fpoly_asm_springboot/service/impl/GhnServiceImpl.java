@@ -1,25 +1,19 @@
 package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.asm.fpoly_asm_springboot.constant.GHN;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.DistrictRequest;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.ShippingMethodRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.ShippingOrderRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.WardRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.GHN.*;
 import com.springboot.asm.fpoly_asm_springboot.service.GHNService;
-import com.springboot.asm.fpoly_asm_springboot.util.RestIO;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -32,57 +26,127 @@ public class GhnServiceImpl implements GHNService {
 
     @Override
     public ShippingOrderResponse createShippingOrder(ShippingOrderRequest request) {
-        return null;
+
+        String jsonResponse = postWebClientOrderResponse(GHN.API_URL_SHIPPING_ORDER, request);
+
+        JsonNode node = getNodeData(jsonResponse, "data");
+
+        return ShippingOrderResponse.builder()
+                .coupon_value(BigDecimal.valueOf(node.path("coupon_value").asDouble()))
+                .total(BigDecimal.valueOf(node.path("total").asDouble()))
+                .service_fee(BigDecimal.valueOf(node.path("service_fee").asDouble()))
+                .r2s_fee(BigDecimal.valueOf(node.path("r2s_fee").asDouble()))
+                .insurance_fee(BigDecimal.valueOf(node.path("insurance_fee").asDouble()))
+                .pick_station_fee(BigDecimal.valueOf(node.path("pick_station_fee").asDouble()))
+                .build();
     }
 
     @Override
     public List<ProvinceResponse> getProvinces() {
+
+        String jsonResponse = getWebClientResponse(GHN.API_URL_PROVINCE);
+
+        // Trích xuất danh sách province từ "data"
+        JsonNode dataNode = getNodeData(jsonResponse, "data");
+
+        return StreamSupport.stream(dataNode.spliterator(), false)
+                .map(node -> ProvinceResponse.builder()
+                        .province_id(node.path("ProvinceID").asInt())
+                        .province_name(node.path("ProvinceName").asText())
+                        .province_code(node.path("Code").asText())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<WardResponse> getWards(WardRequest request) {
+
+        String jsonResponse = postWebClientMethodResponse(GHN.API_URL_WARD, request);
+
+        JsonNode dataNode = getNodeData(jsonResponse, "data");
+
+        return StreamSupport.stream(dataNode.spliterator(), false)
+                .map(node -> WardResponse.builder()
+                        .district_id(node.path("DistrictID").asInt())
+                        .ward_code(node.path("WardCode").asText())
+                        .ward_name(node.path("WardName").asText())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DistrictResponse> getDistricts(DistrictRequest districtRequest) {
+
+        String jsonResponse = postWebClientMethodResponse(GHN.API_URL_DISTRICT, districtRequest);
+
+        JsonNode dataNode = getNodeData(jsonResponse, "data");
+
+        return StreamSupport.stream(dataNode.spliterator(), false)
+                .map(node -> DistrictResponse.builder()
+                        .district_id(node.path("DistrictID").asInt())
+                        .district_name(node.path("DistrictName").asText())
+                        .district_code(node.path("DistrictCode").asText())
+                        .province_id(node.path("ProvinceID").asInt())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ShippingMethodResponse> createShippingMethod(ShippingMethodRequest request) {
+        request.setShop_id(GHN.SHOP_ID);
+
+        String json = postWebClientMethodResponse(GHN.API_URL_SHIPPING_METHOD, request);
+
+        JsonNode dataNode = getNodeData(json, "data");
+
+        return StreamSupport.stream(dataNode.spliterator(), false)
+                .map(node -> ShippingMethodResponse.builder()
+                        .service_id(node.path("service_id").asInt())
+                        .service_type_id(node.path("service_type_id").asInt())
+                        .short_name(node.path("short_name").asText())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+
+    private String getWebClientResponse(String url) {
+        return this.webClient.get()
+                .uri(url)
+                .header("token", GHN.TOKEN_API)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    private <T> String postWebClientMethodResponse(String url, T request) {
+        return this.webClient.post()
+                .uri(url)
+                .header("token", GHN.TOKEN_API)
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+
+    private <T> String postWebClientOrderResponse(String url, T request) {
+        return this.webClient.post()
+                .uri(url)
+                .header("token", GHN.TOKEN_API)
+                .header("ShopID", String.valueOf(GHN.SHOP_ID))
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    private JsonNode getNodeData(String jsonResponse, String nameNode) {
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String jsonResponse = webClient.get()
-                    .uri(GHN.API_URL_PROVINCE)
-                    .header("token", GHN.TOKEN_API)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-
-            // Chuyển đổi JSON sang danh sách ProvinceResponse
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(jsonResponse);
-
-            // Trích xuất danh sách province từ "result.data"
-            JsonNode dataNode = rootNode.path("data");
-
-            return StreamSupport.stream(dataNode.spliterator(), false)
-                    .map(node -> ProvinceResponse.builder()
-                            .province_id(node.path("ProvinceID").asInt())
-                            .province_name(node.path("ProvinceName").asText())
-                            .province_code(node.path("Code").asText())
-                            .build())
-                    .collect(Collectors.toList());
-
+            return objectMapper.readTree(jsonResponse).path(nameNode);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to fetch province data from GHN", e);
+            throw new RuntimeException("Failed to fetch data from GHN", e);
         }
-    }
-
-
-
-
-
-
-    @Override
-    public WardResponse getWard(WardRequest request) {
-        return null;
-    }
-
-    @Override
-    public DistrictResponse getDistrict(DistrictRequest districtRequest) {
-
-        return null;
-    }
-
-    @Override
-    public List<DistrictResponse> getDistricts() {
-        return List.of();
     }
 }
