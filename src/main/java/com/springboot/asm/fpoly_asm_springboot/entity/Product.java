@@ -25,6 +25,8 @@ public class Product {
 
     private String author;
 
+    private int quantity;
+
     private String size;
 
     private String description;
