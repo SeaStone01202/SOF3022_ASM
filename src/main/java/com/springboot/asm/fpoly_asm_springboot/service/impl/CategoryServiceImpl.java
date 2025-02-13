@@ -9,6 +9,9 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.CategoryMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -66,4 +69,12 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponse> findByName(String name) {
         return List.of();
     }
+
+    @Override
+    public Page<CategoryResponse> findByPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return categoryRepository.pagination(pageable).map(categoryMapper::toCategoryResponse);
+    }
+
+
 }

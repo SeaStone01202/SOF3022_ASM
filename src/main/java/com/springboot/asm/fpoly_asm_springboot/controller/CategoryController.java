@@ -6,6 +6,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
 import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +54,15 @@ public class CategoryController {
         categoryService.delete(categoryId);
         return ApiResponse.<String>builder().
                 result("Category deleted").
+                build();
+    }
+
+    @GetMapping("/page")
+    ApiResponse<Page<CategoryResponse>> getCategoryByPage(@RequestParam int page) {
+        int size = 5;
+        categoryService.findByPage(page, size);
+        return ApiResponse.<Page<CategoryResponse>>builder().
+                result(categoryService.findByPage(page, size)).
                 build();
     }
 }
