@@ -1,5 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.dto.response;
 
+import com.springboot.asm.fpoly_asm_springboot.entity.Product;
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,7 +25,9 @@ public class CartItemResponse {
 
     double amount;
 
-    String emailUser;
+    Integer userId;
+
+    Integer productId;
     
     public double getAmount() {
         return this.quantity * this.price;

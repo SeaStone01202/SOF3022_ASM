@@ -5,16 +5,18 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.LogoutRequest;
-import com.springboot.asm.fpoly_asm_springboot.dto.request.RefreshRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.InvalidatedToken;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
+import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.InvalidateTokenRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
@@ -24,19 +26,15 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -50,6 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final InvalidateTokenRepository invalidatedTokenRepository;
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final UserMapper userMapper;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -205,5 +205,49 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String getCurrentUserEmail(LogoutRequest request) {
         return jwtTokenProvider.getEmailFromToken(request.getToken());
+    }
+
+
+    @Override
+    public UserResponse getOrCreateUser(User user) {
+
+        User userOauth2 = userRepository.findByEmail(user.getEmail())
+                .orElseGet(() -> {
+
+                    User newUser = new User();
+
+                    newUser.setEmail(user.getEmail());
+
+                    newUser.setPassword("");
+
+                    newUser.setRole(Role.USER);
+
+                    newUser.setAvatar(user.getAvatar());
+
+                    return userRepository.save(newUser);
+                });
+
+        UserResponse userResponse = userMapper.toUserResponse(userOauth2);
+
+        userResponse.setToken(generateToken(userOauth2));
+
+        return userResponse;
+    }
+
+    @Override
+    public User getOrCreateUser(String email) {
+        return userRepository.findByEmail(email)
+                .orElseGet(() -> {
+
+                    User newUser = new User();
+
+                    newUser.setEmail(email);
+
+                    newUser.setPassword("");
+
+                    newUser.setRole(Role.USER);
+
+                    return userRepository.save(newUser);
+                });
     }
 }

@@ -19,10 +19,10 @@ public class CartController {
 
     CartService cartService;
 
-    @GetMapping("/items/{email}")
-    public ApiResponse<List<CartItemResponse>> getCart(@PathVariable String email) {
+    @GetMapping("/items/{userId}")
+    public ApiResponse<List<CartItemResponse>> getCart(@PathVariable Integer userId) {
         return ApiResponse.<List<CartItemResponse>>builder().
-                result(cartService.getCartItems(email)).
+                result(cartService.getCartItems(userId)).
                 build();
     }
 

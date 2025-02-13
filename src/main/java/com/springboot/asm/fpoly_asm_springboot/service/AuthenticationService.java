@@ -4,9 +4,10 @@ import com.nimbusds.jose.JOSEException;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.LogoutRequest;
-import com.springboot.asm.fpoly_asm_springboot.dto.request.RefreshRequest;
+
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 
 import java.text.ParseException;
@@ -18,6 +19,10 @@ public interface AuthenticationService {
     String generateToken(User user);
 
     IntrospectResponse introspect(IntrospectRequest token) throws JOSEException, ParseException;
+
+    UserResponse getOrCreateUser(User user);
+
+    User getOrCreateUser(String email);
 
     void logout(LogoutRequest token)throws ParseException, JOSEException ;
 

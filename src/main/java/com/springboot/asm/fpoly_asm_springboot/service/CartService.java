@@ -15,7 +15,7 @@ public interface CartService {
 
     void clear();
 
-    List<CartItemResponse> getCartItems(String email);
+    List<CartItemResponse> getCartItems(Integer userId);
 
     int getTotalQuantity(Integer userId);
 

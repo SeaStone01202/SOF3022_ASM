@@ -1,5 +1,6 @@
 package com.springboot.asm.fpoly_asm_springboot.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
     Integer id;
 
@@ -33,4 +35,6 @@ public class UserResponse {
     Boolean role;
 
     String avatar;
+
+    String token;
 }
