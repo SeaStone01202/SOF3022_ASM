@@ -12,7 +12,8 @@ public interface CartItemMapper {
 
     CartItem toCartItem(CartItemRequest request);
 
-    @Mapping(target = "emailUser", source = "user.email")
+    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "productId" ,source = "product.id")
     CartItemResponse toCartItemResponse(CartItem cartItem);
 
     @Mapping(target = "user", ignore = true)

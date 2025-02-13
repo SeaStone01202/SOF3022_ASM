@@ -3,11 +3,13 @@ package com.springboot.asm.fpoly_asm_springboot.service.impl;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.CartItemRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CartItemResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.CartItem;
+import com.springboot.asm.fpoly_asm_springboot.entity.Product;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.CartItemMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CartItemRepository;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.CartService;
 import lombok.AccessLevel;
@@ -27,29 +29,33 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class CartItemServiceImpl implements CartService {
 
-    Map<String, CartItem> cartCached = new ConcurrentHashMap<>();
+    Map<Integer, CartItem> cartCached = new ConcurrentHashMap<>();
     CartItemMapper cartMapper;
     UserRepository userRepository;
+    ProductRepository productRepository;
     CartItemRepository cartItemRepository;
 
 
     @Override
     public CartItemResponse addCartItem(CartItemRequest request) {
 
-        String key = request.getName();
+        int key = request.getProductId();
 
         if (cartCached.containsKey(key)) {
             return updateCartItem(request);
 
         } else {
+            Product product = productRepository.findById(request.getProductId())
+                    .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+
             CartItem newItem = CartItem.builder().
-                    name(request.getName()).
-                    price(request.getPrice()).
+                    product(product).
+                    price(product.getPrice()).
                     quantity(request.getQuantity()).
-                    amount(request.getAmount()).
-                    user(userRepository.findById(request.getUserId()).
-                            orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED))).
-                    build();
+                    amount(getAmount(product.getPrice(), request.getQuantity()))
+                    .user(userRepository.findById(request.getUserId())
+                            .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)))
+                    .build();
 
             cartCached.put(key, newItem);
 
@@ -62,7 +68,7 @@ public class CartItemServiceImpl implements CartService {
     @Override
     public CartItemResponse updateCartItem(CartItemRequest request) {
 
-        String key = request.getName();
+        int key = request.getProductId();
 
         if (!cartCached.containsKey(key)) {
             throw new AppException(ErrorCode.CART_ITEM_NOT_FOUND);
@@ -81,7 +87,7 @@ public class CartItemServiceImpl implements CartService {
 
     @Override
     public void deleteCartItem(CartItemRequest request) {
-        String key = request.getName();
+        int key = request.getUserId();
         if (!cartCached.containsKey(key)) {
             throw new AppException(ErrorCode.CART_ITEM_NOT_FOUND);
         }
@@ -169,5 +175,9 @@ public class CartItemServiceImpl implements CartService {
         log.info("Cart deleted by user {} in database ", user.getEmail());
 
         cartCached.remove(userEmail);
+    }
+
+    private Float getAmount(Float price, Integer quantity) {
+        return price * quantity;
     }
 }
