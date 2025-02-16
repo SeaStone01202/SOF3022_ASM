@@ -22,21 +22,28 @@ public class CartController {
     @GetMapping("/items/{userId}")
     public ApiResponse<List<CartItemResponse>> getCart(@PathVariable Integer userId) {
         return ApiResponse.<List<CartItemResponse>>builder().
-                result(cartService.getCartItems(userId)).
+                result(cartService.getCartItemsByUserId(userId)).
                 build();
     }
 
-    @PostMapping("/items")
+    @GetMapping()
+    public ApiResponse<List<CartItemResponse>> getCart() {
+        return null;
+    }
+
+    @PostMapping
     public ApiResponse<CartItemResponse> addCartItem(@RequestBody CartItemRequest cartItemRequest) {
         return ApiResponse.<CartItemResponse>builder().
                 result(cartService.addCartItem(cartItemRequest)).
                 build();
     }
 
-    @PutMapping("/items")
-    public ApiResponse<CartItemResponse> updateCartItem(@RequestBody CartItemRequest cartItemRequest) {
+    @PutMapping("/items/{cartId}")
+    public ApiResponse<CartItemResponse> updateCartItem(
+            @PathVariable Integer cartId
+            , @RequestBody CartItemRequest cartItemRequest) {
         return ApiResponse.<CartItemResponse>builder().
-                result(cartService.updateCartItem(cartItemRequest)).
+                result(cartService.updateCartItem(cartId, cartItemRequest)).
                 build();
     }
 
@@ -47,12 +54,12 @@ public class CartController {
                 build();
     }
 
-    @GetMapping("/{userId}/total-quantity")
+    @GetMapping("/total-quantity/{userId}")
     public Integer getTotalQuantity(@PathVariable Integer userId) {
         return cartService.getTotalQuantity(userId);
     }
 
-    @GetMapping("/{userId}/total-amount")
+    @GetMapping("/total-amount/{userId}")
     public Double getTotalAmount(@PathVariable Integer userId) {
         return cartService.getTotalAmount(userId);
     }

@@ -50,10 +50,6 @@ public class AuthenticationController {
     @PostMapping("/logout")
     ApiResponse<?> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
 
-        var email = authenticationService.getCurrentUserEmail(request);
-
-        cartService.saveCartOnLogout(email);
-
         authenticationService.logout(request);
 
         return ApiResponse.<String>builder().

@@ -6,6 +6,8 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
 import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    
-    
+
+
     @PostMapping
     ApiResponse<CategoryResponse> createCategory(@RequestBody CategoryRequest request) {
 
@@ -34,10 +36,10 @@ public class CategoryController {
                 build();
     }
 
-    @GetMapping("/{productId}")
-    ApiResponse<CategoryResponse> getCategory(@PathVariable Integer productId) {
+    @GetMapping("/{categoryId}")
+    ApiResponse<CategoryResponse> getCategory(@PathVariable Integer categoryId) {
         return ApiResponse.<CategoryResponse>builder().
-                result(categoryService.findById(productId)).
+                result(categoryService.findById(categoryId)).
                 build();
     }
 
@@ -54,5 +56,11 @@ public class CategoryController {
         return ApiResponse.<String>builder().
                 result("Category deleted").
                 build();
+    }
+
+    @GetMapping("/pages")
+    Page<CategoryResponse> getPages(@RequestParam int page) {
+        return categoryService.getPage(page);
+
     }
 }

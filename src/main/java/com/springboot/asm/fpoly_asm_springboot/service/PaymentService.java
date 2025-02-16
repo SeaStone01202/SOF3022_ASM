@@ -6,4 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface PaymentService {
 
     PaymentResponse.VNPayResponse createVnPayPayment(HttpServletRequest request);
+
+    PaymentResponse.VNPayResponse paymentCallBack(String vnp_ResponseCode, String vnp_TxnRef);
 }
