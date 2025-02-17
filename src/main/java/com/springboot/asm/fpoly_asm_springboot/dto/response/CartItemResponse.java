@@ -22,7 +22,6 @@ public class CartItemResponse {
     @Builder.Default
     int quantity = 1;
 
-
     double amount;
 
     Integer userId;

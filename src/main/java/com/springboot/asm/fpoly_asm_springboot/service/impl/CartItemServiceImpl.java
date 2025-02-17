@@ -133,4 +133,10 @@ public class CartItemServiceImpl implements CartService {
 
         cartItemRepository.deleteByUserId(user.getId());
     }
+
+    @Override
+    public CartItemResponse getCartItemById(Integer cartId) {
+        return cartMapper.toCartItemResponse(cartItemRepository.findById(cartId)
+                .orElseThrow(() -> new AppException(ErrorCode.CART_ITEM_NOT_FOUND)));
+    }
 }

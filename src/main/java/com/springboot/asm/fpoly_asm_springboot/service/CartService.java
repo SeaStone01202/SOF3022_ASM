@@ -27,4 +27,6 @@ public interface CartService {
     void saveCartOnLogout(List<CartItem> cartInLocalStorage);
 
     public void clearAfterPayment(String userEmail);
+
+    CartItemResponse getCartItemById(Integer cartId);
 }

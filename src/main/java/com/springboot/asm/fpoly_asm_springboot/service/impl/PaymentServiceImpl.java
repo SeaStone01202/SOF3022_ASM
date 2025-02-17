@@ -3,6 +3,7 @@ package com.springboot.asm.fpoly_asm_springboot.service.impl;
 import com.springboot.asm.fpoly_asm_springboot.config.payment.VNPAYConfig;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PaymentResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.service.OrderService;
@@ -51,16 +52,15 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentResponse.VNPayResponse paymentCallBack(String vnp_ResponseCode, String vnp_TxnRef) {
-        String orderId = vnp_TxnRef;
-        if(orderId.isEmpty()) throw AppException(ErrorCode.)
-        orderService.getOrderById(Integer.parseInt(orderId));
+    public ProductOrderResponse paymentCallBack(String vnp_ResponseCode, String vnp_TxnRef) {
+        Integer orderId = Integer.parseInt(vnp_TxnRef);
+        if(orderId == null) throw new AppException(ErrorCode.ORDER_NOT_FOUND);
 
+        orderService.completeOrder(orderId);
         
-
         if (vnp_ResponseCode.equals("00")) {
 //            cartService.clearAfterPayment(emailUser);
-            return PaymentResponse.VNPayResponse
+            return orderService.getOrderById(orderId);
         } else {
             throw new AppException(ErrorCode.RESPONSE_NOT_FOUND);
         }
