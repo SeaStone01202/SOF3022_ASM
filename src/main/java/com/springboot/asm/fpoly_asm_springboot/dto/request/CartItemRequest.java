@@ -18,6 +18,4 @@ public class CartItemRequest {
 
     Integer userId;
 
-    float amount;
-
 }

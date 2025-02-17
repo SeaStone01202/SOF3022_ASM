@@ -47,7 +47,8 @@ public class CartItemServiceImpl implements CartService {
                         .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)))
                 .build();
 
-        return cartMapper.toCartItemResponse(newItem);
+
+        return cartMapper.toCartItemResponse(cartItemRepository.save(newItem));
     }
 
 

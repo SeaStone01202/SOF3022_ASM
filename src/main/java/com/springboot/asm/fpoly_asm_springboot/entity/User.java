@@ -13,9 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users", schema = "storedb", uniqueConstraints = {
-        @UniqueConstraint(name = "email_UNIQUE", columnNames = {"email"})
-})
+@Table(name = "users")
 public class User {
     @Id
     @Column(name = "user_id", nullable = false)
