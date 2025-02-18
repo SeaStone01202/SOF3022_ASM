@@ -10,7 +10,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*", allowCredentials = "true")
 public class DashboardController {
 
     @GetMapping
