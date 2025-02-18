@@ -10,11 +10,13 @@ import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.ProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
-import com.springboot.asm.fpoly_asm_springboot.repositories.secondary.Product2Repository;
 import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -116,6 +118,16 @@ public class ProductServiceImpl implements ProductService {
 
         productRepository.save(product);
 
+    }
+
+    @Override
+    public Page<ProductResponse> findAllByCategoryId(int categoryId, int pageNum) {
+
+        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+
+        return productRepository
+                .findByCategoryId(categoryId, pageable)
+                .map(productMapper::toProductResponse);
     }
 
     Category getCategoryByName(String name) {
