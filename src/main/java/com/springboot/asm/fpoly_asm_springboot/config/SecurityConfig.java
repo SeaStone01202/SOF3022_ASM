@@ -46,8 +46,8 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*", "/swagger-ui", "/swagger-ui/**"};
+    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh" };
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*", "/categories", "/categories/*", "/swagger-ui", "/swagger-ui/**", "/payment/vn-pay-callback","/payment/vn-pay-callback/*"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomUserDetailsService customUserDetailsService) throws Exception {

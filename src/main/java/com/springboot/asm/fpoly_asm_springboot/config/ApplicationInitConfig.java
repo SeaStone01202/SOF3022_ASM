@@ -44,6 +44,7 @@ public class ApplicationInitConfig {
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
         return builder.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .codecs(conf -> conf.defaultCodecs().maxInMemorySize(10*1024*1024))
                 .build();
     }
 

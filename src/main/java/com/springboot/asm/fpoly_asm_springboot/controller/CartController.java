@@ -19,41 +19,67 @@ public class CartController {
 
     CartService cartService;
 
-    @GetMapping("/items/{email}")
-    public ApiResponse<List<CartItemResponse>> getCart(@PathVariable String email) {
+    @GetMapping("/items/{userId}")
+    public ApiResponse<List<CartItemResponse>> getCartByUserId(@PathVariable Integer userId) {
         return ApiResponse.<List<CartItemResponse>>builder().
-                result(cartService.getCartItems(email)).
+                result(cartService.getCartItemsByUserId(userId)).
                 build();
     }
 
-    @PostMapping("/items")
+    @GetMapping()
+    public ApiResponse<List<CartItemResponse>> getCarts() {
+        return ApiResponse.<List<CartItemResponse>>builder()
+                .result(cartService.getCartItems())
+                .build();
+    }
+
+    @GetMapping("/{cartItemId}")
+    public ApiResponse<CartItemResponse> getCartItemById(@PathVariable Integer cartItemId) {
+        return ApiResponse.<CartItemResponse>builder()
+                .result(cartService.getCartItemById(cartItemId))
+                .build();
+    }
+
+    @GetMapping("/total-quantity/{userId}")
+    public Integer getTotalQuantity(@PathVariable Integer userId) {
+        return cartService.getTotalQuantity(userId);
+    }
+
+    @GetMapping("/total-amount/{userId}")
+    public Double getTotalAmount(@PathVariable Integer userId) {
+        return cartService.getTotalAmount(userId);
+    }
+
+    @PostMapping
     public ApiResponse<CartItemResponse> addCartItem(@RequestBody CartItemRequest cartItemRequest) {
         return ApiResponse.<CartItemResponse>builder().
                 result(cartService.addCartItem(cartItemRequest)).
                 build();
     }
 
-    @PutMapping("/items")
-    public ApiResponse<CartItemResponse> updateCartItem(@RequestBody CartItemRequest cartItemRequest) {
+    @PutMapping("/{cartId}")
+    public ApiResponse<CartItemResponse> updateCartItem(
+            @PathVariable Integer cartId
+            , @RequestBody CartItemRequest cartItemRequest) {
         return ApiResponse.<CartItemResponse>builder().
-                result(cartService.updateCartItem(cartItemRequest)).
+                result(cartService.updateCartItem(cartId, cartItemRequest)).
                 build();
     }
 
-    @DeleteMapping("/items")
-    public ApiResponse<?> deleteCartItem(@RequestBody CartItemRequest cartItemRequest) {
+    @DeleteMapping("/{cartId}")
+    public ApiResponse<?> deleteCartItem(@PathVariable Integer cartId) {
+        cartService.deleteCartItem(cartId);
         return ApiResponse.<String>builder().
                 result("Cart has been deleted in cached").
                 build();
     }
 
-    @GetMapping("/{userId}/total-quantity")
-    public Integer getTotalQuantity(@PathVariable Integer userId) {
-        return cartService.getTotalQuantity(userId);
+    @DeleteMapping("/items/{userId}")
+    public ApiResponse<?> deleteCartItemsByUserId(@PathVariable Integer userId) {
+        cartService.deleteAllCartItemsByUserId(userId);
+        return ApiResponse.builder()
+                .result("Delete cart item by user id successfully")
+                .build();
     }
 
-    @GetMapping("/{userId}/total-amount")
-    public Double getTotalAmount(@PathVariable Integer userId) {
-        return cartService.getTotalAmount(userId);
-    }
 }
