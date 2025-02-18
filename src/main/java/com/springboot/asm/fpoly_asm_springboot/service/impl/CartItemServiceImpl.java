@@ -43,6 +43,7 @@ public class CartItemServiceImpl implements CartService {
                 product(product).
                 price(product.getPrice()).
                 quantity(request.getQuantity())
+                .amount(request.getQuantity() * product.getPrice())
                 .user(userRepository.findById(request.getUserId())
                         .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)))
                 .build();
