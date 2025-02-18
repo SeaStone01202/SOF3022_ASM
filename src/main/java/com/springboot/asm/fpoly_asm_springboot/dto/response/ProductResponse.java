@@ -34,5 +34,5 @@ public class ProductResponse {
 
     private Date lastUpdateTime;
 
-    private String categoryName;
+    private Integer categoryId;
 }
