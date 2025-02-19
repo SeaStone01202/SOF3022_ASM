@@ -8,6 +8,7 @@ import com.springboot.asm.fpoly_asm_springboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,10 +30,8 @@ public class UserController {
     }
 
     @GetMapping
-    ApiResponse<List<UserResponse>> getAllUsers() {
-        return ApiResponse.<List<UserResponse>>builder().
-                result(userService.getUsers()).
-                build();
+    Page<UserResponse> getAllUsers(@RequestParam int page) {
+        return userService.getUsers(page);
     }
 
     @GetMapping("/myInfo")
@@ -71,5 +70,4 @@ public class UserController {
                 .result("Upload avatar successfully")
                 .build();
     }
-
 }

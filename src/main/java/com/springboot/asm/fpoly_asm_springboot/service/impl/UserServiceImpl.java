@@ -11,8 +11,12 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
 import com.springboot.asm.fpoly_asm_springboot.service.UserService;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final UploadImageFileService uploadImageFileService;
+    private final PageUtil pageUtil;
 
 
     @Override
@@ -53,9 +58,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    public List<UserResponse> getUsers() {
-
-        return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+    public Page<UserResponse> getUsers(int page) {
+        Pageable pageable = pageUtil.createPageable(page);
+        return userRepository.findAll(pageable).map(userMapper::toUserResponse);
     }
 
     @Override
