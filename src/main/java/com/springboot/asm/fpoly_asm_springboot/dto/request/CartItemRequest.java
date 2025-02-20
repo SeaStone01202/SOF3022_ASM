@@ -13,9 +13,9 @@ public class CartItemRequest {
 
     @Builder.Default
     int quantity = 1;
-
+    Integer id;
     Integer productId;
-
+    Integer amount;
     Integer userId;
 
 }

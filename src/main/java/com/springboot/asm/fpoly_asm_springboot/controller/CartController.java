@@ -1,6 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.controller;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.request.BatchCartItemRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.CartItemRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CartItemResponse;
 import com.springboot.asm.fpoly_asm_springboot.service.CartService;
@@ -8,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
@@ -64,6 +65,18 @@ public class CartController {
         return ApiResponse.<CartItemResponse>builder().
                 result(cartService.updateCartItem(cartId, cartItemRequest)).
                 build();
+    }
+
+
+    @PutMapping("/update-carts")
+    public ApiResponse<List<CartItemResponse>> updateCartItems(
+            @RequestBody BatchCartItemRequest batchCartItemRequest) {
+        List<CartItemResponse> responses = batchCartItemRequest.getItems().stream()
+                .map(item -> cartService.updateCartItem(item.getId(), item))
+                .collect(Collectors.toList());
+        return ApiResponse.<List<CartItemResponse>>builder()
+                .result(responses)
+                .build();
     }
 
     @DeleteMapping("/{cartId}")
