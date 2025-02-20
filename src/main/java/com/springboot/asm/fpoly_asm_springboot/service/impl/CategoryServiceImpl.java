@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Page<CategoryResponse> getPage(int page) {
         int size = 5;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page - 1, size);
         return categoryRepository.findAll(pageable).map(categoryMapper::toCategoryResponse);
     }
 }
