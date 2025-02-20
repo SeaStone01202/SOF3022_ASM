@@ -3,6 +3,7 @@ package com.springboot.asm.fpoly_asm_springboot.config;
 import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,13 @@ public class ApplicationInitConfig {
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
         return builder.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .codecs(conf -> conf.defaultCodecs().maxInMemorySize(10*1024*1024))
+                .codecs(conf -> conf.defaultCodecs().maxInMemorySize(10 * 1024 * 1024))
                 .build();
     }
 
 
+    @Bean
+    PageUtil pageUtil() {
+        return new PageUtil();
+    }
 }

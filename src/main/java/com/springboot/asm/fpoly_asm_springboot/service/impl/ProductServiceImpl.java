@@ -12,6 +12,7 @@ import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepo
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
     private final UploadImageFileService uploadImageFileService;
+    private final PageUtil pageUtil;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -123,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductResponse> findAllByCategoryId(int categoryId, int pageNum) {
 
-        Pageable pageable = PageRequest.of(pageNum - 1, 10);
+        Pageable pageable = pageUtil.createPageable(pageNum);
 
         return productRepository
                 .findByCategoryId(categoryId, pageable)
