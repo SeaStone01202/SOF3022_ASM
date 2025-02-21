@@ -5,6 +5,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductOrderRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
 import com.springboot.asm.fpoly_asm_springboot.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
 
     private final OrderService orderService;
+
+    @GetMapping
+    public Page<ProductOrderResponse> listOrders(@RequestParam int page) {
+        return orderService.listOrders(page);
+    }
 
     /**
      * Tạo đơn hàng mới.
@@ -41,20 +47,6 @@ public class OrderController {
                 .result(orderService.getOrderById(orderId))
                 .build();
     }
-//
-//    /**
-//     * Lấy danh sách đơn hàng với phân trang.
-//     * GET /order?page=&size=
-//     *
-//     * @param pageable thông tin phân trang
-//     * @return Page<ProductOrderResponse> chứa danh sách đơn hàng theo phân trang
-//     */
-//    @GetMapping
-//    public ApiResponse<Page<ProductOrderResponse>> listOrders(Pageable pageable) {
-//        return ApiResponse.<ProductOrderResponse>builder()
-//                .result(orderService.listOrders(pageable))
-//                .build();
-//    }
 
     /**
      * Xác nhận đơn hàng (chuyển trạng thái từ PENDING sang PROCESSING).

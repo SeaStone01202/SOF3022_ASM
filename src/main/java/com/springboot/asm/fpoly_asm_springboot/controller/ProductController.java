@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -30,35 +28,9 @@ public class ProductController {
                 build();
     }
 
-//    @GetMapping
-//    ApiResponse<List<ProductResponse>> getAllProducts() {
-//        return ApiResponse.<List<ProductResponse>>builder().
-//                result(productService.findAll()).
-//                build();
-//    }
-
     @GetMapping
-    public ApiResponse<List<ProductResponse>> getAllProducts() {
-        // Dữ liệu sản phẩm giả lập
-        List<ProductResponse> products = Arrays.asList(
-                new ProductResponse(1, "SWE Basic Tee", "SWE", "Áo thun cotton 100%, thoáng mát và thoải mái",
-                        "https://product.hstatic.net/1000344185/product/1_hong_75b7d03b8da143ff827d0061e5a35384_master.jpg", 250000f, "A4", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 101),
-                new ProductResponse(2, "Oversized Tee", "SWE", "Áo thun form rộng, phù hợp streetwear",
-                        "https://product.hstatic.net/1000344185/product/1__19__aa8e810b0ea3421799b73efcaf9e243b_master.jpg", 300000f, "A5", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 102),
-                new ProductResponse(3, "SWE Cargo Pants", "SWE", "Quần cargo túi hộp, chất liệu kaki cao cấp",
-                        "https://product.hstatic.net/1000344185/product/swe0723_30840dd25bff48cbad1c564e6da63720_master.jpg", 450000f, "B5", new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()), 103)
-        );
-
-        return ApiResponse.<List<ProductResponse>>builder()
-                .result(products)
-                .build();
-    }
-
-    @GetMapping("/all")
-    ApiResponse<List<ProductResponse>> getAllProductss() {
-        return ApiResponse.<List<ProductResponse>>builder().
-                result(productService.findAlls()).
-                build();
+    Page<ProductResponse> getAllProducts(@RequestParam int page) {
+        return productService.findAll(page);
     }
 
     @GetMapping("/search/category/{categoryId}")

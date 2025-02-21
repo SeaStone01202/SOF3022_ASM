@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
         if (!authUserEmail.equals(user.getEmail())) {
             log.error("Logged user is: {} try to upload avatar", authUserEmail);
             log.error("User email have permission is: {}", user.getEmail());
-            throw new AppException(ErrorCode.UNAUTHORIZED);
+            throw new AppException(ErrorCode.AVATAR_NOT_PERMISSION);
         }
 
         String avatarUrl = uploadImageFileService.uploadImageFile(file);

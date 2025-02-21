@@ -16,7 +16,6 @@ import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
 
-        product.setCategory(getCategoryByName(request.getCategoryName()));
+        product.setCategory(getCategoryById(request.getCategoryId()));
 
         return productMapper.toProductResponse(productRepository.save(product));
     }
@@ -63,9 +62,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> findAll() {
-        var products = productRepository.findAll();
-        return products.stream().map(productMapper::toProductResponse).toList();
+    public Page<ProductResponse> findAll(int page) {
+        Pageable pageable = pageUtil.createPageable(page);
+        return productRepository.findAll(pageable).map(productMapper::toProductResponse);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
 
-        product.setCategory(getCategoryByName(request.getCategoryName()));
+        product.setCategory(getCategoryById(request.getCategoryId()));
 
         productMapper.updateProduct(product, request);
 
@@ -132,8 +131,8 @@ public class ProductServiceImpl implements ProductService {
                 .map(productMapper::toProductResponse);
     }
 
-    Category getCategoryByName(String name) {
-        return categoryRepository.findByName(name).
+    Category getCategoryById(Integer id) {
+        return categoryRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
 

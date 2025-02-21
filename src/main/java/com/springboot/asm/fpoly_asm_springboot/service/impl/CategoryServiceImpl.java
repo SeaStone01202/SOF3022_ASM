@@ -8,6 +8,7 @@ import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.CategoryMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
-
+    private final PageUtil pageUtil;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -73,8 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<CategoryResponse> getPage(int page) {
-        int size = 5;
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = pageUtil.createPageable(page);
         return categoryRepository.findAll(pageable).map(categoryMapper::toCategoryResponse);
     }
 }
