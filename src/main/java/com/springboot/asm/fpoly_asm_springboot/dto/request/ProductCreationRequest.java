@@ -31,5 +31,5 @@ public class ProductCreationRequest {
 
     private Float price;
 
-    private String categoryName;
+    private Integer categoryId;
 }

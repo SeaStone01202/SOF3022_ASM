@@ -12,7 +12,7 @@ public interface ProductService {
 
     ProductResponse create(ProductCreationRequest product);
     ProductResponse findById(int id);
-    List<ProductResponse> findAll();
+    Page<ProductResponse> findAll(int page);
     ProductResponse update(Integer productId, ProductUpdatedRequest product);
     void delete(int id);
     List<ProductResponse> findAlls();

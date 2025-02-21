@@ -28,13 +28,8 @@ public interface OrderService {
      */
     ProductOrderResponse getOrderById(Integer orderId);
 
-    /**
-     * Lấy danh sách đơn hàng với hỗ trợ phân trang.
-     *
-     * @param pageable Thông tin phân trang.
-     * @return Danh sách đơn hàng dạng phân trang.
-     */
-    Page<ProductOrderResponse> listOrders(Pageable pageable);
+
+    Page<ProductOrderResponse> listOrders(int page);
 
     /**
      * Xác nhận đơn hàng đang ở trạng thái "PENDING".

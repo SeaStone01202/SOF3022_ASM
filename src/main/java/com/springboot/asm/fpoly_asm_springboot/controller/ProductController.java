@@ -11,8 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Slf4j
 @RestController
 @RequestMapping("/products")
@@ -29,17 +27,8 @@ public class ProductController {
     }
 
     @GetMapping
-    ApiResponse<List<ProductResponse>> getAllProducts() {
-        return ApiResponse.<List<ProductResponse>>builder().
-                result(productService.findAll()).
-                build();
-    }
-
-    @GetMapping("/all")
-    ApiResponse<List<ProductResponse>> getAllProductss() {
-        return ApiResponse.<List<ProductResponse>>builder().
-                result(productService.findAlls()).
-                build();
+    Page<ProductResponse> getAllProducts(@RequestParam int page) {
+        return productService.findAll(page);
     }
 
     @GetMapping("/search/category/{categoryId}")
