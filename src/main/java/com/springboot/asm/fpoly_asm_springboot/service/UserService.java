@@ -7,8 +7,6 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 
 public interface UserService {
 
@@ -25,5 +23,7 @@ public interface UserService {
     void deleteUser(Integer userId);
 
     void uploadAvatar(Integer userId,MultipartFile file);
+
+    void updatePassword(String email, String newPassword);
 }
 
