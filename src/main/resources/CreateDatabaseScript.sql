@@ -7,6 +7,8 @@ DATABASE storedb;
 USE
 storedb;
 
+DROP
+TABLE IF EXISTS users;
 CREATE TABLE users
 (
     user_id   INT(11) NOT NULL AUTO_INCREMENT,
@@ -21,6 +23,8 @@ CREATE TABLE users
     UNIQUE KEY email_UNIQUE (email)
 );
 
+DROP
+TABLE IF EXISTS category;
 CREATE TABLE category
 (
     category_id INT(11) NOT NULL AUTO_INCREMENT,
@@ -28,6 +32,8 @@ CREATE TABLE category
     PRIMARY KEY (category_id)
 );
 
+DROP
+TABLE IF EXISTS product;
 CREATE TABLE product
 (
     product_id       INT(11) NOT NULL AUTO_INCREMENT,
@@ -45,6 +51,8 @@ CREATE TABLE product
         ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+DROP
+TABLE IF EXISTS customer;
 CREATE TABLE customer
 (
     customer_id   INT(11) NOT NULL AUTO_INCREMENT,
@@ -64,10 +72,8 @@ CREATE TABLE customer
     UNIQUE KEY email_UNIQUE (email)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
-
-INSERT INTO customer (customer_id, email, firstname, lastname, address_line1, city, state, country, phone, zipcode,
-                      password, register_date)
-
+DROP
+TABLE IF EXISTS review;
 CREATE TABLE review
 (
     review_id   INT(11) NOT NULL AUTO_INCREMENT,
@@ -84,6 +90,8 @@ CREATE TABLE review
         ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
+DROP
+TABLE IF EXISTS product_order;
 CREATE TABLE product_order
 (
     order_id        int(11) NOT NULL AUTO_INCREMENT,
@@ -110,6 +118,8 @@ CREATE TABLE product_order
     CONSTRAINT `customer_fk_2` FOREIGN KEY (`customer_id`) REFERENCES customer (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
+DROP
+TABLE IF EXISTS order_detail;
 CREATE TABLE order_detail
 (
     id         INT(11) primary key auto_increment,
@@ -137,38 +147,38 @@ INSERT INTO storedb.category (category_id, name) VALUES (2, 'bottom');
 INSERT INTO storedb.category (category_id, name) VALUES (3, 'outerwear');
 INSERT INTO storedb.category (category_id, name) VALUES (4, 'accessories');
 
-INSERT INTO product (name, author, description, image, price, publish_date, last_update_time, category_id)
+INSERT INTO product (product_id, name, author, description, image, price, publish_date, last_update_time, category_id)
 VALUES
 -- TOP
-('SWE Basic Tee', 'SWE', 'Áo thun cotton 100%, thoáng mát và thoải mái.', 'swe_basic_tee.jpg', 250000, '2024-01-10', NOW(), 1),
-('SWE Oversized Tee', 'SWE', 'Áo thun form rộng, phù hợp streetwear.', 'swe_oversized_tee.jpg', 290000, '2024-02-01', NOW(), 1),
-('SWE Polo Shirt', 'SWE', 'Áo polo cao cấp, thiết kế đơn giản nhưng tinh tế.', 'swe_polo_shirt.jpg', 320000, '2024-01-20', NOW(), 1),
-('SWE Tank Top', 'SWE', 'Áo tank top thể thao, thoáng mát khi vận động.', 'swe_tank_top.jpg', 270000, '2024-01-15', NOW(), 1),
-('SWE Crop Top', 'SWE', 'Áo crop top dành cho nữ, chất vải co giãn.', 'swe_crop_top.jpg', 280000, '2024-01-25', NOW(), 1),
+(1, 'SWE Basic Tee', 'SWE', 'Áo thun cotton 100%, thoáng mát và thoải mái.', 'swe_basic_tee.jpg', 250000, '2024-01-10', NOW(), 1),
+(2, 'SWE Oversized Tee', 'SWE', 'Áo thun form rộng, phù hợp streetwear.', 'swe_oversized_tee.jpg', 290000, '2024-02-01', NOW(), 1),
+(3, 'SWE Polo Shirt', 'SWE', 'Áo polo cao cấp, thiết kế đơn giản nhưng tinh tế.', 'swe_polo_shirt.jpg', 320000, '2024-01-20', NOW(), 1),
+(4, 'SWE Tank Top', 'SWE', 'Áo tank top thể thao, thoáng mát khi vận động.', 'swe_tank_top.jpg', 270000, '2024-01-15', NOW(), 1),
+(5, 'SWE Crop Top', 'SWE', 'Áo crop top dành cho nữ, chất vải co giãn.', 'swe_crop_top.jpg', 280000, '2024-01-25', NOW(), 1),
 
 -- BOTTOM
-('SWE Cargo Pants', 'SWE', 'Quần cargo túi hộp, chất liệu kaki cao cấp.', 'swe_cargo_pants.jpg', 450000, '2024-02-05', NOW(), 2),
-('SWE Jogger Pants', 'SWE', 'Quần jogger thoải mái, phù hợp streetwear.', 'swe_jogger_pants.jpg', 420000, '2024-01-30', NOW(), 2),
-('SWE Denim Jeans', 'SWE', 'Quần jeans basic, phù hợp nhiều phong cách.', 'swe_denim_jeans.jpg', 500000, '2024-01-12', NOW(), 2),
-('SWE Shorts', 'SWE', 'Quần short nam nữ, thích hợp mùa hè.', 'swe_shorts.jpg', 350000, '2024-02-08', NOW(), 2),
-('SWE Sweatpants', 'SWE', 'Quần nỉ, phù hợp mặc ở nhà và tập luyện.', 'swe_sweatpants.jpg', 390000, '2024-01-28', NOW(), 2),
+(6, 'SWE Cargo Pants', 'SWE', 'Quần cargo túi hộp, chất liệu kaki cao cấp.', 'swe_cargo_pants.jpg', 450000, '2024-02-05', NOW(), 2),
+(7, 'SWE Jogger Pants', 'SWE', 'Quần jogger thoải mái, phù hợp streetwear.', 'swe_jogger_pants.jpg', 420000, '2024-01-30', NOW(), 2),
+(8, 'SWE Denim Jeans', 'SWE', 'Quần jeans basic, phù hợp nhiều phong cách.', 'swe_denim_jeans.jpg', 500000, '2024-01-12', NOW(), 2),
+(9, 'SWE Shorts', 'SWE', 'Quần short nam nữ, thích hợp mùa hè.', 'swe_shorts.jpg', 350000, '2024-02-08', NOW(), 2),
+(10, 'SWE Sweatpants', 'SWE', 'Quần nỉ, phù hợp mặc ở nhà và tập luyện.', 'swe_sweatpants.jpg', 390000, '2024-01-28', NOW(), 2),
 
 -- OUTERWEAR
-('SWE Hoodie', 'SWE', 'Hoodie unisex, vải nỉ dày dặn và ấm áp.', 'swe_hoodie.jpg', 550000, '2024-02-10', NOW(), 3),
-('SWE Zipper Hoodie', 'SWE', 'Áo khoác nỉ có khóa kéo tiện lợi.', 'swe_zipper_hoodie.jpg', 580000, '2024-02-02', NOW(), 3),
-('SWE Bomber Jacket', 'SWE', 'Áo khoác bomber phong cách streetwear.', 'swe_bomber_jacket.jpg', 690000, '2024-01-18', NOW(), 3),
-('SWE Varsity Jacket', 'SWE', 'Áo khoác varsity phối màu đẹp.', 'swe_varsity_jacket.jpg', 750000, '2024-01-22', NOW(), 3),
-('SWE Windbreaker', 'SWE', 'Áo gió chống nước, thích hợp đi phượt.', 'swe_windbreaker.jpg', 600000, '2024-01-14', NOW(), 3),
+(11, 'SWE Hoodie', 'SWE', 'Hoodie unisex, vải nỉ dày dặn và ấm áp.', 'swe_hoodie.jpg', 550000, '2024-02-10', NOW(), 3),
+(12, 'SWE Zipper Hoodie', 'SWE', 'Áo khoác nỉ có khóa kéo tiện lợi.', 'swe_zipper_hoodie.jpg', 580000, '2024-02-02', NOW(), 3),
+(13, 'SWE Bomber Jacket', 'SWE', 'Áo khoác bomber phong cách streetwear.', 'swe_bomber_jacket.jpg', 690000, '2024-01-18', NOW(), 3),
+(14, 'SWE Varsity Jacket', 'SWE', 'Áo khoác varsity phối màu đẹp.', 'swe_varsity_jacket.jpg', 750000, '2024-01-22', NOW(), 3),
+(15, 'SWE Windbreaker', 'SWE', 'Áo gió chống nước, thích hợp đi phượt.', 'swe_windbreaker.jpg', 600000, '2024-01-14', NOW(), 3),
 
 -- ACCESSORIES
-('SWE Cap', 'SWE', 'Mũ lưỡi trai phong cách streetwear.', 'swe_cap.jpg', 250000, '2024-02-04', NOW(), 4),
-('SWE Beanie', 'SWE', 'Mũ len giữ ấm, phong cách tối giản.', 'swe_beanie.jpg', 270000, '2024-01-29', NOW(), 4),
-('SWE Tote Bag', 'SWE', 'Túi tote vải canvas, bền bỉ và tiện dụng.', 'swe_tote_bag.jpg', 300000, '2024-01-26', NOW(), 4),
-('SWE Backpack', 'SWE', 'Balo rộng rãi, phù hợp đi học và đi làm.', 'swe_backpack.jpg', 550000, '2024-02-09', NOW(), 4),
-('SWE Socks', 'SWE', 'Vớ cổ cao chất liệu cotton co giãn.', 'swe_socks.jpg', 120000, '2024-01-19', NOW(), 4),
-('SWE Belt', 'SWE', 'Thắt lưng vải, phong cách trẻ trung.', 'swe_belt.jpg', 180000, '2024-02-06', NOW(), 4),
-('SWE Crossbody Bag', 'SWE', 'Túi đeo chéo gọn nhẹ, phù hợp streetwear.', 'swe_crossbody_bag.jpg', 320000, '2024-01-17', NOW(), 4),
-('SWE Bracelet', 'SWE', 'Vòng tay da cao cấp, phong cách minimal.', 'swe_bracelet.jpg', 200000, '2024-01-23', NOW(), 4);
+(16, 'SWE Cap', 'SWE', 'Mũ lưỡi trai phong cách streetwear.', 'swe_cap.jpg', 250000, '2024-02-04', NOW(), 4),
+(17, 'SWE Beanie', 'SWE', 'Mũ len giữ ấm, phong cách tối giản.', 'swe_beanie.jpg', 270000, '2024-01-29', NOW(), 4),
+(18, 'SWE Tote Bag', 'SWE', 'Túi tote vải canvas, bền bỉ và tiện dụng.', 'swe_tote_bag.jpg', 300000, '2024-01-26', NOW(), 4),
+(19, 'SWE Backpack', 'SWE', 'Balo rộng rãi, phù hợp đi học và đi làm.', 'swe_backpack.jpg', 550000, '2024-02-09', NOW(), 4),
+(20, 'SWE Socks', 'SWE', 'Vớ cổ cao chất liệu cotton co giãn.', 'swe_socks.jpg', 120000, '2024-01-19', NOW(), 4),
+(21, 'SWE Belt', 'SWE', 'Thắt lưng vải, phong cách trẻ trung.', 'swe_belt.jpg', 180000, '2024-02-06', NOW(), 4),
+(22, 'SWE Crossbody Bag', 'SWE', 'Túi đeo chéo gọn nhẹ, phù hợp streetwear.', 'swe_crossbody_bag.jpg', 320000, '2024-01-17', NOW(), 4),
+(23, 'SWE Bracelet', 'SWE', 'Vòng tay da cao cấp, phong cách minimal.', 'swe_bracelet.jpg', 200000, '2024-01-23', NOW(), 4);
 
 INSERT INTO customer (email, firstname, lastname, address_line1, address_line2, city, state, country, phone, zipcode, password, register_date)
 VALUES
