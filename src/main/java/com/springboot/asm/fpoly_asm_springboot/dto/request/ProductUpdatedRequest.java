@@ -19,5 +19,5 @@ public class ProductUpdatedRequest {
 
     private Float price;
 
-    private String categoryName;
+    private Integer categoryId;
 }

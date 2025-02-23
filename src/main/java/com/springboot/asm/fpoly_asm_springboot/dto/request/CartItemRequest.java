@@ -11,19 +11,11 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartItemRequest {
 
-    String name;
-
-    double price;
-
     @Builder.Default
     int quantity = 1;
 
-    double amount;
+    Integer productId;
 
     Integer userId;
-
-    public double getAmount() {
-        return this.quantity * this.price;
-    }
 
 }

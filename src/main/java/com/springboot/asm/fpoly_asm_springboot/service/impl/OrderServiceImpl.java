@@ -10,6 +10,7 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.OrderProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductOrderRepository;
 
 import com.springboot.asm.fpoly_asm_springboot.service.OrderService;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final ProductOrderRepository orderRepository;
     private final OrderProductMapper orderProductMapper;
+    private final PageUtil pageUtil;
 
     /**
      * Tạo đơn hàng mới từ thông tin yêu cầu.
@@ -59,7 +61,8 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductOrderResponse> listOrders(Pageable pageable) {
+    public Page<ProductOrderResponse> listOrders(int page) {
+        Pageable pageable = pageUtil.createPageable(page);
         return orderRepository.findAll(pageable)
                 .map(orderProductMapper::toProductOrderResponse);
     }

@@ -31,6 +31,7 @@ public enum ErrorCode {
     ORDER_NOT_PROCESSING(5020, "Only processing orders can be shipped. ", HttpStatus.CONFLICT),
     ORDER_NOT_SHIPPING(5030, "Only shipping orders can be completed.", HttpStatus.CONFLICT),
     ORDER_NOT_CANCEL(5040, "Cannot cancel a completed order.", HttpStatus.CONFLICT),
+    AVATAR_NOT_PERMISSION(1111, "Cannot change a avatar of other user.", HttpStatus.CONFLICT),
     ;
 
 

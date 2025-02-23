@@ -27,7 +27,9 @@ public class ProductCreationRequest {
 
     private String description;
 
+    private String size;
+
     private Float price;
 
-    private String categoryName;
+    private Integer categoryId;
 }

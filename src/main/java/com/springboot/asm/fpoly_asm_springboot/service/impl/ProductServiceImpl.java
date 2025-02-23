@@ -10,11 +10,13 @@ import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.ProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CategoryRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
-import com.springboot.asm.fpoly_asm_springboot.repositories.secondary.Product2Repository;
 import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import com.springboot.asm.fpoly_asm_springboot.service.UploadImageFileService;
+import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,8 +33,8 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductMapper productMapper;
-    private final Product2Repository product2Repository;
     private final UploadImageFileService uploadImageFileService;
+    private final PageUtil pageUtil;
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
 
-        product.setCategory(getCategoryByName(request.getCategoryName()));
+        product.setCategory(getCategoryById(request.getCategoryId()));
 
         return productMapper.toProductResponse(productRepository.save(product));
     }
@@ -60,9 +62,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> findAll() {
-        var products = productRepository.findAll();
-        return products.stream().map(productMapper::toProductResponse).toList();
+    public Page<ProductResponse> findAll(int page) {
+        Pageable pageable = pageUtil.createPageable(page);
+        return productRepository.findAll(pageable).map(productMapper::toProductResponse);
     }
 
     @Override
@@ -74,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
 
-        product.setCategory(getCategoryByName(request.getCategoryName()));
+        product.setCategory(getCategoryById(request.getCategoryId()));
 
         productMapper.updateProduct(product, request);
 
@@ -108,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
     @PreAuthorize("hasRole('ADMIN')")
     public void uploadImage(Integer productId, MultipartFile imageFile) {
 
-        Product product = product2Repository.findById(productId).
+        Product product = productRepository.findById(productId).
                 orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
@@ -119,8 +121,18 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    Category getCategoryByName(String name) {
-        return categoryRepository.findByName(name).
+    @Override
+    public Page<ProductResponse> findAllByCategoryId(int categoryId, int pageNum) {
+
+        Pageable pageable = pageUtil.createPageable(pageNum);
+
+        return productRepository
+                .findByCategoryId(categoryId, pageable)
+                .map(productMapper::toProductResponse);
+    }
+
+    Category getCategoryById(Integer id) {
+        return categoryRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
 

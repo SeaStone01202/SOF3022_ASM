@@ -7,10 +7,9 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductResponse;
 import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -19,7 +18,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    
+
     @PostMapping
     ApiResponse<ProductResponse> createProduct(@RequestBody ProductCreationRequest request) {
         return ApiResponse.<ProductResponse>builder().
@@ -28,16 +27,14 @@ public class ProductController {
     }
 
     @GetMapping
-    ApiResponse<List<ProductResponse>> getAllProducts() {
-        return ApiResponse.<List<ProductResponse>>builder().
-                result(productService.findAll()).
-                build();
+    Page<ProductResponse> getAllProducts(@RequestParam int page) {
+        return productService.findAll(page);
     }
-    @GetMapping("/all")
-    ApiResponse<List<ProductResponse>> getAllProductss() {
-        return ApiResponse.<List<ProductResponse>>builder().
-                result(productService.findAlls()).
-                build();
+
+    @GetMapping("/search/category/{categoryId}")
+    public Page<ProductResponse> getAllProductsByCategory(@PathVariable int categoryId
+            , @RequestParam int pageNum) {
+        return productService.findAllByCategoryId(categoryId, pageNum);
     }
 
     @GetMapping("/{productId}")

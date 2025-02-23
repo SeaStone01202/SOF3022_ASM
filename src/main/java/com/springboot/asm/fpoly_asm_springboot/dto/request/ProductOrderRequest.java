@@ -16,7 +16,7 @@ import java.sql.Date;
 @Builder
 public class ProductOrderRequest {
 
-    private String emailUser;
+    private Integer userId;
 
     private Date orderDate;
 
