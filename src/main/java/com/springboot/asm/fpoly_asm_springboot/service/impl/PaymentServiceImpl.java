@@ -59,7 +59,6 @@ public class PaymentServiceImpl implements PaymentService {
         orderService.completeOrder(orderId);
         
         if (vnp_ResponseCode.equals("00")) {
-//            cartService.clearAfterPayment(emailUser);
             return orderService.getOrderById(orderId);
         } else {
             throw new AppException(ErrorCode.RESPONSE_NOT_FOUND);

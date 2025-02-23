@@ -46,11 +46,22 @@ public class SecurityConfig {
     @Value("${jwt.signerKey}")
     private String signerKey;
 
-    private final String[] PUBLIC_URLS = {"/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh" };
-    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*","/products/search/category/*", "/categories", "/categories/*", "/swagger-ui", "/swagger-ui/**", "/payment/vn-pay-callback","/payment/vn-pay-callback/*"};
+    private final String[] PUBLIC_URLS = {"/users"
+            , "/auth/token", "/auth/introspect"
+            , "/auth/logout", "/auth/refresh"
+            , "/reset-password"
+            , "/reset-password/*"};
+    private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*"
+            , "/products/search/category/*"
+            , "/categories", "/categories/*"
+            , "/swagger-ui", "/swagger-ui/**"
+            , "/payment/vn-pay-callback"
+            , "/payment/vn-pay-callback/*"
+            , "/reset-password", "/reset-password/*"};
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, CustomUserDetailsService customUserDetailsService) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
                         requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
@@ -59,7 +70,9 @@ public class SecurityConfig {
 
         httpSecurity.oauth2Login(oauth2 -> oauth2
                 .successHandler((request, response, authentication) -> {
+
                     OAuth2User user = (OAuth2User) authentication.getPrincipal();
+
                     UserResponse userResponse = authenticationService.getOrCreateUser(
                             User.builder()
                                     .email(user.getAttribute("email"))
@@ -68,7 +81,9 @@ public class SecurityConfig {
                                     .build());
 
                     response.setContentType("application/json");
+
                     response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
+
                 })
         );
 
@@ -85,22 +100,30 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
+
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+
         converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+
         return converter;
     }
 
 
     @Bean
     public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
+
         return new OAuth2AuthenticationSuccessHandler(authenticationService);
+
     }
 
     @Bean
     public JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HmacSHA512");
+
         return NimbusJwtDecoder.withSecretKey(secretKeySpec).
                 macAlgorithm(MacAlgorithm.HS512).build();
     }
@@ -108,11 +131,15 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
+
         corsConfiguration.addAllowedOrigin("*");
+
         corsConfiguration.addAllowedHeader("*");
+
         corsConfiguration.addAllowedMethod("*");
 
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
         return new CorsFilter(urlBasedCorsConfigurationSource);

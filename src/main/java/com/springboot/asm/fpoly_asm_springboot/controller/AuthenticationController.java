@@ -7,11 +7,12 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
 
-import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
+import com.springboot.asm.fpoly_asm_springboot.entity.ForgotPasswordToken;
+import com.springboot.asm.fpoly_asm_springboot.service.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.*;
-import com.springboot.asm.fpoly_asm_springboot.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ import java.text.ParseException;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-    private final CartService cartService;
+
 
     @PostMapping("/token")
     public ApiResponse<AuthenticationResponse> authenticationResponseApiResponse(@RequestBody AuthenticationRequest request) {
@@ -56,11 +57,12 @@ public class AuthenticationController {
                 result("Account is logged out successfully ").
                 build();
     }
-//
-//    @PostMapping("/refresh")
-//    ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
-//        return ApiResponse.<AuthenticationResponse>builder().
-//                result(authenticationService.refreshToken(request)).
-//                build();
-//    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        return ApiResponse.<AuthenticationResponse>builder().
+                result(authenticationService.refreshToken(request)).
+                build();
+    }
+
 }

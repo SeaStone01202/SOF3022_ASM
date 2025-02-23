@@ -2,6 +2,7 @@ package com.springboot.asm.fpoly_asm_springboot.controller;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PaymentResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.service.CartService;
@@ -37,10 +38,13 @@ public class PaymentController {
     }
 
     @GetMapping("/vn-pay-callback")
-    public ApiResponse<PaymentResponse.VNPayResponse> payCallbackHandler(
+    public ApiResponse<?> payCallbackHandler(
             @RequestParam String vnp_ResponseCode,
             @RequestParam String vnp_TxnRef) {
 
-        return null;
+
+        return ApiResponse.builder()
+                .result(paymentService.paymentCallBack(vnp_ResponseCode, vnp_TxnRef).getStatus())
+                .build();
     }
 }
