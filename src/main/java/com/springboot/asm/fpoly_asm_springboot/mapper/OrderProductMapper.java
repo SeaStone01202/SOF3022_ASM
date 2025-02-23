@@ -6,12 +6,12 @@ import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse
 import com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface OrderProductMapper {
     ProductOrder toProductOrder(ProductOrderRequest request);
 
+    @Mapping(target = "emailUser" , source = "user.email")
     ProductOrderResponse toProductOrderResponse(ProductOrder order);
 
 }

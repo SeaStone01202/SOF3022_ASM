@@ -7,13 +7,10 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.ShippingOrderRequ
 import com.springboot.asm.fpoly_asm_springboot.dto.request.GHN.WardRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.GHN.*;
 import com.springboot.asm.fpoly_asm_springboot.service.GHNService;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/shipping")
@@ -23,13 +20,13 @@ public class GHNController {
     private final GHNService ghnService;
 
     @GetMapping("/provinces")
-    public ApiResponse<List<ProvinceResponse>> getProvinces() throws IOException {
+    public ApiResponse<List<ProvinceResponse>> getProvinces() {
         return ApiResponse.<List<ProvinceResponse>>builder()
                 .result(ghnService.getProvinces())
                 .build();
     }
 
-    @GetMapping("/districts")
+    @PostMapping("/districts")
     public ApiResponse<List<DistrictResponse>> getDistricts(@RequestBody DistrictRequest request) {
         return ApiResponse.<List<DistrictResponse>>builder()
                 .result(ghnService.getDistricts(request))
@@ -37,7 +34,7 @@ public class GHNController {
     }
 
 
-    @GetMapping("/wards")
+    @PostMapping("/wards")
     public ApiResponse<List<WardResponse>> getWards(@RequestBody WardRequest request) {
         return ApiResponse.<List<WardResponse>>builder()
                 .result(ghnService.getWards(request))
@@ -45,7 +42,7 @@ public class GHNController {
     }
 
 
-    @GetMapping("/methods")
+    @PostMapping("/methods")
     public ApiResponse<List<ShippingMethodResponse>> getShippingMethods(@RequestBody ShippingMethodRequest request) {
         return ApiResponse.<List<ShippingMethodResponse>>builder()
                 .result(ghnService.createShippingMethod(request))
@@ -53,7 +50,7 @@ public class GHNController {
     }
 
 
-    @GetMapping("/fee")
+    @PostMapping("/fee")
     public ApiResponse<ShippingOrderResponse> getShippingOrder(@RequestBody ShippingOrderRequest request) {
         return ApiResponse.<ShippingOrderResponse>builder()
                 .result(ghnService.createShippingOrder(request))

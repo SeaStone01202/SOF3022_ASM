@@ -18,19 +18,15 @@ public class ProductOrderResponse {
 
     private Date orderDate;
 
-    private String rAddressLine1;
-
-    private String rAddressLine2;
-
     private String rFirstname;
 
     private String rLastname;
 
     private String rPhone;
 
-    private String rCountry;
+    private Integer rCountry;
 
-    private String rCity;
+    private Integer rCity;
 
     private String rState;
 

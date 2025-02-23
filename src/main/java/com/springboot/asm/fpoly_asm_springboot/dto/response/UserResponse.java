@@ -28,7 +28,7 @@ public class UserResponse {
 
     String phone;
 
-    String gender;
+    boolean gender;
 
     LocalDate birthday;
 

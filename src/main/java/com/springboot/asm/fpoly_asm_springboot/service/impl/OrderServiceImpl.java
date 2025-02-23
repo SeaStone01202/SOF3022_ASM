@@ -4,11 +4,13 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductOrderRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder;
 
+import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
 import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.OrderProductMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductOrderRepository;
 
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.OrderService;
 import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,8 @@ public class OrderServiceImpl implements OrderService {
     private final ProductOrderRepository orderRepository;
     private final OrderProductMapper orderProductMapper;
     private final PageUtil pageUtil;
+    private final UserRepository UserRepository;
+    private final UserRepository userRepository;
 
     /**
      * Tạo đơn hàng mới từ thông tin yêu cầu.
@@ -37,8 +42,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public ProductOrderResponse createOrder(ProductOrderRequest orderRequest) {
+
         ProductOrder order = orderProductMapper.toProductOrder(orderRequest);
+        User user = userRepository.findById(orderRequest.getUserId())
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         order.setStatus("PENDING");
+        order.setUser(user);
         order.setOrderDate(new Date(System.currentTimeMillis()));
         ProductOrder savedOrder = orderRepository.save(order);
         return orderProductMapper.toProductOrderResponse(savedOrder);
@@ -54,6 +63,11 @@ public class OrderServiceImpl implements OrderService {
         return orderProductMapper.toProductOrderResponse(
                 orderRepository.findById(orderId)
                         .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND)));
+    }
+
+    @Override
+    public List<ProductOrderResponse> getAllOrdersByUserId(Integer userId) {
+        return orderRepository.findByUserId(userId).stream().map(orderProductMapper::toProductOrderResponse).toList();
     }
 
     /**
@@ -74,7 +88,6 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductOrderResponse confirmOrder(Integer orderId) {
         ProductOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
@@ -85,6 +98,17 @@ public class OrderServiceImpl implements OrderService {
         return orderProductMapper.toProductOrderResponse(orderRepository.save(order));
     }
 
+    @Override
+    public ProductOrderResponse paidOrder(Integer orderId) {
+        ProductOrder order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+        if (!"PENDING".equals(order.getStatus())) {
+            throw new AppException(ErrorCode.ORDER_NOT_SPENDING);
+        }
+        order.setStatus("PAID");
+        return orderProductMapper.toProductOrderResponse(orderRepository.save(order));
+    }
+
     /**
      * Giao đơn hàng:
      * - Chỉ cho phép giao hàng khi đơn hàng đang ở trạng thái "PROCESSING".
@@ -92,7 +116,6 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductOrderResponse shipOrder(Integer orderId) {
         ProductOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
@@ -110,7 +133,6 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductOrderResponse completeOrder(Integer orderId) {
         ProductOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
@@ -129,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     @Transactional
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasRole('USER')")
     public ProductOrderResponse cancelOrder(Integer orderId) {
         ProductOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));

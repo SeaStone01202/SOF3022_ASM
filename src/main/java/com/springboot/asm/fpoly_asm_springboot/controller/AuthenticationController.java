@@ -7,11 +7,8 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
 
-import com.springboot.asm.fpoly_asm_springboot.entity.ForgotPasswordToken;
 import com.springboot.asm.fpoly_asm_springboot.service.*;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -8,12 +8,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
+
+    @GetMapping("/all/{userId}")
+    public List<ProductOrderResponse> listOrdersByUserId(@PathVariable Integer userId) {
+        return orderService.getAllOrdersByUserId(userId);
+    }
+
 
     @GetMapping
     public Page<ProductOrderResponse> listOrders(@RequestParam int page) {

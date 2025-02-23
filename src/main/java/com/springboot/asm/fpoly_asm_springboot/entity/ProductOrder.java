@@ -27,13 +27,6 @@ public class ProductOrder {
     @NotNull
     private Date orderDate;
 
-    @Size(max = 256)
-    @NotNull
-    private String rAddressLine1;
-
-    @Size(max = 256)
-    private String rAddressLine2;
-
     @Size(max = 30)
     @NotNull
     private String rFirstname;
@@ -45,18 +38,19 @@ public class ProductOrder {
     @NotNull
     private String rPhone;
 
-    @Size(max = 4)
-    private String rCountry;
+    private Integer rCountry;
 
-    @Size(max = 32)
-    private String rCity;
+    private Integer rCity;
 
-    @Size(max = 45)
     private String rState;
+
+    private String rWard;
 
     @Size(max = 20)
     @NotNull
     private String paymentMethod;
+
+    private int service_id;
 
     private Float shippingFee;
 

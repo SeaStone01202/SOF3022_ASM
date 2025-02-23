@@ -20,19 +20,21 @@ public class ShippingOrderRequest {
     Integer serviceId;                 // ID của dịch vụ GHN
 
     @JsonProperty("insurance_value")
-    BigDecimal insuranceValue;         // Giá trị bảo hiểm hàng hóa (dùng BigDecimal để tránh mất dữ liệu)
+    Integer insuranceValue;         // Giá trị bảo hiểm hàng hóa (dùng BigDecimal để tránh mất dữ liệu)
 
     @JsonProperty("cod_failed_amount")
-    BigDecimal codFailedAmount;        // Số tiền phải thu khi giao hàng thất bại
+    Integer codFailedAmount;        // Số tiền phải thu khi giao hàng thất bại
 
     @JsonProperty("coupon")
     String coupon;                     // Mã giảm giá (nullable)
 
     @JsonProperty("from_district_id")
-    Integer fromDistrictId;            // ID quận/huyện gửi hàng
+    @Builder.Default
+    Integer fromDistrictId = 1454;            // ID quận/huyện gửi hàng
 
     @JsonProperty("from_ward_code")
-    String fromWardCode;               // Mã phường/xã gửi hàng (bị thiếu trong DTO cũ)
+    @Builder.Default
+    String fromWardCode = "21211";               // Mã phường/xã gửi hàng (bị thiếu trong DTO cũ)
 
     @JsonProperty("to_district_id")
     Integer toDistrictId;              // ID quận/huyện nhận hàng
@@ -41,14 +43,18 @@ public class ShippingOrderRequest {
     String toWardCode;                 // Mã phường/xã nhận hàng
 
     @JsonProperty("height")
-    Integer height;                     // Chiều cao của gói hàng (cm)
+    @Builder.Default
+    Integer height = 5;                     // Chiều cao của gói hàng (cm)
 
     @JsonProperty("length")
-    Integer length;                     // Chiều dài của gói hàng (cm)
+    @Builder.Default
+    Integer length = 30;                     // Chiều dài của gói hàng (cm)
 
     @JsonProperty("weight")
-    Integer weight;                     // Trọng lượng gói hàng (gram)
+    @Builder.Default
+    Integer weight = 200;                     // Trọng lượng gói hàng (gram)
 
     @JsonProperty("width")
-    Integer width;                       // Chiều rộng của gói hàng (cm)
+    @Builder.Default
+    Integer width = 40;                       // Chiều rộng của gói hàng (cm)
 }
