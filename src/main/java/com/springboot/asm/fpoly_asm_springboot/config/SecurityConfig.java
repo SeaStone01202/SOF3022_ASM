@@ -2,12 +2,9 @@ package com.springboot.asm.fpoly_asm_springboot.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.asm.fpoly_asm_springboot.constant.Role;
-import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserGGResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
-import com.springboot.asm.fpoly_asm_springboot.service.impl.CustomUserDetailsService;
-import com.springboot.asm.fpoly_asm_springboot.service.impl.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +24,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -50,9 +45,7 @@ public class SecurityConfig {
             , "/auth/token", "/auth/introspect"
             , "/auth/logout", "/auth/refresh"
             , "/reset-password"
-            , "/reset-password/*"
-
-    };
+            , "/reset-password/*", "/auth/callback"};
     private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*"
             , "/products/search/category/*"
             , "/categories", "/categories/*"
@@ -73,22 +66,23 @@ public class SecurityConfig {
         );
 
         httpSecurity.oauth2Login(oauth2 -> oauth2
-                .successHandler((request, response, authentication) -> {
+                        .successHandler((request, response, authentication) -> {
 
-                    OAuth2User user = (OAuth2User) authentication.getPrincipal();
+                            OAuth2User user = (OAuth2User) authentication.getPrincipal();
 
-                    UserResponse userResponse = authenticationService.getOrCreateUser(
-                            User.builder()
-                                    .email(user.getAttribute("email"))
-                                    .fullName(user.getAttribute("name"))
-                                    .avatar(user.getAttribute("picture"))
-                                    .build());
+                            UserGGResponse userResponse = authenticationService.getOrCreateUser(
+                                    User.builder()
+                                            .email(user.getAttribute("email"))
+                                            .fullName(user.getAttribute("name"))
+                                            .avatar(user.getAttribute("picture"))
+                                            .build());
 
-                    response.setContentType("application/json");
+                            request.getSession().setAttribute("userInfo", userResponse);
+                            request.getSession().setAttribute("token", userResponse.getToken());
 
-                    response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
+                            response.sendRedirect("http://localhost:5173/login-success");
 
-                })
+                        })
         );
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
@@ -114,14 +108,6 @@ public class SecurityConfig {
         converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return converter;
-    }
-
-
-    @Bean
-    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
-
-        return new OAuth2AuthenticationSuccessHandler(authenticationService);
-
     }
 
     @Bean

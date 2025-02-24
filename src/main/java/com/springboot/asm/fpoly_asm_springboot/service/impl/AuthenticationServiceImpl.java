@@ -1,5 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.service.impl;
 
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -12,6 +14,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.LogoutRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.RefreshRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserGGResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.ForgotPasswordToken;
 import com.springboot.asm.fpoly_asm_springboot.entity.InvalidatedToken;
@@ -32,14 +35,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Optional;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -224,9 +226,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
 
-
     @Override
-    public UserResponse getOrCreateUser(User user) {
+    public UserGGResponse getOrCreateUser(User user) {
 
         User userOauth2 = userRepository.findByEmail(user.getEmail())
                 .orElseGet(() -> {
@@ -244,7 +245,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     return userRepository.save(newUser);
                 });
 
-        UserResponse userResponse = userMapper.toUserResponse(userOauth2);
+        UserGGResponse userResponse = UserGGResponse.builder()
+                .email(userOauth2.getEmail())
+                .avatar(userOauth2.getAvatar())
+                .role(userOauth2.getRole())
+                .fullName(userOauth2.getFullName())
+                .id(userOauth2.getId())
+                .build();
 
         userResponse.setToken(generateToken(userOauth2));
 

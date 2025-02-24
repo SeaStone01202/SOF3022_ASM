@@ -8,11 +8,14 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.LogoutRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.RefreshRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserGGResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.ForgotPasswordToken;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 
+import java.io.IOException;
 import java.text.ParseException;
+import java.util.Map;
 import java.util.Optional;
 
 public interface AuthenticationService {
@@ -23,13 +26,11 @@ public interface AuthenticationService {
 
     IntrospectResponse introspect(IntrospectRequest token) throws JOSEException, ParseException;
 
-    UserResponse getOrCreateUser(User user);
+    UserGGResponse getOrCreateUser(User user);
 
     User getOrCreateUser(String email);
 
-    void logout(LogoutRequest token)throws ParseException, JOSEException ;
+    void logout(LogoutRequest token) throws ParseException, JOSEException;
 
     AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException;
-
-
 }
