@@ -53,11 +53,14 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public ProductOrderResponse paymentCallBack(String vnp_ResponseCode, String vnp_TxnRef) {
-        Integer orderId = Integer.parseInt(vnp_TxnRef);
-        if(orderId == null) throw new AppException(ErrorCode.ORDER_NOT_FOUND);
+        if (vnp_TxnRef == null) {
+            throw new AppException(ErrorCode.ORDER_NOT_FOUND);
+        }
 
-        orderService.completeOrder(orderId);
+        Integer orderId = Integer.parseInt(vnp_TxnRef);
         
+        orderService.paidOrder(orderId);
+
         if (vnp_ResponseCode.equals("00")) {
             return orderService.getOrderById(orderId);
         } else {

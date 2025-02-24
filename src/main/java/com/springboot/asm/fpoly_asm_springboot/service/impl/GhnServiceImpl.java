@@ -32,12 +32,12 @@ public class GhnServiceImpl implements GHNService {
         JsonNode node = getNodeData(jsonResponse, "data");
 
         return ShippingOrderResponse.builder()
-                .coupon_value(BigDecimal.valueOf(node.path("coupon_value").asDouble()))
-                .total(BigDecimal.valueOf(node.path("total").asDouble()))
-                .service_fee(BigDecimal.valueOf(node.path("service_fee").asDouble()))
-                .r2s_fee(BigDecimal.valueOf(node.path("r2s_fee").asDouble()))
-                .insurance_fee(BigDecimal.valueOf(node.path("insurance_fee").asDouble()))
-                .pick_station_fee(BigDecimal.valueOf(node.path("pick_station_fee").asDouble()))
+                .coupon_value((node.path("coupon_value").asInt()))
+                .total((node.path("total").asInt()))
+                .service_fee((node.path("service_fee").asInt()))
+                .r2s_fee((node.path("r2s_fee").asInt()))
+                .insurance_fee((node.path("insurance_fee").asInt()))
+                .pick_station_fee((node.path("pick_station_fee").asInt()))
                 .build();
     }
 
@@ -94,7 +94,6 @@ public class GhnServiceImpl implements GHNService {
 
     @Override
     public List<ShippingMethodResponse> createShippingMethod(ShippingMethodRequest request) {
-        request.setShop_id(GHN.SHOP_ID);
 
         String json = postWebClientMethodResponse(GHN.API_URL_SHIPPING_METHOD, request);
 

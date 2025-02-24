@@ -2,9 +2,9 @@ package com.springboot.asm.fpoly_asm_springboot.service;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ProductOrderRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
-import com.springboot.asm.fpoly_asm_springboot.entity.ProductOrder;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Interface định nghĩa các nghiệp vụ xử lý đơn hàng.
@@ -28,6 +28,7 @@ public interface OrderService {
      */
     ProductOrderResponse getOrderById(Integer orderId);
 
+    List<ProductOrderResponse> getAllOrdersByUserId(Integer userId);
 
     Page<ProductOrderResponse> listOrders(int page);
 
@@ -40,6 +41,8 @@ public interface OrderService {
      */
     ProductOrderResponse confirmOrder(Integer orderId);
 
+
+    ProductOrderResponse paidOrder(Integer orderId);
     /**
      * Giao hàng cho đơn hàng đang ở trạng thái "PROCESSING".
      *
