@@ -23,7 +23,7 @@ public interface ReviewService {
 
     List<Review> findByUserId(Integer userId);
 
-    List<Review> findByProductId(Integer productId);
+    List<ReviewResponse> findByProductId(Integer productId);
 
 }
 

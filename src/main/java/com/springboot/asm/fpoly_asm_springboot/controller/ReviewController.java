@@ -28,4 +28,9 @@ public class ReviewController {
     public Page<ReviewResponse> retrieveReviews(@RequestParam int page) {
         return reviewService.findAll(page);
     }
+
+    @GetMapping("/{productId}")
+    public ApiResponse<List<ReviewResponse>> findByProductId(@PathVariable int productId) {
+        return ApiResponse.<List<ReviewResponse>>builder().result(reviewService.findByProductId(productId)).build();
+    }
 }

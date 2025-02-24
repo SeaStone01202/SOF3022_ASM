@@ -23,8 +23,10 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         ReviewResponse reviewResponse = new ReviewResponse();
         BeanUtils.copyProperties(savedReview, reviewResponse);
+        reviewResponse.setUsername(user.get().getFullName());
 
         return reviewResponse;
     }
@@ -88,7 +91,26 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> findByProductId(Integer productId) {
-        return List.of();
+    public List<ReviewResponse> findByProductId(Integer productId) {
+        // Lấy danh sách review từ database
+        List<Review> reviews = reviewRepository.findByProductId(productId);
+
+        // Tạo danh sách kết quả
+        List<ReviewResponse> responses = new ArrayList<>();
+
+        // Duyệt qua từng review để chuyển đổi sang ReviewResponse
+        for (Review review : reviews) {
+            // Chuyển đổi Review thành ReviewResponse
+            ReviewResponse response = reviewMapper.toReviewResponse(review);
+
+            // Lấy tên người dùng và gán vào response
+            response.setUsername(review.getUser().getFullName());
+
+            // Thêm vào danh sách kết quả
+            responses.add(response);
+        }
+
+        return responses;
     }
+
 }
