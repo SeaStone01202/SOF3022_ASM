@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -44,6 +45,6 @@ public class Review {
 
     @NotNull
     @Column(name = "review_time", nullable = false)
-    private Instant reviewTime;
+    private LocalDate reviewTime;
 
 }

@@ -60,6 +60,5 @@ public class CategoryController {
     @GetMapping("/pages")
     Page<CategoryResponse> getPages(@RequestParam int page) {
         return categoryService.getPage(page);
-
     }
 }

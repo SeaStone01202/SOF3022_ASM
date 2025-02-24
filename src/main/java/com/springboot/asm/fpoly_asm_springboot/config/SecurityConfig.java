@@ -50,14 +50,18 @@ public class SecurityConfig {
             , "/auth/token", "/auth/introspect"
             , "/auth/logout", "/auth/refresh"
             , "/reset-password"
-            , "/reset-password/*"};
+            , "/reset-password/*"
+
+    };
     private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*"
             , "/products/search/category/*"
             , "/categories", "/categories/*"
             , "/swagger-ui", "/swagger-ui/**"
             , "/payment/vn-pay-callback"
             , "/payment/vn-pay-callback/*"
-            , "/reset-password", "/reset-password/*"};
+            , "/reset-password", "/reset-password/*"
+            , "/review", "/review/*"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
