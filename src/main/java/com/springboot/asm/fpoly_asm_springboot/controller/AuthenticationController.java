@@ -2,6 +2,7 @@ package com.springboot.asm.fpoly_asm_springboot.controller;
 
 import com.nimbusds.jose.JOSEException;
 import com.springboot.asm.fpoly_asm_springboot.constant.Google;
+import com.springboot.asm.fpoly_asm_springboot.constant.Role;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.AuthenticationRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.IntrospectRequest;
@@ -94,8 +95,15 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi lấy thông tin user");
             }
 
-            User user = userService.findByEmail((String) userInfo.get("email"));
-            String jwtToken = authenticationService.generateToken(user);
+            User userGG = User.builder()
+                    .email((String) userInfo.get("email"))
+                    .fullName((String) userInfo.get("name"))
+                    .avatar((String) userInfo.get("picture"))
+                    .phone((String) userInfo.get("phone"))
+                    .role(Role.USER)
+                    .build();
+
+            String jwtToken = authenticationService.generateToken(authenticationService.getOrCreateUser(userGG));
 
             Map<String, Object> response = new HashMap<>();
             response.put("google_access_token", accessToken);

@@ -23,11 +23,11 @@ public class ProductCreationRequest {
 
     private String name;
 
-    private String author;
-
     private String description;
 
     private String size;
+
+    private Integer quantity;
 
     private Float price;
 

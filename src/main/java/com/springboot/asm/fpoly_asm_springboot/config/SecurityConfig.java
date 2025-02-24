@@ -53,7 +53,19 @@ public class SecurityConfig {
             , "/payment/vn-pay-callback"
             , "/payment/vn-pay-callback/*"
             , "/reset-password", "/reset-password/*"
-            , "/review", "/review/*"
+            , "/reviews", "/reviews/*"
+    };
+    public static final String[] PRODUCT_URLS = {
+            "/products/search/category/{categoryId}",
+            "/products/search/price",
+            "/products/search/category/{categoryId}/price",
+            "/products/search/category/{categoryId}/size",
+            "/products/search/category/{categoryId}/filter",
+            "/products/sort/name/asc/{categoryId}",
+            "/products/sort/name/desc/{categoryId}",
+            "/products/search/category/{categoryId}/sort/price/asc",
+            "/products/search/category/{categoryId}/sort/price/desc",
+            "/products/{productId}",
     };
 
     @Bean
@@ -62,27 +74,28 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
                         requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
+                        requestMatchers(HttpMethod.GET, PRODUCT_URLS).permitAll().
                         anyRequest().authenticated()
         );
 
         httpSecurity.oauth2Login(oauth2 -> oauth2
-                        .successHandler((request, response, authentication) -> {
+                .successHandler((request, response, authentication) -> {
 
-                            OAuth2User user = (OAuth2User) authentication.getPrincipal();
+                    OAuth2User user = (OAuth2User) authentication.getPrincipal();
 
-                            UserGGResponse userResponse = authenticationService.getOrCreateUser(
-                                    User.builder()
-                                            .email(user.getAttribute("email"))
-                                            .fullName(user.getAttribute("name"))
-                                            .avatar(user.getAttribute("picture"))
-                                            .build());
+                    User userResponse = authenticationService.getOrCreateUser(
+                            User.builder()
+                                    .email(user.getAttribute("email"))
+                                    .fullName(user.getAttribute("name"))
+                                    .avatar(user.getAttribute("picture"))
+                                    .build());
 
-                            request.getSession().setAttribute("userInfo", userResponse);
-                            request.getSession().setAttribute("token", userResponse.getToken());
+                    request.getSession().setAttribute("userInfo", userResponse);
 
-                            response.sendRedirect("http://localhost:5173/login-success");
 
-                        })
+                    response.sendRedirect("http://localhost:5173/login-success");
+
+                })
         );
 
         httpSecurity.oauth2ResourceServer(oauth2 ->

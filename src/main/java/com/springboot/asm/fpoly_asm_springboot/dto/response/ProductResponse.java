@@ -20,8 +20,6 @@ public class ProductResponse {
 
     private String name;
 
-    private String author;
-
     private String description;
 
     private String image;
@@ -29,6 +27,8 @@ public class ProductResponse {
     private Float price;
 
     private String size;
+
+    private int quantity;
 
     private Date publishDate;
 

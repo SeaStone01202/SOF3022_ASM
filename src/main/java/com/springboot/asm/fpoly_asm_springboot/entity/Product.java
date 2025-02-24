@@ -19,8 +19,6 @@ public class    Product {
 
     private String name;
 
-    private String author;
-
     private int quantity;
 
     private String size;

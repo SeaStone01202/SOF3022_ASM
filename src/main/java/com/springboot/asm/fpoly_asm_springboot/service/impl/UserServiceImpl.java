@@ -101,8 +101,6 @@ public class UserServiceImpl implements UserService {
         User userUpdating = userRepository.findById(userId).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        userUpdating.setPassword(passwordEncoder.encode(request.getPassword()));
-
         userMapper.updateUser(userUpdating, request);
 
         return userMapper.toUserResponse(userRepository.save(userUpdating));

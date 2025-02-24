@@ -4,6 +4,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ReviewRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.CategoryResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.ReviewResponse;
+import com.springboot.asm.fpoly_asm_springboot.entity.Review;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ReviewRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.ReviewService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class ReviewController {
     @GetMapping()
     public Page<ReviewResponse> retrieveReviews(@RequestParam int page) {
         return reviewService.findAll(page);
+    }
+
+    @GetMapping("/{productId}")
+    public Page<ReviewResponse> getReviewsByProductId(@RequestParam int page, @PathVariable Integer productId) {
+        return reviewService.findByProductId(productId, page);
     }
 }

@@ -10,15 +10,11 @@ import java.time.LocalDate;
 @Getter
 public class UserUpdatedRequest {
 
-    private String password;
-
-    private String firstName;
-
-    private String lastName;
-
-    private String fullName = getLastName() + " " + getFirstName();
+    private String fullName;
 
     private String phone;
+
+    private boolean gender;
 
     private LocalDate birthday;
 

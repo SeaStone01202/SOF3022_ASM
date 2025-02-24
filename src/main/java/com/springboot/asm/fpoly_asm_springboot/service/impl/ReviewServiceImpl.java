@@ -10,9 +10,7 @@ import com.springboot.asm.fpoly_asm_springboot.mapper.ReviewMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ReviewRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
-import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import com.springboot.asm.fpoly_asm_springboot.service.ReviewService;
-import com.springboot.asm.fpoly_asm_springboot.service.UserService;
 import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -20,10 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -83,12 +78,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> findByUserId(Integer userId) {
-        return List.of();
+    public Page<Review> findByUserId(Integer userId, int page) {
+        return reviewRepository.findAllByUserId(userId, pageUtil.createPageable(page));
     }
 
     @Override
-    public List<Review> findByProductId(Integer productId) {
-        return List.of();
+    public Page<ReviewResponse> findByProductId(Integer productId, int page) {
+        Pageable pageable = pageUtil.createPageable(page,2);
+        var reviews = reviewRepository.findAllByProductId(pageable, productId);
+        return reviews.map(reviewMapper::toReviewResponse);
     }
 }

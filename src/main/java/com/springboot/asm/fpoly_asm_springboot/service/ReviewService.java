@@ -4,9 +4,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.ReviewRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.ReviewResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.Review;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ReviewService {
@@ -21,9 +19,9 @@ public interface ReviewService {
 
     Optional<Review> findById(Integer id);
 
-    List<Review> findByUserId(Integer userId);
+    Page<Review> findByUserId(Integer userId,int page);
 
-    List<Review> findByProductId(Integer productId);
+    Page<ReviewResponse> findByProductId(Integer productId, int page);
 
 }
 
