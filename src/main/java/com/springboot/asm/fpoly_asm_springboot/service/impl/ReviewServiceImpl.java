@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         ReviewResponse reviewResponse = new ReviewResponse();
         BeanUtils.copyProperties(savedReview, reviewResponse);
+        reviewResponse.setUsername(user.get().getFullName());
 
         return reviewResponse;
     }
@@ -88,4 +90,5 @@ public class ReviewServiceImpl implements ReviewService {
         var reviews = reviewRepository.findAllByProductId(pageable, productId);
         return reviews.map(reviewMapper::toReviewResponse);
     }
+
 }

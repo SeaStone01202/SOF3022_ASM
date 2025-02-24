@@ -20,4 +20,6 @@ public class ReviewResponse {
     private Integer userId;
 
     private Integer productId;
+
+    private String username;
 }
