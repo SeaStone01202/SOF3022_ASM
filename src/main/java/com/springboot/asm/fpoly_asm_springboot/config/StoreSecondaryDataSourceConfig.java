@@ -29,7 +29,7 @@ import javax.sql.DataSource;
 public class StoreSecondaryDataSourceConfig {
 
     @Bean(name = "secondaryProperties")
-    @ConfigurationProperties("spring.datasource.secondary")
+    @ConfigurationProperties("spring.secondary.datasource")
     public DataSourceProperties dataSourceProperties() {
         return new DataSourceProperties();
     }

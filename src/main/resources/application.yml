@@ -1,0 +1,79 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /store
+
+spring:
+  datasource:
+    url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3307/storedb}
+    username: ${DBMS_USERNAME:root}
+    password: ${DBMS_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+
+  secondary:
+    datasource:
+      url: ${DBMS_SECONDARY_CONNECTION:jdbc:mysql://localhost:3308/storedb}
+      username: ${DBMS_USERNAME:root}
+      password: ${DBMS_PASSWORD:root}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            scope: email, profile
+            redirect-uri: ${GOOGLE_REDIRECT_URI:http://localhost:5173/login-success}
+            client-id: 384241258749-3lk4emo83tf3ndreqrlstj7e1dpv03b1.apps.googleusercontent.com
+            client-secret: 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
+
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: nguyendanggiang99@gmail.com
+    password: bmdl exir oumv ipsk
+    protocol: smtps
+    properties:
+      mail:
+        transport:
+          protocol: smtps
+        smtps:
+          auth: true
+          starttls:
+            enable: true
+          timeout: 8000
+
+  data:
+    redis:
+      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      repositories:
+        enabled: true
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+jwt:
+  signerKey: oa+ji4n1sseImLWqvR21hqOBCyagWLxv+K2TPia8xypUKUQJw/aE2QHsAvRQEXUF
+  valid-duration: 7200
+  refreshable-duration: 72000
+
+payment:
+  vnPay:
+    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    tmnCode: PTX1D0VC
+    secretKey: 2K5CXZRX2AHBJJRDMO371IMED76U52XI
+    returnUrl: ${VNPAY_RETURN_URL:http://localhost:5173/order/list}
+    version: 2.1.0
+    command: pay
+    orderType: other
