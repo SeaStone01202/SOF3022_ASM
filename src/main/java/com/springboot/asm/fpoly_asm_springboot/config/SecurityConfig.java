@@ -52,7 +52,9 @@ public class SecurityConfig {
             , "/swagger-ui", "/swagger-ui/**"
             , "/payment/vn-pay-callback"
             , "/payment/vn-pay-callback/*"
-            , "/reset-password", "/reset-password/*"};
+            , "/reset-password", "/reset-password/*"
+            , "/review", "/review/*"
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
