@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+
+  node1:
+    image: mysql:8.0
+    container_name: node1
+    hostname: node1
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: storedb
+    command: ["mysqld",
+      "--server-id=1",
+      "--bind-address=0.0.0.0",
+      "--log-bin=mysql-bin-1.log",
+      "--enforce-gtid-consistency=ON",
+      "--log-slave-updates=ON",
+      "--gtid-mode=ON",
+      "--transaction-write-set-extraction=XXHASH64",
+      "--binlog-checksum=NONE",
+      "--master-info-repository=TABLE",
+      "--relay-log-info-repository=TABLE",
+      "--plugin-load=group_replication.so",
+      "--relay-log-recovery=ON",
+      "--loose-group-replication-start-on-boot=OFF",
+      "--loose-group-replication-group-name=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",  # UUID của nhóm
+      "--loose-group-replication-local-address=node1:8801",
+      "--loose-group-replication-group-seeds=node1:8801,node2:8801,node3:8801",
+      "--loose-group-replication-single-primary-mode=ON",
+      "--loose-group-replication-enforce-update-everywhere-checks=OFF"]
+
+
+  node2:
+    image: mysql:8.0
+    container_name: node2
+    hostname: node2
+    ports:
+      - "3308:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: storedb
+    command: ["mysqld",
+      "--server-id=2",
+      "--bind-address=0.0.0.0",  # Đảm bảo server-id duy nhất cho mỗi node
+      "--log-bin=mysql-bin-1.log",
+      "--enforce-gtid-consistency=ON",
+      "--log-slave-updates=ON",
+      "--gtid-mode=ON",
+      "--transaction-write-set-extraction=XXHASH64",
+      "--binlog-checksum=NONE",
+      "--master-info-repository=TABLE",
+      "--relay-log-info-repository=TABLE",
+      "--plugin-load=group_replication.so",
+      "--relay-log-recovery=ON",
+      "--loose-group-replication-start-on-boot=OFF",
+      "--loose-group-replication-group-name=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",  # UUID của nhóm
+      "--loose-group-replication-local-address=node2:8801",
+      "--loose-group-replication-group-seeds=node1:8801,node2:8801,node3:8801",
+      "--loose-group-replication-single-primary-mode=ON",
+      "--loose-group-replication-enforce-update-everywhere-checks=OFF"]
