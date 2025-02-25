@@ -54,6 +54,7 @@ services:
     restart: unless-stopped
 
   store-app:
+    image: giangnd919/store:0.1
     build:
       context: .
       dockerfile: Dockerfile

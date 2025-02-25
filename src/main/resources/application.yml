@@ -5,19 +5,12 @@ server:
 
 spring:
   datasource:
-    url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3307/storedb}
+    url: ${DBMS_CONNECTION:jdbc:mysql://13.209.89.241:3306/storedb}
     username: ${DBMS_USERNAME:root}
     password: ${DBMS_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
-
-  secondary:
-    datasource:
-      url: ${DBMS_SECONDARY_CONNECTION:jdbc:mysql://localhost:3308/storedb}
-      username: ${DBMS_USERNAME:root}
-      password: ${DBMS_PASSWORD:root}
-      driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
@@ -53,7 +46,7 @@ spring:
   data:
     redis:
       port: ${REDIS_PORT:6379}
-      host: ${REDIS_HOST:localhost}
+      host: ${REDIS_HOST:13.209.89.241}
       repositories:
         enabled: true
 
