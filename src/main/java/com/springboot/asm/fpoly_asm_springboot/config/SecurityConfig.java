@@ -2,12 +2,9 @@ package com.springboot.asm.fpoly_asm_springboot.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springboot.asm.fpoly_asm_springboot.constant.Role;
-import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserGGResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
-import com.springboot.asm.fpoly_asm_springboot.service.impl.CustomUserDetailsService;
-import com.springboot.asm.fpoly_asm_springboot.service.impl.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +24,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -50,14 +45,28 @@ public class SecurityConfig {
             , "/auth/token", "/auth/introspect"
             , "/auth/logout", "/auth/refresh"
             , "/reset-password"
-            , "/reset-password/*"};
+            , "/reset-password/*", "/auth/callback"};
     private final String[] PUBLIC_PRODUCT_URLS = {"/products", "/products/*"
             , "/products/search/category/*"
             , "/categories", "/categories/*"
             , "/swagger-ui", "/swagger-ui/**"
             , "/payment/vn-pay-callback"
             , "/payment/vn-pay-callback/*"
-            , "/reset-password", "/reset-password/*"};
+            , "/reset-password", "/reset-password/*"
+            , "/reviews", "/reviews/*"
+    };
+    public static final String[] PRODUCT_URLS = {
+            "/products/search/category/{categoryId}",
+            "/products/search/price",
+            "/products/search/category/{categoryId}/price",
+            "/products/search/category/{categoryId}/size",
+            "/products/search/category/{categoryId}/filter",
+            "/products/sort/name/asc/{categoryId}",
+            "/products/sort/name/desc/{categoryId}",
+            "/products/search/category/{categoryId}/sort/price/asc",
+            "/products/search/category/{categoryId}/sort/price/desc",
+            "/products/{productId}",
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -65,6 +74,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(requests ->
                 requests.requestMatchers(HttpMethod.POST, PUBLIC_URLS).permitAll().
                         requestMatchers(HttpMethod.GET, PUBLIC_PRODUCT_URLS).permitAll().
+                        requestMatchers(HttpMethod.GET, PRODUCT_URLS).permitAll().
                         anyRequest().authenticated()
         );
 
@@ -73,16 +83,17 @@ public class SecurityConfig {
 
                     OAuth2User user = (OAuth2User) authentication.getPrincipal();
 
-                    UserResponse userResponse = authenticationService.getOrCreateUser(
+                    User userResponse = authenticationService.getOrCreateUser(
                             User.builder()
                                     .email(user.getAttribute("email"))
                                     .fullName(user.getAttribute("name"))
                                     .avatar(user.getAttribute("picture"))
                                     .build());
 
-                    response.setContentType("application/json");
+                    request.getSession().setAttribute("userInfo", userResponse);
 
-                    response.getWriter().write(new ObjectMapper().writeValueAsString(userResponse));
+
+                    response.sendRedirect("http://localhost:5173/login-success");
 
                 })
         );
@@ -110,14 +121,6 @@ public class SecurityConfig {
         converter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return converter;
-    }
-
-
-    @Bean
-    public OAuth2AuthenticationSuccessHandler oAuth2SuccessHandler() {
-
-        return new OAuth2AuthenticationSuccessHandler(authenticationService);
-
     }
 
     @Bean

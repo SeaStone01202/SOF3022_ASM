@@ -1,6 +1,7 @@
 package com.springboot.asm.fpoly_asm_springboot.dto.request.GHN;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.springboot.asm.fpoly_asm_springboot.constant.GHN;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,7 +14,9 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShippingMethodRequest {
 
-    Integer shop_id;         // ID của shop
-    Integer from_district;   // ID quận/huyện người gửi
+    @Builder.Default
+    Integer shop_id = GHN.SHOP_ID;
+    @Builder.Default// ID của shop
+    Integer from_district = 1461;   // ID quận/huyện người gửi
     Integer to_district;     // ID quận/huyện người nhận
 }

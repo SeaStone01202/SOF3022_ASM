@@ -80,6 +80,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+    }
+
+    @Override
     @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse getUserById(Integer id) {
 
@@ -95,8 +100,6 @@ public class UserServiceImpl implements UserService {
 
         User userUpdating = userRepository.findById(userId).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-
-        userUpdating.setPassword(passwordEncoder.encode(request.getPassword()));
 
         userMapper.updateUser(userUpdating, request);
 

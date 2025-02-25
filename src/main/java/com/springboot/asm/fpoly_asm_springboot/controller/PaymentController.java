@@ -2,15 +2,9 @@ package com.springboot.asm.fpoly_asm_springboot.controller;
 
 import com.springboot.asm.fpoly_asm_springboot.dto.request.ApiResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.PaymentResponse;
-import com.springboot.asm.fpoly_asm_springboot.dto.response.ProductOrderResponse;
-import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
-import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
-import com.springboot.asm.fpoly_asm_springboot.service.CartService;
-import com.springboot.asm.fpoly_asm_springboot.service.OrderService;
 import com.springboot.asm.fpoly_asm_springboot.service.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,8 +35,6 @@ public class PaymentController {
     public ApiResponse<?> payCallbackHandler(
             @RequestParam String vnp_ResponseCode,
             @RequestParam String vnp_TxnRef) {
-
-
         return ApiResponse.builder()
                 .result(paymentService.paymentCallBack(vnp_ResponseCode, vnp_TxnRef).getStatus())
                 .build();

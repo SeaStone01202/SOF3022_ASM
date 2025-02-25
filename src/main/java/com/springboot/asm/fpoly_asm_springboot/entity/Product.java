@@ -1,15 +1,11 @@
 package com.springboot.asm.fpoly_asm_springboot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -22,8 +18,6 @@ public class    Product {
     private Integer id;
 
     private String name;
-
-    private String author;
 
     private int quantity;
 

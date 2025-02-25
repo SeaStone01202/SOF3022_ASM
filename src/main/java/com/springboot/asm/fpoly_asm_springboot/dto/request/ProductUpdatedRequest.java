@@ -13,9 +13,9 @@ public class ProductUpdatedRequest {
 
     private String name;
 
-    private String author;
-
     private String description;
+
+    private Integer quantity;
 
     private Float price;
 

@@ -12,6 +12,7 @@ import com.springboot.asm.fpoly_asm_springboot.repositories.primary.CartItemRepo
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.CartService;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -71,6 +72,7 @@ public class CartItemServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void deleteAllCartItemsByUserId(Integer userId) {
         try {
             cartItemRepository.deleteByUserId(userId);

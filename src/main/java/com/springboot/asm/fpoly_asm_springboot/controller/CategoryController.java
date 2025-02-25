@@ -7,7 +7,6 @@ import com.springboot.asm.fpoly_asm_springboot.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,6 +60,5 @@ public class CategoryController {
     @GetMapping("/pages")
     Page<CategoryResponse> getPages(@RequestParam int page) {
         return categoryService.getPage(page);
-
     }
 }

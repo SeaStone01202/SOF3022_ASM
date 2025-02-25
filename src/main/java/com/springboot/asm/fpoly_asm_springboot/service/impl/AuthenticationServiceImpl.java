@@ -12,8 +12,7 @@ import com.springboot.asm.fpoly_asm_springboot.dto.request.LogoutRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.request.RefreshRequest;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.AuthenticationResponse;
 import com.springboot.asm.fpoly_asm_springboot.dto.response.IntrospectResponse;
-import com.springboot.asm.fpoly_asm_springboot.dto.response.UserResponse;
-import com.springboot.asm.fpoly_asm_springboot.entity.ForgotPasswordToken;
+import com.springboot.asm.fpoly_asm_springboot.dto.response.UserGGResponse;
 import com.springboot.asm.fpoly_asm_springboot.entity.InvalidatedToken;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
 import com.springboot.asm.fpoly_asm_springboot.exception.AppException;
@@ -21,13 +20,10 @@ import com.springboot.asm.fpoly_asm_springboot.exception.ErrorCode;
 import com.springboot.asm.fpoly_asm_springboot.mapper.UserMapper;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.InvalidateTokenRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
-import com.springboot.asm.fpoly_asm_springboot.repositories.redisrepo.ForgotPasswordTokenRepository;
 import com.springboot.asm.fpoly_asm_springboot.service.AuthenticationService;
-import com.springboot.asm.fpoly_asm_springboot.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,10 +32,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.Optional;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -224,9 +217,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
 
-
     @Override
-    public UserResponse getOrCreateUser(User user) {
+    public User getOrCreateUser(User user) {
 
         User userOauth2 = userRepository.findByEmail(user.getEmail())
                 .orElseGet(() -> {
@@ -244,11 +236,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     return userRepository.save(newUser);
                 });
 
-        UserResponse userResponse = userMapper.toUserResponse(userOauth2);
+        UserGGResponse userResponse = UserGGResponse.builder()
+                .email(userOauth2.getEmail())
+                .avatar(userOauth2.getAvatar())
+                .role(userOauth2.getRole())
+                .fullName(userOauth2.getFullName())
+                .id(userOauth2.getId())
+                .build();
 
         userResponse.setToken(generateToken(userOauth2));
 
-        return userResponse;
+        return userOauth2;
     }
 
     @Override

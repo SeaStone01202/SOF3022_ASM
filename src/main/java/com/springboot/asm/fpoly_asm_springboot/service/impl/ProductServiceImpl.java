@@ -45,11 +45,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         Product product = productMapper.toProduct(request);
-
         product.setPublishDate(Date.valueOf(LocalDate.now()));
-
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
-
         product.setCategory(getCategoryById(request.getCategoryId()));
 
         return productMapper.toProductResponse(productRepository.save(product));
@@ -57,29 +54,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse findById(int id) {
-        return productMapper.toProductResponse(productRepository.findById(id).
-                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED)));
+        return productMapper.toProductResponse(
+                productRepository.findById(id)
+                        .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED))
+        );
     }
 
     @Override
     public Page<ProductResponse> findAll(int page) {
         Pageable pageable = pageUtil.createPageable(page);
-        return productRepository.findAll(pageable).map(productMapper::toProductResponse);
+        return productRepository.findAll(pageable)
+                .map(productMapper::toProductResponse);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse update(Integer productId, ProductUpdatedRequest request) {
-
-        Product product = productRepository.findById(productId).
-                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
-
         product.setCategory(getCategoryById(request.getCategoryId()));
-
         productMapper.updateProduct(product, request);
-
         return productMapper.toProductResponse(productRepository.save(product));
     }
 
@@ -92,52 +88,90 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public List<ProductResponse> findAlls() {
-
         List<Product> products = productRepository.findAll();
-
         List<ProductResponse> productResponses = new ArrayList<>();
-
         for (Product product : products) {
-
             productResponses.add(productMapper.toProductResponse(product));
-
         }
-
         return productResponses;
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public void uploadImage(Integer productId, MultipartFile imageFile) {
-
-        Product product = productRepository.findById(productId).
-                orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
         product.setLastUpdateTime(Date.valueOf(LocalDate.now()));
-
         product.setImage(convertImageToStringUrl(imageFile));
-
         productRepository.save(product);
-
     }
 
     @Override
     public Page<ProductResponse> findAllByCategoryId(int categoryId, int pageNum) {
-
         Pageable pageable = pageUtil.createPageable(pageNum);
-
-        return productRepository
-                .findByCategoryId(categoryId, pageable)
+        return productRepository.findByCategoryId(categoryId, pageable)
                 .map(productMapper::toProductResponse);
     }
 
-    Category getCategoryById(Integer id) {
-        return categoryRepository.findById(id).
-                orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
+    @Override
+    public Page<ProductResponse> findByPriceRange(float priceMin, float priceMax, int pageNum) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findAllByPriceBetween(priceMin, priceMax, pageable)
+                .map(productMapper::toProductResponse);
+    }
+
+    @Override
+    public Page<ProductResponse> findByCategoryAndPrice(int categoryId, float priceMin, float priceMax, int pageNum) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdAndPriceBetween(categoryId, priceMin, priceMax, pageable)
+                .map(productMapper::toProductResponse);
+    }
+
+    @Override
+    public Page<ProductResponse> findByCategoryAndSize(int categoryId, String size, int pageNum) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdAndSize(categoryId, size, pageable)
+                .map(productMapper::toProductResponse);
+    }
+
+    @Override
+    public Page<ProductResponse> findByCategorySizeAndPrice(int categoryId, String size, float priceMin, float priceMax, int pageNum) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdAndSizeAndPriceBetween(categoryId, size, priceMin, priceMax, pageable)
+                .map(productMapper::toProductResponse);
+    }
+
+    @Override
+    public Page<ProductResponse> findAllSortedByNameAsc(int pageNum, Integer categoryId) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdOrderByNameAsc(categoryId, pageable).map(productMapper::toProductResponse);
+    }
+
+    @Override
+    public Page<ProductResponse> findAllSortedByNameDesc(int pageNum, Integer categoryId) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdOrderByNameDesc(categoryId, pageable).map(productMapper::toProductResponse);
+    }
+///
+    @Override
+    public Page<ProductResponse> findByCategoryIdOrderByPriceAsc(int pageNum, Integer categoryId) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdOrderByPriceAsc(categoryId, pageable).map(productMapper::toProductResponse);
+    }
+///
+    @Override
+    public Page<ProductResponse> findByCategoryIdOrderByPriceDesc(int pageNum, Integer categoryId) {
+        Pageable pageable = pageUtil.createPageable(pageNum);
+        return productRepository.findByCategoryIdOrderByPriceDesc(categoryId, pageable).map(productMapper::toProductResponse);
+    }
+
+    private Category getCategoryById(Integer id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_EXISTED));
     }
 
     private String convertImageToStringUrl(MultipartFile file) {
         return uploadImageFileService.uploadImageFile(file);
     }
-
 }
