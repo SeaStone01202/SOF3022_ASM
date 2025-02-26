@@ -59,8 +59,9 @@ public class CartItemServiceImpl implements CartService {
 
         CartItem existingItem = cartItemRepository.findById(cartId)
                 .orElseThrow(() -> new AppException(ErrorCode.CART_ITEM_NOT_FOUND));
-
-        return cartMapper.toCartItemResponse(existingItem);
+        cartMapper.updateCartItem(existingItem, request);
+        CartItem updatedItem = cartItemRepository.save(existingItem);
+        return cartMapper.toCartItemResponse(updatedItem);
     }
 
     @Override

@@ -15,7 +15,6 @@ public interface CartItemMapper {
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "productId" ,source = "product.id")
     CartItemResponse toCartItemResponse(CartItem cartItem);
-
     @Mapping(target = "user", ignore = true)
     void updateCartItem(@MappingTarget CartItem cartItem, CartItemRequest request);
 }
