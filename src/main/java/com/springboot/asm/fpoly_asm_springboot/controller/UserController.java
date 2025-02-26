@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping
-    Page<UserResponse> getAllUsers(@RequestParam int page) {
+        Page<UserResponse> getAllUsers(@RequestParam int page) {
         return userService.getUsers(page);
     }
 
