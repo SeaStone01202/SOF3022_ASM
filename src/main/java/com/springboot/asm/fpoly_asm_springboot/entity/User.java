@@ -34,4 +34,6 @@ public class User {
 
     private Boolean role;
 
+    public User(int id, String image, LocalDate of, String mail, String nguyễnBìnhMinh, int i, String number, String s, int i1) {
+    }
 }

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,13 +154,15 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = pageUtil.createPageable(pageNum);
         return productRepository.findByCategoryIdOrderByNameDesc(categoryId, pageable).map(productMapper::toProductResponse);
     }
-///
+
+    ///
     @Override
     public Page<ProductResponse> findByCategoryIdOrderByPriceAsc(int pageNum, Integer categoryId) {
         Pageable pageable = pageUtil.createPageable(pageNum);
         return productRepository.findByCategoryIdOrderByPriceAsc(categoryId, pageable).map(productMapper::toProductResponse);
     }
-///
+
+    ///
     @Override
     public Page<ProductResponse> findByCategoryIdOrderByPriceDesc(int pageNum, Integer categoryId) {
         Pageable pageable = pageUtil.createPageable(pageNum);
@@ -173,5 +176,23 @@ public class ProductServiceImpl implements ProductService {
 
     private String convertImageToStringUrl(MultipartFile file) {
         return uploadImageFileService.uploadImageFile(file);
+    }
+
+    public void addData() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category( "Áo thun"));  // Để Hibernate tự tạo ID
+        categories.add(new Category( "Quần jean"));
+        categories.add(new Category( "Giày thể thao"));
+
+        List<Category> savedCategories = categoryRepository.saveAll(categories);
+
+        List<Product> products = new ArrayList<>();
+        products.add(new Product("Áo thun trắng nam", "Áo thun nam chất liệu cotton thoáng mát", "https://res.cloudinary.com/dpbysnmcc/image/upload/sample.jpg", 299000, 100, "L", LocalDate.of(2025, 2, 20), LocalDateTime.of(2025, 2, 24, 0, 0), savedCategories.get(0)));
+        products.add(new Product( "Áo thun đen nữ", "Áo thun nữ phong cách basic", "https://res.cloudinary.com/dpbysnmcc/image/upload/sample.jpg", 249000, 80, "M", LocalDate.of(2025, 2, 18), LocalDateTime.of(2025, 2, 23, 0, 0), savedCategories.get(0)));
+        products.add(new Product( "Quần jean xanh nam", "Quần jean nam form slimfit, chất liệu co giãn", "https://res.cloudinary.com/dpbysnmcc/image/upload/sample.jpg", 699000, 50, "M", LocalDate.of(2025, 2, 19), LocalDateTime.of(2025, 2, 21, 0, 0), savedCategories.get(1)));
+        products.add(new Product("Quần jean đen nữ", "Quần jean nữ dáng skinny, tôn dáng", "https://res.cloudinary.com/dpbysnmcc/image/upload/sample.jpg", 729000, 40, "S", LocalDate.of(2025, 2, 20), LocalDateTime.of(2025, 2, 22, 0, 0), savedCategories.get(1)));
+        products.add(new Product( "Giày Adidas Ultraboost", "Giày thể thao nam chống trơn trượt", "https://res.cloudinary.com/dpbysnmcc/image/upload/sample.jpg", 1800000, 30, "L", LocalDate.of(2025, 2, 15), LocalDateTime.of(2025, 2, 24, 0, 0), savedCategories.get(2)));
+
+        productRepository.saveAll(products);
     }
 }

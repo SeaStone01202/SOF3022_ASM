@@ -1,8 +1,11 @@
 package com.springboot.asm.fpoly_asm_springboot.config;
 
 import com.springboot.asm.fpoly_asm_springboot.constant.Role;
+import com.springboot.asm.fpoly_asm_springboot.entity.Product;
 import com.springboot.asm.fpoly_asm_springboot.entity.User;
+import com.springboot.asm.fpoly_asm_springboot.repositories.primary.ProductRepository;
 import com.springboot.asm.fpoly_asm_springboot.repositories.primary.UserRepository;
+import com.springboot.asm.fpoly_asm_springboot.service.ProductService;
 import com.springboot.asm.fpoly_asm_springboot.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
@@ -30,8 +33,9 @@ public class ApplicationInitConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Bean
-    ApplicationRunner applicationRunner(UserRepository userRepository) {
+    ApplicationRunner applicationRunner(UserRepository userRepository, ProductService productService) {
         log.info("Initializing application.....");
+        productService.addData();
         return args -> {
             if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
                 User user = User.builder().

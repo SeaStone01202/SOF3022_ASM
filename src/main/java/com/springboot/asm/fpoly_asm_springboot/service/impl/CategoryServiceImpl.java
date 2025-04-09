@@ -77,4 +77,5 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = pageUtil.createPageable(page);
         return categoryRepository.findAll(pageable).map(categoryMapper::toCategoryResponse);
     }
+
 }

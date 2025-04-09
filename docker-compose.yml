@@ -5,6 +5,7 @@ networks:
     driver: bridge
 
 services:
+
   store-app:
     build:
       context: .
@@ -13,8 +14,6 @@ services:
     depends_on:
       db1:
         condition: service_healthy
-      db2:
-        condition: service_healthy
       redis:
         condition: service_started
     networks:
@@ -22,7 +21,7 @@ services:
     environment:
       DBMS_USERNAME: root
       DBMS_PASSWORD: root
-      DBMS_CONNECTION: jdbc:mysql://13.209.89.241:3306/storedb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      DBMS_CONNECTION: jdbc:mysql://localhost:3306/storedb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
       REDIS_HOST: redis
       REDIS_PORT: 6379
       OAUTH2_GOOGLE_REDIRECT_URI: http://localhost:5173/login-success

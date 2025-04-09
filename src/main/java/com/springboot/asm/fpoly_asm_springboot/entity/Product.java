@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -40,4 +42,15 @@ public class    Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    public Product() {}
+    public Product(String name, String s, String url, int i, int i1, String l, LocalDate of, LocalDateTime of1, Category category) {
+        this.name = name;
+        this.quantity = i;
+        this.size = l;
+        this.description = s;
+        this.image = url;
+        this.price = Float.valueOf(i);
+        this.publishDate = Date.valueOf(of);
+        this.category = category;
+    }
 }

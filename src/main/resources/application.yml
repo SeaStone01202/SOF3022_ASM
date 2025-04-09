@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: ${DBMS_CONNECTION:jdbc:mysql://13.209.89.241:3306/storedb}
+    url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3307/storedb}
     username: ${DBMS_USERNAME:root}
     password: ${DBMS_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver

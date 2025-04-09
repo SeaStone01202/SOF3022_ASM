@@ -40,12 +40,14 @@ public interface ProductService {
     Page<ProductResponse> findByCategorySizeAndPrice(int categoryId, String size, float priceMin, float priceMax, int pageNum);
 
     // Sắp xếp theo tên A-Z
-    Page<ProductResponse> findAllSortedByNameAsc(int pageNum,Integer categoryId);
+    Page<ProductResponse> findAllSortedByNameAsc(int pageNum, Integer categoryId);
 
     // Sắp xếp theo tên Z-A
-    Page<ProductResponse> findAllSortedByNameDesc(int pageNum,Integer categoryId);
+    Page<ProductResponse> findAllSortedByNameDesc(int pageNum, Integer categoryId);
 
-    Page<ProductResponse> findByCategoryIdOrderByPriceAsc(int pageNum,Integer categoryId);
+    Page<ProductResponse> findByCategoryIdOrderByPriceAsc(int pageNum, Integer categoryId);
 
-    Page<ProductResponse> findByCategoryIdOrderByPriceDesc(int pageNum,Integer categoryId);
+    Page<ProductResponse> findByCategoryIdOrderByPriceDesc(int pageNum, Integer categoryId);
+
+    void addData();
 }
